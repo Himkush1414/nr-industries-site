@@ -8,6 +8,7 @@ import {
   COMPANY_ADDRESS_LINES,
   COMPANY_EMAIL,
   COMPANY_PHONE_DISPLAY,
+  COMPANY_WEBSITE_DISPLAY,
   buildMailtoLink,
   buildTelLink,
 } from "@/config/contact";
@@ -25,6 +26,16 @@ export function ContactPage() {
         eyebrow="Contact Us"
         title="Get in touch"
         description="For pricing, specifications, or project consultation — reach us directly or send a message below."
+        tickerItems={[
+          COMPANY_PHONE_DISPLAY,
+          COMPANY_EMAIL,
+          ...COMPANY_ADDRESS_LINES,
+          COMPANY_WEBSITE_DISPLAY,
+          "Pricing & Specifications",
+          "Project Consultation",
+          "WhatsApp Inquiry",
+        ]}
+        tickerLabel="Contact information"
       />
 
       <section className="py-16 sm:py-20">

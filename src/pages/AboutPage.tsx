@@ -17,6 +17,11 @@ export function AboutPage() {
         eyebrow="About Us"
         title="Decades of experience in power distribution"
         description="Manufacturer of high-performance transformers and power distribution equipment, built for reliability across small installations and large industrial projects alike."
+        tickerItems={[
+          ...infrastructurePoints,
+          ...whyChooseUs.map((item) => item.title),
+        ]}
+        tickerLabel="About N R Industries"
       />
 
       {/* About */}

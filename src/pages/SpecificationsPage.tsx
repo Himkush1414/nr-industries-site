@@ -17,6 +17,11 @@ export function SpecificationsPage() {
         eyebrow="Technical Specifications"
         title="Specifications & production capacity"
         description="Standard technical parameters across our transformer range, along with annual production capacity by rating."
+        tickerItems={[
+          ...technicalSpecs.map((spec) => `${spec.label}: ${spec.value}`),
+          ...productionCapacity.map((row) => `${row.rating} — ${row.unitsPerAnnum}`),
+        ]}
+        tickerLabel="Technical specifications"
       />
 
       <section className="py-16 sm:py-20">

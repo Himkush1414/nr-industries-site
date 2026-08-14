@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — N R Industries brand system.
+  Fonts: Archivo (headings) — geometric/engineered character, technical B2B tone.
+         Inter (body + data) — high legibility at small sizes for dense spec tables.
+  Palette: deep steel-navy primary (brand/trust), muted amber-gold as a sparing
+  accent (matches logo star), neutral grays for surfaces/text.
+*/
+@theme {
+  --font-heading: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-950: #060f1f;
+  --color-navy-900: #0b1f3a;
+  --color-navy-800: #102a4c;
+  --color-navy-700: #163a63;
+  --color-navy-600: #1d4e7c;
+  --color-navy-500: #2c6699;
+  --color-navy-400: #5a8cb8;
+  --color-navy-100: #e4ecf4;
+  --color-navy-50: #f4f7fb;
+
+  --color-gold-600: #a8791a;
+  --color-gold-500: #c9a227;
+  --color-gold-400: #dcbd5c;
+  --color-gold-100: #f6ecd0;
+
+  --color-ink-900: #12161f;
+  --color-ink-700: #333a48;
+  --color-ink-500: #5b6472;
+  --color-ink-300: #97a1af;
+  --color-ink-100: #e3e7ec;
+
+  --color-surface: #f7f8fa;
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-fade-up: fade-up 0.6s ease-out both;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-surface text-ink-900 font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold-600;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+  .blueprint-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, white 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

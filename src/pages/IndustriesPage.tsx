@@ -16,6 +16,7 @@ export function IndustriesPage() {
         eyebrow="Industries We Serve"
         title="Powering every sector"
         description="From heavy industry to renewable energy, our transformers and power distribution equipment are built for the demands of each sector we serve."
+        backgroundImage="/industries-hero-bg.jpg"
       />
 
       <section className="py-16 sm:py-20">

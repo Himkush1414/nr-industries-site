@@ -5,13 +5,13 @@ import { ProductMarquee } from "@/components/ProductMarquee";
 import { CertificationStrip } from "@/components/CertificationStrip";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { FeatureRow } from "@/components/FeatureRow";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
+import { HomeAboutSection } from "@/components/HomeAboutSection";
 import { IndustryIconChip } from "@/components/IndustryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StatStrip } from "@/components/StatStrip";
-import { aboutSummary, industries, whyChooseUs } from "@/data/company";
+import { industries, whyChooseUs } from "@/data/company";
 import { products } from "@/data/products";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
@@ -82,28 +82,7 @@ export function HomePage() {
       <ProductMarquee />
 
       {/* About teaser */}
-      <section className="py-20 sm:py-24">
-        <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal>
-            <ImagePlaceholder label="N R Industries manufacturing facility" aspectRatio="video" className="rounded" />
-          </Reveal>
-          <Reveal>
-            <SectionHeading eyebrow="About Us" title="Decades of experience in power distribution" />
-            <p className="mt-5 text-base leading-relaxed text-ink-500">{aboutSummary}</p>
-            <p className="mt-3 text-base leading-relaxed text-ink-500">
-              We focus on faster, on-time delivery and dependable after-sales support, with
-              tailored solutions from small installations to large industrial projects.
-            </p>
-            <Link
-              to="/about"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-800 hover:text-gold-600"
-            >
-              Learn More About Us
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
+      <HomeAboutSection />
 
       {/* Products */}
       <section className="bg-navy-50 py-20 sm:py-24">

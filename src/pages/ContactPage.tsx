@@ -1,12 +1,13 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import {
   COMPANY_ADDRESS_LINES,
   COMPANY_EMAIL,
+  COMPANY_GOOGLE_MAPS_EMBED_URL,
+  COMPANY_GOOGLE_MAPS_URL,
   COMPANY_PHONE_DISPLAY,
   COMPANY_WEBSITE_DISPLAY,
   buildMailtoLink,
@@ -94,12 +95,24 @@ export function ContactPage() {
               <WhatsAppButton className="self-start" />
             </div>
 
-            {/* PLACEHOLDER: embed Google Maps iframe with actual coordinates for Vill. Rampur Banjaran, PO Dhaulakuan, Sirmaur, HP */}
-            <ImagePlaceholder
-              label="Google Maps — Vill. Rampur Banjaran, Dhaulakuan, Sirmaur, HP"
-              aspectRatio="video"
-              className="rounded"
-            />
+            <div className="overflow-hidden rounded border border-ink-100 bg-white">
+              <iframe
+                title="N R Industries location on Google Maps"
+                src={COMPANY_GOOGLE_MAPS_EMBED_URL}
+                className="aspect-video w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a
+                href={COMPANY_GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block border-t border-ink-100 px-4 py-3 text-center text-xs font-semibold tracking-wide text-navy-800 uppercase transition-colors duration-150 hover:bg-navy-50"
+              >
+                Open in Google Maps
+              </a>
+            </div>
           </Reveal>
 
           {/* Form */}

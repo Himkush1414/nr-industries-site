@@ -22,6 +22,14 @@ export const COMPANY_ADDRESS_LINES = [
 
 export const COMPANY_ADDRESS_FULL = COMPANY_ADDRESS_LINES.join(" ");
 
+/** Google Maps listing for the manufacturing facility. */
+export const COMPANY_GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/place/NR+INDUSTRIES+-+TRANSFORMER+MANUFACTURER+,+REPAIR+AND+EXPORTER/@30.5055141,77.4806743,17z/data=!3m1!4b1!4m6!3m5!1s0x390f173aea4c0577:0x26aab691ade277bb!8m2!3d30.5055095!4d77.4832492!16s%2Fg%2F11bxc5dfkd?entry=ttu";
+
+/** Embed URL for the contact page map — uses the same place coordinates. */
+export const COMPANY_GOOGLE_MAPS_EMBED_URL =
+  "https://maps.google.com/maps?q=30.5055095,77.4832492&z=17&hl=en&output=embed";
+
 export const COMPANY_NAME = "N R Industries";
 export const COMPANY_TAGLINE = "Power at Best";
 

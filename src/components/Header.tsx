@@ -62,24 +62,17 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur">
-      <div className="container-page flex h-18 items-center justify-between gap-4 py-3">
+      <div className="container-page flex h-[55px] items-center justify-between gap-4 py-3">
         {/* Logo */}
-        <NavLink to="/" className="flex shrink-0 items-center gap-3" aria-label={`${COMPANY_NAME} home`}>
-          <div
-            role="img"
-            aria-label="Company logo — pending"
-            className="flex h-11 w-11 items-center justify-center rounded bg-navy-950 text-sm font-bold text-gold-400"
-          >
-            NR
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-heading text-base font-bold text-navy-950 sm:text-lg">
-              {COMPANY_NAME}
-            </span>
-            <span className="text-[11px] font-medium tracking-wide text-gold-600 uppercase">
-              Power at Best
-            </span>
-          </div>
+        <NavLink to="/" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
+          <img
+            src="/nr-industries-logo.svg"
+            alt={COMPANY_NAME}
+            width={248}
+            height={44}
+            className="h-7 w-auto max-w-[min(168px,48vw)] object-contain object-left sm:h-8 sm:max-w-[190px] lg:h-9 lg:max-w-[220px]"
+            decoding="async"
+          />
         </NavLink>
 
         {/* Desktop nav */}
@@ -135,11 +128,11 @@ export function Header() {
           <a
             href={buildTelLink()}
             aria-label={`Call ${COMPANY_PHONE_DISPLAY}`}
-            className="hidden h-10 w-10 items-center justify-center rounded border border-ink-100 text-navy-800 transition-colors duration-150 hover:border-navy-800 sm:flex"
+            className="hidden h-[33px] w-[33px] items-center justify-center rounded-full border border-ink-100 text-navy-800 transition-colors duration-150 hover:border-navy-800 sm:flex"
           >
-            <Phone className="h-4 w-4" aria-hidden="true" />
+            <Phone className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
-          <WhatsAppButton className="hidden sm:inline-flex" />
+          <WhatsAppButton compact />
 
           <button
             type="button"
@@ -157,7 +150,7 @@ export function Header() {
       {isMobileOpen && (
         <nav
           aria-label="Mobile primary"
-          className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
+          className="max-h-[calc(100vh-55px)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
         >
           <div className="container-page flex flex-col gap-1 py-4">
             <NavLink

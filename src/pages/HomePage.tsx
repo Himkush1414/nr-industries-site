@@ -22,9 +22,19 @@ export function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="blueprint-grid relative flex min-h-[92vh] flex-col justify-center overflow-hidden bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950">
-        {/* PLACEHOLDER: replace with company facility/product photo (full-bleed, dark overlay retained for text contrast) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/40" aria-hidden="true" />
+      <section className="relative flex min-h-[92vh] flex-col justify-center overflow-hidden bg-navy-950">
+        <img
+          src="/hero-factory.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          decoding="async"
+          fetchPriority="high"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-950/85 via-navy-950/70 to-navy-950/90"
+          aria-hidden="true"
+        />
+        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
 
         <div className="container-page relative flex flex-col gap-10 py-24">
           <div className="flex max-w-3xl flex-col gap-6">

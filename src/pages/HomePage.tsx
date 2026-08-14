@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CertificationMarquee } from "@/components/CertificationMarquee";
+import { ProductMarquee } from "@/components/ProductMarquee";
 import { CertificationStrip } from "@/components/CertificationStrip";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { FeatureRow } from "@/components/FeatureRow";
@@ -75,6 +77,9 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      <CertificationMarquee />
+      <ProductMarquee />
 
       {/* About teaser */}
       <section className="py-20 sm:py-24">

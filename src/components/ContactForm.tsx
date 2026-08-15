@@ -1,6 +1,7 @@
 import { Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Button } from "@/components/Button";
+import { supabase } from "@/lib/supabaseClient";
 import {
   type ContactFormErrors,
   type ContactFormValues,
@@ -66,13 +67,15 @@ export function ContactForm() {
   const [values, setValues] = useState<ContactFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function updateField(field: keyof ContactFormValues, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const validationErrors = validateContactForm(values);
     setErrors(validationErrors);
@@ -82,8 +85,24 @@ export function ContactForm() {
       return;
     }
 
-    // TODO: wire to backend/email service. For now, log the payload for verification.
-    console.log("Contact form submitted:", values);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: values.name.trim(),
+      email: values.email.trim(),
+      phone: values.phone.trim(),
+      message: values.message.trim(),
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      setSubmitError(
+        "Something went wrong sending your message. Please try again or contact us directly.",
+      );
+      return;
+    }
 
     setIsSubmitted(true);
     setValues(INITIAL_VALUES);
@@ -125,14 +144,24 @@ export function ContactForm() {
         onChange={(v) => updateField("message", v)}
       />
 
-      <Button as="button" type="submit" className="self-start">
+      <Button
+        as="button"
+        type="submit"
+        disabled={isSubmitting}
+        className="self-start disabled:opacity-60"
+      >
         <Send className="h-4 w-4" aria-hidden="true" />
-        Send Message
+        {isSubmitting ? "Sending..." : "Send Message"}
       </Button>
 
       {isSubmitted && (
         <p role="status" className="text-sm font-medium text-navy-700">
           Thank you — your message has been received. We'll get back to you shortly.
+        </p>
+      )}
+      {submitError && (
+        <p role="alert" className="text-sm font-medium text-red-600">
+          {submitError}
         </p>
       )}
     </form>

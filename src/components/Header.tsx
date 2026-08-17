@@ -66,11 +66,11 @@ export function Header() {
         {/* Logo */}
         <NavLink to="/" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
           <img
-            src="/nr-industries-logo.svg"
+            src="/logo.png"
             alt={COMPANY_NAME}
             width={248}
             height={44}
-            className="h-7 w-auto max-w-[min(168px,48vw)] object-contain object-left sm:h-8 sm:max-w-[190px] lg:h-9 lg:max-w-[220px]"
+            className="h-10 w-auto max-w-[min(220px,52vw)] object-contain object-left sm:h-12 sm:max-w-[260px] lg:h-14 lg:max-w-[300px]"
             decoding="async"
           />
         </NavLink>

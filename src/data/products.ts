@@ -103,7 +103,12 @@ export const products: Product[] = [
       "A precision transformer with built-in AVR — a combination of an HT AVR and a standard distribution transformer. Fluctuating HT voltage from the grid supply is first controlled by the HT AVR to an accuracy of ±1%, then fed to the transformer, which transforms it to the standard LT voltage ratio. A stabilized HT voltage results in a stabilized LT voltage at ±1% accuracy — input at 11/33 kV, output as regulated LT voltage, delivered via a single product.",
     rangeLabel: "Power Range",
     rangeValue: "Up to 33 kV class",
-    features: [],
+    features: [
+      "HT voltage from the grid is regulated to ±1% accuracy before transformation",
+      "Combines an HT AVR and a standard distribution transformer in one enclosure",
+      "Stabilized LT output delivered at ±1% accuracy",
+      "Single product replaces a separate two-part regulation setup",
+    ],
   },
   {
     slug: "dry-type-transformer",
@@ -116,7 +121,12 @@ export const products: Product[] = [
       "Uses air instead of liquid for cooling — safer and more environmentally friendly. Ideal for indoor and outdoor applications including commercial buildings, industrial facilities, and renewable energy systems. Built with high-quality insulation materials for excellent fire resistance, reduced maintenance, and a long operational life. Compact design and quiet operation make it well suited for densely populated areas.",
     rangeLabel: "Power Range",
     rangeValue: "Available in 400 V, 200 V, 110 V, 11 kV, and 33 kV primary voltage range",
-    features: [],
+    features: [
+      "Air-cooled — no liquid insulation, improving fire resistance and reducing environmental risk",
+      "High-quality insulation materials with reduced maintenance requirements",
+      "Long operational lifespan under continuous duty",
+      "Compact, quiet design suited to densely populated or indoor sites",
+    ],
   },
   {
     slug: "compact-substation",
@@ -128,7 +138,12 @@ export const products: Product[] = [
       "A pre-engineered, modular electrical distribution system integrating transformers, switchgear, and protection devices in a single enclosed unit. Delivers efficient space utilization, reliable power distribution, and enhanced safety — ideal for urban, industrial, and renewable energy applications, with quick installation, minimal maintenance, and high performance in demanding environments.",
     rangeLabel: "Voltage Range",
     rangeValue: "3.3 kV, 6.6 kV, 11 kV, 22 kV, 33 kV, or special class by customer requirement",
-    features: [],
+    features: [
+      "Integrates transformer, switchgear, and protection devices in one enclosed unit",
+      "Efficient space utilization for constrained urban or industrial sites",
+      "Quick installation with minimal ongoing maintenance",
+      "Built for reliable performance in demanding operating environments",
+    ],
   },
   {
     slug: "ht-lt-panels",
@@ -140,7 +155,12 @@ export const products: Product[] = [
       "Essential for distributing and controlling power across mechanical systems, built with high-quality materials that adhere to industrial standards. Used across industries, commercial buildings, hospitals, and more. High Tension (HT) panels manage electricity flow for devices and distribution boards in indoor or outdoor installations, while Low Tension (LT) panels work with low-tension cables to distribute power. Ring Main Units (RMUs) are compact, gas-insulated switchgear units widely used in ring-type networks, with capacities up to 630 A and 24 kV.",
     rangeLabel: "Capacity",
     rangeValue: "RMUs up to 630 A and 24 kV",
-    features: [],
+    features: [
+      "HT panels manage electricity flow for devices and distribution boards, indoors or outdoors",
+      "LT panels distribute power through low-tension cables",
+      "RMUs: compact, gas-insulated switchgear for ring-type networks",
+      "Built from high-quality materials to industrial standards",
+    ],
   },
 ];
 

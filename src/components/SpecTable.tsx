@@ -1,3 +1,16 @@
+import {
+  Activity,
+  Gauge,
+  Layers,
+  type LucideIcon,
+  Repeat,
+  Ruler,
+  Settings2,
+  Thermometer,
+  Wrench,
+  Zap,
+} from "lucide-react";
+
 interface SpecTableProps {
   title: string;
   columnLabels: [string, string];
@@ -5,7 +18,22 @@ interface SpecTableProps {
   caption?: string;
 }
 
-/** Dense, scannable key/value table — used for Technical Specifications and Production Capacity. */
+const ICON_BY_LABEL: Record<string, LucideIcon> = {
+  Rating: Gauge,
+  Phase: Zap,
+  "Vector Group": Layers,
+  Cooling: Thermometer,
+  Frequency: Activity,
+  "Winding Material": Ruler,
+  "Tapping Range": Settings2,
+  "Temperature Rise": Thermometer,
+  Losses: Zap,
+  "Fitting & Accessories": Wrench,
+  "Tap Changer": Repeat,
+  "Voltage Class": Zap,
+};
+
+/** Dense, scannable key/value grid — used for Technical Specifications and Production Capacity. */
 export function SpecTable({ title, columnLabels, rows, caption }: SpecTableProps) {
   return (
     <div className="overflow-hidden rounded border border-ink-100 bg-white">
@@ -13,30 +41,30 @@ export function SpecTable({ title, columnLabels, rows, caption }: SpecTableProps
         <h3 className="font-heading text-lg font-bold text-white">{title}</h3>
         {caption && <p className="mt-1 text-sm text-navy-100/75">{caption}</p>}
       </div>
-      <table className="w-full text-left text-sm">
-        <caption className="sr-only">{title}</caption>
-        <thead>
-          <tr className="border-b border-ink-100 bg-navy-50">
-            <th scope="col" className="px-6 py-3 font-semibold text-ink-700">
-              {columnLabels[0]}
-            </th>
-            <th scope="col" className="px-6 py-3 font-semibold text-ink-700">
-              {columnLabels[1]}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr
+      <div className="grid grid-cols-1 sm:grid-cols-2">
+        {rows.map((row, i) => {
+          const Icon = ICON_BY_LABEL[row.label] ?? Settings2;
+          return (
+            <div
               key={row.label}
-              className={`border-b border-ink-100 last:border-0 ${i % 2 === 1 ? "bg-navy-50/50" : ""}`}
+              className={`flex items-start gap-3 border-b border-ink-100 px-6 py-4 transition-colors duration-150 hover:bg-navy-50/60 sm:border-r sm:[&:nth-child(2n)]:border-r-0 ${
+                i === rows.length - 1 || i === rows.length - 2 ? "sm:border-b-0" : ""
+              }`}
             >
-              <td className="px-6 py-3 font-medium text-navy-950">{row.label}</td>
-              <td className="px-6 py-3 text-ink-500">{row.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded bg-navy-50">
+                <Icon className="h-4 w-4 text-navy-600" aria-hidden="true" />
+              </div>
+              <div className="flex min-w-0 flex-col">
+                <span className="text-xs font-semibold tracking-wide text-ink-500 uppercase">
+                  {row.label}
+                </span>
+                <span className="text-sm font-medium text-navy-950">{row.value}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <span className="sr-only">{columnLabels.join(", ")}</span>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/PageHero";
+import { ProductionCapacityChart } from "@/components/ProductionCapacityChart";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SpecTable } from "@/components/SpecTable";
@@ -45,14 +46,7 @@ export function SpecificationsPage() {
               as="h2"
             />
             <div className="mt-6">
-              <SpecTable
-                title="Production Capacity"
-                columnLabels={["Rating", "Units / Annum"]}
-                rows={productionCapacity.map((row) => ({
-                  label: row.rating,
-                  value: row.unitsPerAnnum,
-                }))}
-              />
+              <ProductionCapacityChart rows={productionCapacity} />
             </div>
           </Reveal>
         </div>

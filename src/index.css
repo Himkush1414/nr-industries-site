@@ -87,13 +87,28 @@
   }
 }
 
+@layer utilities {
+  .flip-card-perspective {
+    perspective: 1200px;
+  }
+  .flip-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .flip-card-perspective:hover .flip-card-inner,
+  .flip-card-perspective:focus-within .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-card-face {
+    backface-visibility: hidden;
+  }
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
+  .flip-card-inner {
+    transition: none;
   }
 }

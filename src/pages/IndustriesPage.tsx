@@ -22,10 +22,10 @@ export function IndustriesPage() {
       />
 
       <section className="py-16 sm:py-20">
-        <div className="container-page grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="container-page grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((industry, i) => (
             <Reveal key={industry.name} delayMs={i * 30}>
-              <IndustryCard industry={industry} />
+              <IndustryCard industry={industry} index={i} />
             </Reveal>
           ))}
         </div>

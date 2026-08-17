@@ -76,6 +76,27 @@ export function AboutPage() {
         </div>
       </section>
 
+      {/* Parallax window — this section is a transparent cutout revealing a fixed background photo pinned behind the whole page, independent of the sections above/below it. (Note: background-attachment: fixed doesn't work on iOS Safari; it degrades to a normal scrolling image there.) */}
+      <section
+        className="relative mt-[110px] flex h-[70vh] min-h-[420px] items-end bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url('/home-strip-bg.avif')" }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-950/60 via-navy-950/40 to-navy-950/70"
+          aria-hidden="true"
+        />
+        <div className="container-page relative w-full pb-0">
+          <div className="max-w-lg -mb-16 rounded bg-navy-950 p-10 shadow-xl">
+            <SectionHeading
+              eyebrow="Global Standards"
+              title="Built to serve industries everywhere"
+              subtitle="Engineered to international standards, ready for the demands of any market."
+              light
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Why choose us */}
       <section className="bg-navy-50 py-20 sm:py-24">
         <div className="container-page flex flex-col gap-12">

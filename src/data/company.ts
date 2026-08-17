@@ -17,12 +17,12 @@ export const aboutFull = [
 export const visionStatement =
   "To be a global leader in power distribution technology, setting benchmarks in quality, innovation, and sustainability, while empowering industries and communities worldwide — backed by the best calibration and certification standards.";
 
-export const infrastructurePoints = [
-  "World-class manufacturing facility with advanced machinery and testing equipment",
-  "In-house testing and R&D capability",
-  "ISO certified operations",
-  "Skilled workforce and organized logistics for timely global delivery",
-];
+  export const infrastructurePoints = [
+    "A world-class manufacturing facility equipped with advanced machinery and precision testing equipment",
+    "Dedicated in-house testing and R&D, ensuring every product is validated before it leaves the facility",
+    "ISO-certified operations upheld across every stage of manufacturing",
+    "A skilled, experienced workforce supported by organized logistics for reliable, on-time delivery worldwide",
+  ];
 
 export const whyChooseUs: DifferentiatorItem[] = [
   {

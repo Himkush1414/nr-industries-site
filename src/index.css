@@ -36,6 +36,7 @@
 
   --animate-marquee: marquee 38s linear infinite;
   --animate-fade-up: fade-up 0.6s ease-out both;
+  --animate-character-sway: character-sway 3.5s ease-in-out infinite;
 
   @keyframes marquee {
     from {
@@ -53,6 +54,15 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  @keyframes character-sway {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-4px) rotate(-1.5deg);
     }
   }
 }
@@ -85,9 +95,6 @@
       linear-gradient(to bottom, color-mix(in srgb, white 6%, transparent) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-}
-
-@layer utilities {
   .flip-card-perspective {
     perspective: 1200px;
   }
@@ -108,7 +115,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flip-card-inner {
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

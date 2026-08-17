@@ -1,5 +1,6 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+﻿import { Mail, MapPin, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { EyesFollowCursor } from "@/components/EyesFollowCursor";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
@@ -18,7 +19,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 export function ContactPage() {
   useDocumentMeta(
     "Contact Us",
-    "Get in touch with N R Industries — Vill. Rampur Banjaran, Dhaulakuan, Sirmaur, Himachal Pradesh. Call, WhatsApp, or send us a message.",
+    "Get in touch with N R Industries - Vill. Rampur Banjaran, Dhaulakuan, Sirmaur, Himachal Pradesh. Call, WhatsApp, or send us a message.",
   );
 
   return (
@@ -26,7 +27,7 @@ export function ContactPage() {
       <PageHero
         eyebrow="Contact Us"
         title="Get in touch"
-        description="For pricing, specifications, or project consultation — reach us directly or send a message below."
+        description="For pricing, specifications, or project consultation - reach us directly or send a message below."
         tickerItems={[
           COMPANY_PHONE_DISPLAY,
           COMPANY_EMAIL,
@@ -41,7 +42,6 @@ export function ContactPage() {
 
       <section className="py-16 sm:py-20">
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Contact details */}
           <Reveal className="flex flex-col gap-8">
             <div className="flex flex-col gap-5">
               <div className="flex items-start gap-4 rounded border border-ink-100 bg-white p-5">
@@ -115,14 +115,16 @@ export function ContactPage() {
             </div>
           </Reveal>
 
-          {/* Form */}
-          <Reveal className="rounded border border-ink-100 bg-white p-6 sm:p-8">
+          <Reveal className="flex flex-col rounded border border-ink-100 bg-white p-6 sm:p-8">
             <h2 className="font-heading text-2xl font-bold text-navy-950">Send a Message</h2>
             <p className="mt-2 text-sm text-ink-500">
               Fill out the form and our team will get back to you.
             </p>
             <div className="mt-6">
               <ContactForm />
+            </div>
+            <div className="mt-6 flex-1 rounded bg-navy-50">
+              <EyesFollowCursor />
             </div>
           </Reveal>
         </div>

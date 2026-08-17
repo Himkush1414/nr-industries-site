@@ -19,11 +19,18 @@ export interface DifferentiatorItem {
 export interface Certification {
   code: string;
   label: string;
+  /** Path to the real logo image under /public. Omit to fall back to the icon placeholder. */
+  logoSrc?: string;
 }
 
 export interface IndustryItem {
   name: string;
   description: string;
+}
+
+export interface ClientItem {
+  name: string;
+  logoSrc: string;
 }
 
 export interface SpecRow {

@@ -1,6 +1,7 @@
 import type {
   AdditionalService,
   Certification,
+  ClientItem,
   DifferentiatorItem,
   IndustryItem,
 } from "@/types/content";
@@ -47,33 +48,33 @@ export const whyChooseUs: DifferentiatorItem[] = [
 ];
 
 export const certifications: Certification[] = [
-  { code: "ISO", label: "ISO 9001:2015" },
-  { code: "BIS", label: "BIS Certification" },
-  { code: "IS", label: "IS:1180 Certified" },
-  { code: "ERDA", label: "ERDA" },
-  { code: "NABL", label: "NABL" },
-  { code: "UN", label: "United Nations Global Marketplace" },
-  { code: "BEE", label: "BEE (Energy is Life)" },
-  { code: "CPRI", label: "CPRI Approved" },
+  { code: "ISO", label: "ISO 9001:2015", logoSrc: "/certifications/iso.png" },
+  { code: "BIS", label: "BIS Certification", logoSrc: "/certifications/bis.png" },
+  { code: "IS", label: "IS:1180 Certified", logoSrc: "/certifications/is-1180.png" },
+  { code: "ERDA", label: "ERDA", logoSrc: "/certifications/erda.png" },
+  { code: "NABL", label: "NABL", logoSrc: "/certifications/nabl.png" },
+  { code: "UN", label: "United Nations Global Marketplace", logoSrc: "/certifications/un.png" },
+  { code: "BEE", label: "BEE (Energy is Life)", logoSrc: "/certifications/bee.png" },
+  { code: "CPRI", label: "CPRI Approved", logoSrc: "/certifications/cpri.png" },
   { code: "MII", label: "Make in India" },
 ];
 
-export const clientNames = [
-  "Reliance",
-  "Reliance Jio",
-  "Mahindra Rise",
-  "Nayara Energy",
-  "Essar",
-  "HP",
-  "Bharat Petroleum",
-  "Vodafone Idea",
-  "Vishal Mega Mart",
-  "LG",
-  "Ford",
-  "Royal Enfield",
-  "PNB",
-  "HDFC Bank",
-  "Airtel",
+export const clients: ClientItem[] = [
+  { name: "Reliance Jio", logoSrc: "/clients/reliance-jio.png" },
+  { name: "Mahindra Rise", logoSrc: "/clients/mahindra-rise.png" },
+  { name: "Nayara Energy", logoSrc: "/clients/nayara-energy.jpg" },
+  { name: "Essar", logoSrc: "/clients/essar.png" },
+  { name: "HP", logoSrc: "/clients/hp.png" },
+  { name: "Bharat Petroleum", logoSrc: "/clients/bharat-petroleum.png" },
+  { name: "Vodafone Idea", logoSrc: "/clients/vodafone-idea.png" },
+  { name: "Vishal Mega Mart", logoSrc: "/clients/vishal-mega-mart.png" },
+  { name: "LG", logoSrc: "/clients/lg.webp" },
+  { name: "Ford", logoSrc: "/clients/ford.png" },
+  { name: "Royal Enfield", logoSrc: "/clients/royal-enfield.png" },
+  { name: "PNB", logoSrc: "/clients/pnb.png" },
+  { name: "HDFC Bank", logoSrc: "/clients/hdfc-bank.png" },
+  { name: "Airtel", logoSrc: "/clients/airtel.png" },
+  { name: "SBPCL", logoSrc: "/clients/sbpcl.png" },
 ];
 
 export const industries: IndustryItem[] = [

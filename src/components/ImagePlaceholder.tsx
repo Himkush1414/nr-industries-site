@@ -8,6 +8,8 @@ interface ImagePlaceholderProps {
   className?: string;
   /** Set true for logo/badge placeholders to render on a lighter card instead of navy. */
   light?: boolean;
+  /** Real photo path under /public. When provided, renders the photo instead of the pending placeholder. */
+  src?: string;
 }
 
 const ASPECT_CLASS: Record<PlaceholderAspectRatio, string> = {
@@ -18,16 +20,28 @@ const ASPECT_CLASS: Record<PlaceholderAspectRatio, string> = {
 };
 
 /**
- * PLACEHOLDER — replace with real photography/artwork before launch.
- * Reserves the correct aspect ratio for its context so swapping in real
- * images later causes no layout shift.
+ * Renders a real photo when `src` is provided; otherwise falls back to the
+ * "image pending" placeholder. Reserves the correct aspect ratio either way,
+ * so swapping a photo in later causes no layout shift.
  */
 export function ImagePlaceholder({
   label,
   aspectRatio = "video",
   className = "",
   light = false,
+  src,
 }: ImagePlaceholderProps) {
+  if (src) {
+    return (
+      <img
+        src={src}
+        alt={label}
+        loading="lazy"
+        className={`object-cover ${ASPECT_CLASS[aspectRatio]} ${className}`}
+      />
+    );
+  }
+
   return (
     <div
       role="img"

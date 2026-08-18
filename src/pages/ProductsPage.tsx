@@ -9,15 +9,14 @@ export function ProductsPage() {
     "Products",
     "Explore N R Industries' full range: Power, Distribution, Furnace, Dry Type & Solar Inverter Duty Transformers, Servo Voltage Stabilizers, Compact Substations, and HT & LT Panels.",
   );
-
   return (
     <>
       <PageHero
         eyebrow="Our Products"
         title="A complete range of power equipment"
         description="Engineered for power plants, industrial facilities, commercial buildings, and utility-scale distribution networks — every product built to international standards."
+        backgroundImage="/products/all-products-bg.jpg"
       />
-
       <section className="py-16 sm:py-20">
         <div className="container-page grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product, i) => (

@@ -1,33 +1,25 @@
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { SectionHeading } from "@/components/SectionHeading";
 
 const ABOUT_STEPS = [
   {
-    image: "/hero-factory.png",
+    image: "/about-1.jpg",
     imageAlt: "N R Industries manufacturing facility",
-    usePlaceholder: false,
   },
   {
-    image: "/industries-hero-bg.jpg",
-    imageAlt: "Industrial power equipment manufacturing",
-    usePlaceholder: false,
+    image: "/about-2.jpg",
+    imageAlt: "N R Industries power equipment production",
   },
   {
-    placeholderLabel: "Power and distribution transformers",
-    imageAlt: "Power and distribution transformers",
-    usePlaceholder: true,
-  },
-  {
-    placeholderLabel: "Servo voltage stabilizers and HT-AVR solutions",
-    imageAlt: "Servo voltage stabilizers and HT-AVR solutions",
-    usePlaceholder: true,
+    image: "/about-3.jpg",
+    imageAlt: "N R Industries transformer solutions",
   },
 ] as const;
 
-/** Home page About Us — scroll-linked text reveals with a crossfading image panel. */
+/** Home page About Us — scroll-linked text reveals with a crossfading image panel.
+ * 3 text steps, 3 images, 1:1 mapping. */
 export function HomeAboutSection() {
   const [activeStep, setActiveStep] = useState(0);
   const [revealedSteps, setRevealedSteps] = useState<Set<number>>(() => new Set([0]));
@@ -68,34 +60,18 @@ export function HomeAboutSection() {
       <div className="container-page grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="sticky top-[4.75rem] z-30 -mx-5 bg-surface px-5 pb-4 sm:-mx-8 sm:px-8 lg:top-24 lg:z-10 lg:mx-0 lg:bg-transparent lg:px-0 lg:pb-0">
           <div className="relative aspect-video overflow-hidden rounded border border-ink-100 bg-white shadow-sm lg:border-0 lg:shadow-none">
-            {ABOUT_STEPS.map((step, index) =>
-              step.usePlaceholder ? (
-                <div
-                  key={step.placeholderLabel}
-                  className={`absolute inset-0 transition-opacity duration-700 ease-out ${
-                    activeStep === index ? "opacity-100" : "opacity-0"
-                  }`}
-                  aria-hidden={activeStep !== index}
-                >
-                  <ImagePlaceholder
-                    label={step.placeholderLabel}
-                    aspectRatio="video"
-                    className="h-full rounded-none"
-                  />
-                </div>
-              ) : (
-                <img
-                  key={step.image}
-                  src={step.image}
-                  alt={step.imageAlt}
-                  className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out ${
-                    activeStep === index ? "opacity-100" : "opacity-0"
-                  }`}
-                  aria-hidden={activeStep !== index}
-                  decoding="async"
-                />
-              ),
-            )}
+            {ABOUT_STEPS.map((step, index) => (
+              <img
+                key={step.image}
+                src={step.image}
+                alt={step.imageAlt}
+                className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out ${
+                  activeStep === index ? "opacity-100" : "opacity-0"
+                }`}
+                aria-hidden={activeStep !== index}
+                decoding="async"
+              />
+            ))}
           </div>
         </div>
 
@@ -164,17 +140,10 @@ export function HomeAboutSection() {
               </strong>
               , we provide solutions built for dependable performance.
             </p>
-          </div>
 
-          <div
-            ref={(node) => {
-              stepRefs.current[3] = node;
-            }}
-            className="min-h-[24vh] py-6 sm:min-h-[28vh] lg:min-h-[32vh] lg:py-10"
-          >
             <p
-              className={`font-heading text-lg font-semibold text-navy-950 transition-all duration-500 ease-out sm:text-xl ${
-                isRevealed(3)
+              className={`mt-6 font-heading text-lg font-semibold text-navy-950 transition-all duration-500 ease-out sm:text-xl ${
+                isRevealed(2)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
               }`}
@@ -185,7 +154,7 @@ export function HomeAboutSection() {
             <Link
               to="/about"
               className={`mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-800 transition-all duration-500 ease-out hover:text-gold-600 ${
-                isRevealed(3)
+                isRevealed(2)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
               }`}

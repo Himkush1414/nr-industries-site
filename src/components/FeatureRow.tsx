@@ -7,6 +7,8 @@ interface FeatureRowProps {
   title: string;
   description: string;
   imageLabel: string;
+  /** Real photo path under /public. Falls back to the placeholder if omitted. */
+  imageSrc?: string;
   /** When true, image sits on the right instead of the left. */
   reverse?: boolean;
   children?: ReactNode;
@@ -17,13 +19,14 @@ export function FeatureRow({
   title,
   description,
   imageLabel,
+  imageSrc,
   reverse = false,
   children,
 }: FeatureRowProps) {
   return (
     <Reveal className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div className={reverse ? "lg:order-2" : ""}>
-        <ImagePlaceholder label={imageLabel} aspectRatio="video" className="rounded" />
+        <ImagePlaceholder label={imageLabel} aspectRatio="video" className="rounded" src={imageSrc} />
       </div>
       <div className={`flex flex-col gap-4 ${reverse ? "lg:order-1" : ""}`}>
         {eyebrow && (

@@ -24,10 +24,11 @@ export function ContactPage() {
 
   return (
     <>
-      <PageHero
+            <PageHero
         eyebrow="Contact Us"
         title="Get in touch"
         description="For pricing, specifications, or project consultation - reach us directly or send a message below."
+        backgroundImage="/industries/power-plant.webp"
         tickerItems={[
           COMPANY_PHONE_DISPLAY,
           COMPANY_EMAIL,

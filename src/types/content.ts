@@ -5,15 +5,21 @@ export interface Product {
   cardDescription: string;
   tagline: string;
   intro: string;
-  /** Label varies by product ("Power Range" vs "Voltage Range") — set per product. */
+  /** Label varies by product ("Power Range" vs "Voltage Range") â€” set per product. */
   rangeLabel: string;
   rangeValue: string;
   features: string[];
+  /** Product photo under /public/products, used in cards and the detail page's image box. */
+  mainImageSrc?: string;
+  /** Hero/placeholder photo under /public/products, used behind the detail page header. */
+  backgroundImageSrc?: string;
 }
 
 export interface DifferentiatorItem {
   title: string;
   description: string;
+  /** Path to a real photo under /public. Falls back to the placeholder if omitted. */
+  imageSrc?: string;
 }
 
 export interface Certification {

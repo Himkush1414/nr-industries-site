@@ -25,9 +25,9 @@ export function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[92vh] flex-col justify-center overflow-hidden bg-navy-950">
-        <img
-          src="/hero-factory.png"
+      <section className="relative flex min-h-[calc(92vh-70px)] flex-col justify-center overflow-hidden bg-navy-950">
+          <img
+            src="/hero-home.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center"
           decoding="async"
@@ -118,15 +118,16 @@ export function HomePage() {
             />
           </Reveal>
           <div className="flex flex-col gap-16 pt-6 sm:gap-20">
-            {whyChooseUs.map((item, i) => (
-              <FeatureRow
-                key={item.title}
-                title={item.title}
-                description={item.description}
-                imageLabel={item.title}
-                reverse={i % 2 === 1}
-              />
-            ))}
+          {whyChooseUs.map((item, i) => (
+                <FeatureRow
+                  key={item.title}
+                  title={item.title}
+                  description={item.description}
+                  imageLabel={item.title}
+                  imageSrc={item.imageSrc}
+                  reverse={i % 2 === 1}
+                />
+              ))}
           </div>
         </div>
       </section>

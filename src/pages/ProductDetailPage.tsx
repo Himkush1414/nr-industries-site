@@ -29,8 +29,19 @@ export function ProductDetailPage() {
   return (
     <>
       {/* Header */}
-      <section className="blueprint-grid bg-navy-950 py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-4">
+      <section
+        className="blueprint-grid relative overflow-hidden bg-navy-950 py-16 sm:py-20"
+        style={
+          product.backgroundImageSrc
+            ? {
+                backgroundImage: `linear-gradient(to bottom, rgba(6,15,31,0.75), rgba(6,15,31,0.92)), url('${product.backgroundImageSrc}')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : undefined
+        }
+      >
+        <div className="container-page relative flex flex-col gap-4">
           <nav aria-label="Breadcrumb" className="text-xs text-navy-100/60">
             <Link to="/products" className="hover:text-gold-400">
               Products
@@ -53,7 +64,12 @@ export function ProductDetailPage() {
       <section className="py-16 sm:py-20">
         <div className="container-page grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
-            <ImagePlaceholder label={product.name} aspectRatio="video" className="rounded" />
+            <ImagePlaceholder
+              label={product.name}
+              aspectRatio="video"
+              className="rounded"
+              src={product.mainImageSrc}
+            />
           </Reveal>
           <Reveal className="flex flex-col gap-6">
             <p className="text-base leading-relaxed text-ink-500">{product.intro}</p>

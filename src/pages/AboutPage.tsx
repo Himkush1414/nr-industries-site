@@ -13,10 +13,11 @@ export function AboutPage() {
 
   return (
     <>
-      <PageHero
+            <PageHero
         eyebrow="About Us"
         title="Decades of experience in power distribution"
         description="Manufacturer of high-performance transformers and power distribution equipment, built for reliability across small installations and large industrial projects alike."
+        backgroundImage="/hero-factory.png"
         tickerItems={[
           ...infrastructurePoints,
           ...whyChooseUs.map((item) => item.title),

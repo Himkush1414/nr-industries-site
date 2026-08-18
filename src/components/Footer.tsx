@@ -5,6 +5,8 @@ import {
   COMPANY_EMAIL,
   COMPANY_NAME,
   COMPANY_PHONE_DISPLAY,
+  COMPANY_PHONE_DISPLAY_2,
+  COMPANY_PHONE_TEL_2,
   COMPANY_WEBSITE_DISPLAY,
   buildMailtoLink,
   buildTelLink,
@@ -104,9 +106,14 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-2.5">
               <Phone className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
-              <a href={buildTelLink()} className="hover:text-gold-400">
-                {COMPANY_PHONE_DISPLAY}
-              </a>
+              <div className="flex flex-col gap-1">
+                <a href={buildTelLink()} className="hover:text-gold-400">
+                  {COMPANY_PHONE_DISPLAY}
+                </a>
+                <a href={buildTelLink(COMPANY_PHONE_TEL_2)} className="hover:text-gold-400">
+                  {COMPANY_PHONE_DISPLAY_2}
+                </a>
+              </div>
             </li>
             <li className="flex items-center gap-2.5">
               <Mail className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />

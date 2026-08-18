@@ -11,6 +11,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StatStrip } from "@/components/StatStrip";
+import { COMPANY_NAME } from "@/config/contact";
 import { industries, whyChooseUs } from "@/data/company";
 import { products } from "@/data/products";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -44,8 +45,8 @@ export function HomePage() {
               <span className="h-px w-8 bg-gold-400" aria-hidden="true" />
               Power &amp; Distribution Equipment Manufacturer
             </span>
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
-              N R Industries
+            <h1 className="font-heading text-5xl font-bold tracking-tight text-white uppercase sm:text-6xl lg:text-7xl">
+              {COMPANY_NAME}
             </h1>
             <p className="font-heading text-xl font-semibold text-gold-400 sm:text-2xl">
               Power at Best
@@ -162,9 +163,9 @@ export function HomePage() {
           </Reveal>
           <Reveal>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {industries.map((industry, i) => (
-                  <IndustryIconChip key={industry.name} industry={industry} index={i} />
-                ))}
+              {industries.map((industry, i) => (
+                <IndustryIconChip key={industry.name} industry={industry} index={i} />
+              ))}
             </div>
           </Reveal>
           <Reveal className="flex justify-center">

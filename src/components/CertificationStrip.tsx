@@ -4,7 +4,7 @@ import { certifications } from "@/data/company";
 /** Real logos render where available; entries without one (e.g. Make in India) fall back to the icon placeholder. */
 export function CertificationStrip() {
   return (
-    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-9 lg:gap-5">
+    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-8 lg:gap-5">
       {certifications.map((cert) => (
         <li key={cert.code} className="flex flex-col items-center gap-2 text-center">
           {cert.logoSrc ? (

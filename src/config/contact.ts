@@ -4,14 +4,16 @@
  */
 
 // PLACEHOLDER — replace before launch
-export const COMPANY_PHONE_DISPLAY = "+91 70182 88734";
+export const COMPANY_PHONE_DISPLAY = "+91 88942 25597";
+export const COMPANY_PHONE_DISPLAY_2 = "+91 80919 30019";
 // PLACEHOLDER — replace before launch (E.164 format, used in tel: links)
-export const COMPANY_PHONE_TEL = "+917018288734";
+export const COMPANY_PHONE_TEL = "+91 88942 25597";
+export const COMPANY_PHONE_TEL_2 = "+91 80919 30019";
 
 // PLACEHOLDER — replace before launch (digits only, country code first, no + no spaces — wa.me format)
-export const WHATSAPP_NUMBER = "917018288734";
+export const WHATSAPP_NUMBER = "+917018288734";
 
-export const COMPANY_EMAIL = "nr.industries2012@gmail.com";
+export const COMPANY_EMAIL = "info@nrenergy.in";
 export const COMPANY_WEBSITE_DISPLAY = "www.nrindustriespower.in";
 
 export const COMPANY_ADDRESS_LINES = [
@@ -47,8 +49,8 @@ export function buildWhatsAppLink(message: string): string {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
-export function buildTelLink(): string {
-  return `tel:${COMPANY_PHONE_TEL}`;
+export function buildTelLink(number: string = COMPANY_PHONE_TEL): string {
+  return `tel:${number}`;
 }
 
 export function buildMailtoLink(subject?: string): string {

@@ -17,12 +17,12 @@ export const aboutFull = [
 export const visionStatement =
   "To be a global leader in power distribution technology, setting benchmarks in quality, innovation, and sustainability, while empowering industries and communities worldwide — backed by the best calibration and certification standards.";
 
-  export const infrastructurePoints = [
-    "A world-class manufacturing facility equipped with advanced machinery and precision testing equipment",
-    "Dedicated in-house testing and R&D, ensuring every product is validated before it leaves the facility",
-    "ISO-certified operations upheld across every stage of manufacturing",
-    "A skilled, experienced workforce supported by organized logistics for reliable, on-time delivery worldwide",
-  ];
+export const infrastructurePoints = [
+  "A world-class manufacturing facility equipped with advanced machinery and precision testing equipment",
+  "Dedicated in-house testing and R&D, ensuring every product is validated before it leaves the facility",
+  "ISO-certified operations upheld across every stage of manufacturing",
+  "A skilled, experienced workforce supported by organized logistics for reliable, on-time delivery worldwide",
+];
 
 export const whyChooseUs: DifferentiatorItem[] = [
   {
@@ -50,7 +50,6 @@ export const whyChooseUs: DifferentiatorItem[] = [
 export const certifications: Certification[] = [
   { code: "ISO", label: "ISO 9001:2015", logoSrc: "/certifications/iso.png" },
   { code: "BIS", label: "BIS Certification", logoSrc: "/certifications/bis.png" },
-  { code: "IS", label: "IS:1180 Certified", logoSrc: "/certifications/is-1180.png" },
   { code: "ERDA", label: "ERDA", logoSrc: "/certifications/erda.png" },
   { code: "NABL", label: "NABL", logoSrc: "/certifications/nabl.png" },
   { code: "UN", label: "United Nations Global Marketplace", logoSrc: "/certifications/un.png" },
@@ -81,62 +80,77 @@ export const industries: IndustryItem[] = [
   {
     name: "Food Industry",
     description: "Reliable power for continuous processing and cold-chain operations.",
+    imageSrc: "/industries/food-industry.jpg",
   },
   {
     name: "Paper Industry",
     description: "Stable supply for high-load pulping and paper production lines.",
+    imageSrc: "/industries/paper-industry.jpg",
   },
   {
     name: "Plastic Industry",
     description: "Consistent voltage for extrusion and molding equipment.",
+    imageSrc: "/industries/plastic-industry.avif",
   },
   {
     name: "Foundry",
     description: "Heavy-duty transformers built for furnace and casting loads.",
+    imageSrc: "/industries/foundry.jpg",
   },
   {
     name: "Solar Power Plants",
     description: "Inverter duty transformers matched to grid integration requirements.",
+    imageSrc: "/industries/solar-power-plants.jpg",
   },
   {
     name: "Power Plant",
     description: "Power transformers for generation and primary distribution circuits.",
+    imageSrc: "/industries/power-plant.webp",
   },
   {
     name: "Water Treatment",
     description: "Dependable supply for pumping and treatment infrastructure.",
+    imageSrc: "/industries/water-treatment.jpg",
   },
   {
     name: "Refinery",
     description: "Robust equipment engineered for demanding industrial environments.",
+    imageSrc: "/industries/refinery.jpg",
   },
   {
     name: "Chemical Industry",
     description: "Durable transformers suited to continuous-process facilities.",
+    imageSrc: "/industries/chemical-industry.jpg",
   },
   {
     name: "Windmill Power Projects",
     description: "Transformers engineered for renewable generation applications.",
+    imageSrc: "/industries/windmill-power-projects.jpg",
   },
   {
     name: "Rice Industry",
     description: "Steady power for milling and processing operations.",
+    imageSrc: "/industries/rice-industry.webp",
   },
   {
     name: "Textile Industry",
     description: "Consistent supply for spinning, weaving, and finishing lines.",
+    imageSrc: "/industries/textile-industry.webp",
   },
   {
     name: "Cement Industry",
     description: "Heavy industrial-grade transformers for continuous plant operation.",
+    imageSrc: "/industries/cement-industry.jpg",
   },
   {
     name: "Pharma Industry",
     description: "Reliable, standards-compliant power for regulated manufacturing.",
+    imageSrc: "/industries/pharma-industry.webp",
   },
   {
     name: "Hydro Projects",
     description: "Equipment suited to generation and distribution in hydro installations.",
+    imageSrc: "/industries/hydro-projects.jpg",
   },
 ];
 

@@ -14,19 +14,21 @@ const CHARACTERS: Character[] = [
   {
     id: "navy-tall",
     color: "var(--color-navy-800)",
-    path: "M10 140 C10 60 30 10 55 10 C80 10 100 60 100 140 Z",
+    // Sharp rectangle
+    path: "M15 10 L95 10 L95 140 L15 140 Z",
     width: 110,
     height: 150,
     eyes: [
-      { cx: 45, cy: 55 },
-      { cx: 65, cy: 55 },
+      { cx: 42, cy: 45 },
+      { cx: 68, cy: 45 },
     ],
     eyeRadius: 5,
   },
   {
     id: "gold-round",
     color: "var(--color-gold-500)",
-    path: "M15 130 C15 70 40 30 70 30 C100 30 115 70 115 130 Z",
+    // Semicircle: flat bottom, round top
+    path: "M15 130 L15 65 A50 50 0 0 1 115 65 L115 130 Z",
     width: 130,
     height: 140,
     eyes: [
@@ -38,24 +40,26 @@ const CHARACTERS: Character[] = [
   {
     id: "navy-dome",
     color: "var(--color-navy-600)",
-    path: "M5 120 C5 60 30 20 60 20 C90 20 115 60 115 120 Z",
+    // Fat rectangle, medium size, sharp corners
+    path: "M5 25 L115 25 L115 120 L5 120 Z",
     width: 120,
     height: 130,
     eyes: [
-      { cx: 45, cy: 60 },
-      { cx: 75, cy: 60 },
+      { cx: 42, cy: 58 },
+      { cx: 78, cy: 58 },
     ],
     eyeRadius: 5,
   },
   {
     id: "gold-short",
     color: "var(--color-gold-600)",
-    path: "M10 110 C10 55 30 15 55 15 C80 15 100 55 100 110 Z",
+    // Sharp triangle
+    path: "M52 15 L100 110 L5 110 Z",
     width: 105,
     height: 120,
     eyes: [
-      { cx: 40, cy: 50 },
-      { cx: 65, cy: 50 },
+      { cx: 40, cy: 78 },
+      { cx: 65, cy: 78 },
     ],
     eyeRadius: 4,
   },

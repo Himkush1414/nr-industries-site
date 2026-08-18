@@ -162,9 +162,9 @@ export function HomePage() {
           </Reveal>
           <Reveal>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              {industries.map((industry) => (
-                <IndustryIconChip key={industry.name} name={industry.name} />
-              ))}
+            {industries.map((industry, i) => (
+                  <IndustryIconChip key={industry.name} industry={industry} index={i} />
+                ))}
             </div>
           </Reveal>
           <Reveal className="flex justify-center">

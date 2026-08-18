@@ -26,6 +26,8 @@ export interface Certification {
 export interface IndustryItem {
   name: string;
   description: string;
+  /** Path to a real photo under /public/industries. Falls back to the icon-only treatment if omitted. */
+  imageSrc?: string;
 }
 
 export interface ClientItem {

@@ -5,7 +5,7 @@ interface Stat {
 
 const stats: Stat[] = [
   { value: "12.5 MVA", label: "Max Transformer Capacity" },
-  { value: "33 kV", label: "Max Voltage Class" },
+  { value: "66 kV", label: "Max Voltage Class" },
   { value: "9", label: "Product Lines" },
   { value: "15", label: "Industries Served" },
 ];

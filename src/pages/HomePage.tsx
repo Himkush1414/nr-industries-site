@@ -11,7 +11,6 @@ import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StatStrip } from "@/components/StatStrip";
-import { COMPANY_NAME } from "@/config/contact";
 import { industries, whyChooseUs } from "@/data/company";
 import { products } from "@/data/products";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";

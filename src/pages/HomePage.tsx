@@ -26,8 +26,8 @@ export function HomePage() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[calc(92vh-70px)] flex-col justify-center overflow-hidden bg-navy-950">
-          <img
-            src="/hero-home.jpg"
+        <img
+          src="/hero-home.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center"
           decoding="async"
@@ -40,13 +40,14 @@ export function HomePage() {
         <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
 
         <div className="container-page relative flex flex-col gap-10 py-24">
-          <div className="flex max-w-3xl flex-col gap-6">
+          <Reveal className="flex max-w-3xl flex-col gap-6">
             <span className="flex items-center gap-2 text-xs font-semibold tracking-[0.22em] text-gold-400 uppercase">
               <span className="h-px w-8 bg-gold-400" aria-hidden="true" />
               Power &amp; Distribution Equipment Manufacturer
             </span>
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white uppercase sm:text-6xl lg:text-7xl">
-              {COMPANY_NAME}
+            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+              <span className="uppercase">N R</span>{" "}
+              <span className="text-gold-400 uppercase">Industries</span>
             </h1>
             <p className="font-heading text-xl font-semibold text-gold-400 sm:text-2xl">
               Power at Best
@@ -56,26 +57,27 @@ export function HomePage() {
               Voltage Stabilizers, and HT &amp; LT Panels — engineered for industrial, commercial,
               and utility-scale power distribution.
             </p>
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-5 pt-2">
               <Link
                 to="/products"
-                className="inline-flex items-center gap-2 rounded bg-gold-500 px-6 py-3.5 text-sm font-semibold tracking-wide text-navy-950 transition-colors duration-150 hover:bg-gold-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="inline-flex items-center gap-2 rounded bg-gold-500 px-7 py-4 text-sm font-semibold tracking-wide text-navy-950 shadow-lg shadow-gold-900/20 transition-all duration-150 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 View Our Products
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded border border-white/35 px-6 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors duration-150 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/90 transition-colors duration-150 hover:text-gold-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Contact Us
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="border-t border-white/10 pt-8">
+          <Reveal delayMs={150}>
             <StatStrip />
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -118,16 +120,16 @@ export function HomePage() {
             />
           </Reveal>
           <div className="flex flex-col gap-16 pt-6 sm:gap-20">
-          {whyChooseUs.map((item, i) => (
-                <FeatureRow
-                  key={item.title}
-                  title={item.title}
-                  description={item.description}
-                  imageLabel={item.title}
-                  imageSrc={item.imageSrc}
-                  reverse={i % 2 === 1}
-                />
-              ))}
+            {whyChooseUs.map((item, i) => (
+              <FeatureRow
+                key={item.title}
+                title={item.title}
+                description={item.description}
+                imageLabel={item.title}
+                imageSrc={item.imageSrc}
+                reverse={i % 2 === 1}
+              />
+            ))}
           </div>
         </div>
       </section>

@@ -1,6 +1,5 @@
-﻿import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
-import { EyesFollowCursor } from "@/components/EyesFollowCursor";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
@@ -123,9 +122,6 @@ export function ContactPage() {
             </p>
             <div className="mt-6">
               <ContactForm />
-            </div>
-            <div className="mt-6 flex-1 rounded bg-navy-50">
-              <EyesFollowCursor />
             </div>
           </Reveal>
         </div>

@@ -17,7 +17,7 @@ export function AboutPage() {
         eyebrow="About Us"
         title="Decades of experience in power distribution"
         description="Manufacturer of high-performance transformers and power distribution equipment, built for reliability across small installations and large industrial projects alike."
-        backgroundImage="/hero-factory.png"
+        backgroundImage="/hero-factory.webp"
         tickerItems={[
           ...infrastructurePoints,
           ...whyChooseUs.map((item) => item.title),
@@ -33,7 +33,7 @@ export function AboutPage() {
               label="N R Industries manufacturing facility"
               aspectRatio="video"
               className="rounded"
-              src="/about-2.jpg"
+              src="/about-2.webp"
             />
           </Reveal>
           <Reveal className="flex flex-col gap-4">
@@ -90,7 +90,7 @@ export function AboutPage() {
       {/* Parallax window — this section is a transparent cutout revealing a fixed background photo pinned behind the whole page, independent of the sections above/below it. (Note: background-attachment: fixed doesn't work on iOS Safari; it degrades to a normal scrolling image there.) */}
       <section
         className="relative mt-[110px] flex h-[70vh] min-h-[420px] items-end bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('/about-parallax.jpg')" }}
+        style={{ backgroundImage: "url('/about-parallax.webp')" }}
       >
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-950/60 via-navy-950/40 to-navy-950/70"

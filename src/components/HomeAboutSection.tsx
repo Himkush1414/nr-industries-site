@@ -5,15 +5,15 @@ import { SectionHeading } from "@/components/SectionHeading";
 
 const ABOUT_STEPS = [
   {
-    image: "/about-1.jpg",
+    image: "/about-1.webp",
     imageAlt: "N R Industries manufacturing facility",
   },
   {
-    image: "/about-2.jpg",
+    image: "/about-2.webp",
     imageAlt: "N R Industries power equipment production",
   },
   {
-    image: "/about-3.jpg",
+    image: "/about-3.webp",
     imageAlt: "N R Industries transformer solutions",
   },
 ] as const;

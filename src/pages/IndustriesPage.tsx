@@ -16,7 +16,7 @@ export function IndustriesPage() {
         eyebrow="Industries We Serve"
         title="Powering every sector"
         description="From heavy industry to renewable energy, our transformers and power distribution equipment are built for the demands of each sector we serve."
-        backgroundImage="/industries-hero-bg.jpg"
+        backgroundImage="/industries-hero-bg.webp"
         tickerItems={industries.map((industry) => industry.name)}
         tickerLabel="Industries we serve"
       />

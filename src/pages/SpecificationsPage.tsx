@@ -18,7 +18,7 @@ export function SpecificationsPage() {
         eyebrow="Technical Specifications"
         title="Specifications & production capacity"
         description="Standard technical parameters across our transformer range, along with annual production capacity by rating."
-        backgroundImage="/products/all-products-bg.jpg"
+        backgroundImage="/products/all-products-bg.webp"
         tickerItems={[
           ...technicalSpecs.map((spec) => `${spec.label}: ${spec.value}`),
           ...productionCapacity.map((row) => `${row.rating} — ${row.unitsPerAnnum}`),

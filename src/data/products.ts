@@ -19,8 +19,8 @@ export const products: Product[] = [
       "Steps up or down voltages, enabling efficient power transmission and distribution",
       "Built with high-class sturdy, robust material for better performance in harsh weather conditions",
     ],
-    mainImageSrc: "/products/power-transformers-main.png",
-    backgroundImageSrc: "/products/power-transformers-bg.jpg",
+    mainImageSrc: "/products/power-transformers-main.webp",
+    backgroundImageSrc: "/products/power-transformers-bg.webp",
   },
   {
     slug: "distribution-transformers",
@@ -39,8 +39,8 @@ export const products: Product[] = [
       "Adequate ducts between layers, coils, and discs for maximum oil flow and reduced hot spot temperature",
       "Pre-compressed insulation material for minimal moisture absorption",
     ],
-    mainImageSrc: "/products/distribution-transformers-main.png",
-    backgroundImageSrc: "/products/distribution-transformers-bg.jpg",
+    mainImageSrc: "/products/distribution-transformers-main.webp",
+    backgroundImageSrc: "/products/distribution-transformers-bg.webp",
   },
   {
     slug: "solar-inverter-duty-transformers",
@@ -58,8 +58,8 @@ export const products: Product[] = [
       "Available in Mineral Oil or Silicone Oil, or as per requirement, with Electrolytic Grade Copper winding",
       "Low loss CRGO Silicon steel core, step-lap construction, and mitered joints designed for extreme supply variations and ambient temperature",
     ],
-    mainImageSrc: "/products/solar-inverter-duty-transformers-main.png",
-    backgroundImageSrc: "/products/solar-inverter-duty-transformers-bg.jpg",
+    mainImageSrc: "/products/solar-inverter-duty-transformers-main.webp",
+    backgroundImageSrc: "/products/solar-inverter-duty-transformers-bg.webp",
   },
   {
     slug: "furnace-transformers",
@@ -78,8 +78,8 @@ export const products: Product[] = [
       "Efficient oil or water cooling mechanisms to maintain optimal performance under high load",
       "Minimizes power losses, ensuring reliable and cost-effective operation",
     ],
-    mainImageSrc: "/products/furnace-transformers-main.png",
-    backgroundImageSrc: "/products/furnace-transformers-bg.jpg",
+    mainImageSrc: "/products/furnace-transformers-main.webp",
+    backgroundImageSrc: "/products/furnace-transformers-bg.webp",
   },
   {
     slug: "servo-voltage-stabilizer",
@@ -99,8 +99,8 @@ export const products: Product[] = [
       "Reverse phase sequence protection for 3-phase stabilizers",
       "Built-in spike suppressor with audio-visual alarm",
     ],
-    mainImageSrc: "/products/servo-voltage-stabilizer-main.png",
-    backgroundImageSrc: "/products/servo-voltage-stabilizer-bg.jpg",
+    mainImageSrc: "/products/servo-voltage-stabilizer-main.webp",
+    backgroundImageSrc: "/products/servo-voltage-stabilizer-bg.webp",
   },
   {
     slug: "ht-avr-transformer",
@@ -119,7 +119,7 @@ export const products: Product[] = [
       "Stabilized LT output delivered at ±1% accuracy",
       "Single product replaces a separate two-part regulation setup",
     ],
-    mainImageSrc: "/products/ht-avr-transformer-main.png",
+    mainImageSrc: "/products/ht-avr-transformer-main.webp",
     backgroundImageSrc: "/products/ht-avr-transformer-bg.webp",
   },
   {
@@ -139,7 +139,7 @@ export const products: Product[] = [
       "Long operational lifespan under continuous duty",
       "Compact, quiet design suited to densely populated or indoor sites",
     ],
-    mainImageSrc: "/products/dry-type-transformer-main.png",
+    mainImageSrc: "/products/dry-type-transformer-main.webp",
     backgroundImageSrc: "/products/dry-type-transformer-bg.webp",
   },
   {
@@ -158,8 +158,8 @@ export const products: Product[] = [
       "Quick installation with minimal ongoing maintenance",
       "Built for reliable performance in demanding operating environments",
     ],
-    mainImageSrc: "/products/compact-substation-main.png",
-    backgroundImageSrc: "/products/compact-substation-bg.jpg",
+    mainImageSrc: "/products/compact-substation-main.webp",
+    backgroundImageSrc: "/products/compact-substation-bg.webp",
   },
   {
     slug: "ht-lt-panels",
@@ -177,8 +177,8 @@ export const products: Product[] = [
       "RMUs: compact, gas-insulated switchgear for ring-type networks",
       "Built from high-quality materials to industrial standards",
     ],
-    mainImageSrc: "/products/ht-lt-panels-main.png",
-    backgroundImageSrc: "/products/ht-lt-panels-bg.jpg",
+    mainImageSrc: "/products/ht-lt-panels-main.webp",
+    backgroundImageSrc: "/products/ht-lt-panels-bg.webp",
   },
 ];
 

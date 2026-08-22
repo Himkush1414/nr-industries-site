@@ -44,6 +44,7 @@ export function PageHero({
               alt=""
               className="absolute inset-0 h-full w-full object-cover object-center"
               decoding="async"
+              fetchPriority="high"
             />
             <div
               className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-950/85 via-navy-950/70 to-navy-950/90"

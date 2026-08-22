@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { ContactCtaGroup } from "@/components/PhoneButton";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductSchema } from "@/components/ProductSchema";
 import { Reveal } from "@/components/Reveal";
 import { getProductBySlug, products } from "@/data/products";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -18,6 +19,9 @@ export function ProductDetailPage() {
     product
       ? `${product.tagline}. ${product.rangeLabel}: ${product.rangeValue}.`
       : "The requested product could not be found.",
+    product?.mainImageSrc
+      ? { image: `https://www.nrindustriespower.in${product.mainImageSrc}`, type: "product" }
+      : undefined,
   );
 
   if (!product) {
@@ -28,6 +32,8 @@ export function ProductDetailPage() {
 
   return (
     <>
+      <ProductSchema product={product} />
+
       {/* Header */}
       <section
         className="blueprint-grid relative overflow-hidden bg-navy-950 py-16 sm:py-20"

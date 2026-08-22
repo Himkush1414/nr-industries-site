@@ -66,7 +66,7 @@ export function Header() {
         {/* Logo */}
         <NavLink to="/" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt={COMPANY_NAME}
             width={248}
             height={44}

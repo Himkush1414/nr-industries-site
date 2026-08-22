@@ -26,7 +26,7 @@ export function HomePage() {
       {/* Hero */}
       <section className="relative flex min-h-[calc(92vh-70px)] flex-col justify-center overflow-hidden bg-navy-950">
         <img
-          src="/hero-home.jpg"
+          src="/hero-home.webp"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center"
           decoding="async"

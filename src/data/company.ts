@@ -35,76 +35,76 @@ export const whyChooseUs: DifferentiatorItem[] = [
     title: "International Standards",
     description:
       "Designed and manufactured to international standards for safety, efficiency, and reliability across every product line.",
-    imageSrc: "/industries/refinery.jpg",
+    imageSrc: "/industries/refinery.webp",
   },
   {
     title: "Expert Engineering & After-Sales Support",
     description:
       "An expert engineering team supports customers through consultation and dependable after-sales service.",
-    imageSrc: "/industries/solar-power-plants.jpg",
+    imageSrc: "/industries/solar-power-plants.webp",
   },
   {
     title: "Eco-Friendly Manufacturing",
     description:
       "Manufacturing practices oriented toward sustainability, without compromising on performance or durability.",
-    imageSrc: "/industries/windmill-power-projects.jpg",
+    imageSrc: "/industries/windmill-power-projects.webp",
   },
 ];
 
 export const certifications: Certification[] = [
-  { code: "ISO", label: "ISO 9001:2015", logoSrc: "/certifications/iso.png" },
-  { code: "BIS", label: "BIS Certification", logoSrc: "/certifications/bis.png" },
-  { code: "ERDA", label: "ERDA", logoSrc: "/certifications/erda.png" },
-  { code: "NABL", label: "NABL", logoSrc: "/certifications/nabl.png" },
-  { code: "UN", label: "United Nations Global Marketplace", logoSrc: "/certifications/un.png" },
-  { code: "BEE", label: "BEE (Energy is Life)", logoSrc: "/certifications/bee.png" },
-  { code: "CPRI", label: "CPRI Approved", logoSrc: "/certifications/cpri.png" },
+  { code: "ISO", label: "ISO 9001:2015", logoSrc: "/certifications/iso.webp" },
+  { code: "BIS", label: "BIS Certification", logoSrc: "/certifications/bis.webp" },
+  { code: "ERDA", label: "ERDA", logoSrc: "/certifications/erda.webp" },
+  { code: "NABL", label: "NABL", logoSrc: "/certifications/nabl.webp" },
+  { code: "UN", label: "United Nations Global Marketplace", logoSrc: "/certifications/un.webp" },
+  { code: "BEE", label: "BEE (Energy is Life)", logoSrc: "/certifications/bee.webp" },
+  { code: "CPRI", label: "CPRI Approved", logoSrc: "/certifications/cpri.webp" },
   { code: "MII", label: "Make in India" },
 ];
 
 export const clients: ClientItem[] = [
-  { name: "Reliance Jio", logoSrc: "/clients/reliance-jio.png" },
-  { name: "Mahindra Rise", logoSrc: "/clients/mahindra-rise.png" },
-  { name: "Nayara Energy", logoSrc: "/clients/nayara-energy.jpg" },
-  { name: "Essar", logoSrc: "/clients/essar.png" },
-  { name: "HP", logoSrc: "/clients/hp.png" },
-  { name: "Bharat Petroleum", logoSrc: "/clients/bharat-petroleum.png" },
-  { name: "Vodafone Idea", logoSrc: "/clients/vodafone-idea.png" },
-  { name: "Vishal Mega Mart", logoSrc: "/clients/vishal-mega-mart.png" },
+  { name: "Reliance Jio", logoSrc: "/clients/reliance-jio.webp" },
+  { name: "Mahindra Rise", logoSrc: "/clients/mahindra-rise.webp" },
+  { name: "Nayara Energy", logoSrc: "/clients/nayara-energy.webp" },
+  { name: "Essar", logoSrc: "/clients/essar.webp" },
+  { name: "HP", logoSrc: "/clients/hp.webp" },
+  { name: "Bharat Petroleum", logoSrc: "/clients/bharat-petroleum.webp" },
+  { name: "Vodafone Idea", logoSrc: "/clients/vodafone-idea.webp" },
+  { name: "Vishal Mega Mart", logoSrc: "/clients/vishal-mega-mart.webp" },
   { name: "LG", logoSrc: "/clients/lg.webp" },
-  { name: "Ford", logoSrc: "/clients/ford.png" },
-  { name: "Royal Enfield", logoSrc: "/clients/royal-enfield.png" },
-  { name: "PNB", logoSrc: "/clients/pnb.png" },
-  { name: "HDFC Bank", logoSrc: "/clients/hdfc-bank.png" },
-  { name: "Airtel", logoSrc: "/clients/airtel.png" },
-  { name: "SBPCL", logoSrc: "/clients/sbpcl.png" },
+  { name: "Ford", logoSrc: "/clients/ford.webp" },
+  { name: "Royal Enfield", logoSrc: "/clients/royal-enfield.webp" },
+  { name: "PNB", logoSrc: "/clients/pnb.webp" },
+  { name: "HDFC Bank", logoSrc: "/clients/hdfc-bank.webp" },
+  { name: "Airtel", logoSrc: "/clients/airtel.webp" },
+  { name: "SBPCL", logoSrc: "/clients/sbpcl.webp" },
 ];
 
 export const industries: IndustryItem[] = [
   {
     name: "Food Industry",
     description: "Reliable power for continuous processing and cold-chain operations.",
-    imageSrc: "/industries/food-industry.jpg",
+    imageSrc: "/industries/food-industry.webp",
   },
   {
     name: "Paper Industry",
     description: "Stable supply for high-load pulping and paper production lines.",
-    imageSrc: "/industries/paper-industry.jpg",
+    imageSrc: "/industries/paper-industry.webp",
   },
   {
     name: "Plastic Industry",
     description: "Consistent voltage for extrusion and molding equipment.",
-    imageSrc: "/industries/plastic-industry.avif",
+    imageSrc: "/industries/plastic-industry.webp",
   },
   {
     name: "Foundry",
     description: "Heavy-duty transformers built for furnace and casting loads.",
-    imageSrc: "/industries/foundry.jpg",
+    imageSrc: "/industries/foundry.webp",
   },
   {
     name: "Solar Power Plants",
     description: "Inverter duty transformers matched to grid integration requirements.",
-    imageSrc: "/industries/solar-power-plants.jpg",
+    imageSrc: "/industries/solar-power-plants.webp",
   },
   {
     name: "Power Plant",
@@ -114,22 +114,22 @@ export const industries: IndustryItem[] = [
   {
     name: "Water Treatment",
     description: "Dependable supply for pumping and treatment infrastructure.",
-    imageSrc: "/industries/water-treatment.jpg",
+    imageSrc: "/industries/water-treatment.webp",
   },
   {
     name: "Refinery",
     description: "Robust equipment engineered for demanding industrial environments.",
-    imageSrc: "/industries/refinery.jpg",
+    imageSrc: "/industries/refinery.webp",
   },
   {
     name: "Chemical Industry",
     description: "Durable transformers suited to continuous-process facilities.",
-    imageSrc: "/industries/chemical-industry.jpg",
+    imageSrc: "/industries/chemical-industry.webp",
   },
   {
     name: "Windmill Power Projects",
     description: "Transformers engineered for renewable generation applications.",
-    imageSrc: "/industries/windmill-power-projects.jpg",
+    imageSrc: "/industries/windmill-power-projects.webp",
   },
   {
     name: "Rice Industry",
@@ -144,7 +144,7 @@ export const industries: IndustryItem[] = [
   {
     name: "Cement Industry",
     description: "Heavy industrial-grade transformers for continuous plant operation.",
-    imageSrc: "/industries/cement-industry.jpg",
+    imageSrc: "/industries/cement-industry.webp",
   },
   {
     name: "Pharma Industry",
@@ -154,7 +154,7 @@ export const industries: IndustryItem[] = [
   {
     name: "Hydro Projects",
     description: "Equipment suited to generation and distribution in hydro installations.",
-    imageSrc: "/industries/hydro-projects.jpg",
+    imageSrc: "/industries/hydro-projects.webp",
   },
 ];
 

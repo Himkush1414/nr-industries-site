@@ -5,7 +5,7 @@ export interface Product {
   cardDescription: string;
   tagline: string;
   intro: string;
-  /** Label varies by product ("Power Range" vs "Voltage Range") â€” set per product. */
+  /** Label varies by product ("Power Range" vs "Voltage Range") — set per product. */
   rangeLabel: string;
   rangeValue: string;
   features: string[];

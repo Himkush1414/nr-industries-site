@@ -2,7 +2,7 @@ import { COMPANY_NAME } from "@/config/contact";
 import type { Product } from "@/types/content";
 
 // TODO: swap for the real production domain once it's connected (see COMPANY_WEBSITE_DISPLAY in config/contact.ts).
-const SITE_URL = "https://www.nrindustriespower.in";
+const SITE_URL = "https://nrpower.in";
 
 interface ProductSchemaProps {
   product: Product;

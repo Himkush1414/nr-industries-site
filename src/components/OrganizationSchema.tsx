@@ -6,7 +6,7 @@ import {
 } from "@/config/contact";
 
 // TODO: swap for the real production domain once it's connected (see COMPANY_WEBSITE_DISPLAY in config/contact.ts).
-const SITE_URL = "https://www.nrindustriespower.in";
+const SITE_URL = "https://nrpower.in";
 
 // Coordinates match the manufacturing facility pin used in COMPANY_GOOGLE_MAPS_EMBED_URL (config/contact.ts).
 const FACILITY_LATITUDE = 30.5055095;

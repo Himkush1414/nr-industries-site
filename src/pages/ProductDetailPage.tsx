@@ -20,7 +20,7 @@ export function ProductDetailPage() {
       ? `${product.tagline}. ${product.rangeLabel}: ${product.rangeValue}.`
       : "The requested product could not be found.",
     product?.mainImageSrc
-      ? { image: `https://www.nrindustriespower.in${product.mainImageSrc}`, type: "product" }
+      ? { image: `https://nrpower.in${product.mainImageSrc}`, type: "product" }
       : undefined,
   );
 

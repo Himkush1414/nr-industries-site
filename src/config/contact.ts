@@ -14,7 +14,7 @@ export const COMPANY_PHONE_TEL_2 = "+91 80919 30019";
 export const WHATSAPP_NUMBER = "+917018288734";
 
 export const COMPANY_EMAIL = "info@nrenergy.in";
-export const COMPANY_WEBSITE_DISPLAY = "www.nrindustriespower.in";
+export const COMPANY_WEBSITE_DISPLAY = "nrpower.in";
 
 export const COMPANY_ADDRESS_LINES = [
   "Vill. Rampur Banjaran, PO Dhaulakuan,",

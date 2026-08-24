@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 const SITE_NAME = "N R Industries";
 
 // TODO: swap for the real production domain once it's connected (see config/contact.ts COMPANY_WEBSITE_DISPLAY).
-const SITE_URL = "https://www.nrindustriespower.in";
+const SITE_URL = "https://nrpower.in";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/brand-logo.webp`;
 
 interface DocumentMetaOptions {

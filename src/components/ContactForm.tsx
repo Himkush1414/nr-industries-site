@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { AlertCircle, CheckCircle2, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Button } from "@/components/Button";
 import { supabase } from "@/lib/supabaseClient";
@@ -7,6 +7,14 @@ import {
   type ContactFormValues,
   validateContactForm,
 } from "@/utils/contactFormValidation";
+
+/** Fires the Google Ads conversion event for a completed contact form submission.
+ * Guarded so a slow-loading (or blocked) gtag.js never breaks the submit flow. */
+function trackContactConversion() {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "conversion", { send_to: "AW-18382965681/6fdFCN_PwuccELGX171E" });
+  }
+}
 
 const INITIAL_VALUES: ContactFormValues = { name: "", email: "", phone: "", message: "" };
 
@@ -82,30 +90,37 @@ export function ContactForm() {
 
     if (Object.keys(validationErrors).length > 0) {
       setIsSubmitted(false);
+      setSubmitError(null);
       return;
     }
 
     setIsSubmitting(true);
     setSubmitError(null);
+    setIsSubmitted(false);
 
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: values.name.trim(),
-      email: values.email.trim(),
-      phone: values.phone.trim(),
-      message: values.message.trim(),
-    });
+    try {
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: values.name.trim(),
+        email: values.email.trim(),
+        phone: values.phone.trim(),
+        message: values.message.trim(),
+      });
 
-    setIsSubmitting(false);
+      if (error) {
+        setSubmitError("Something went wrong. Please try again.");
+        return;
+      }
 
-    if (error) {
-      setSubmitError(
-        "Something went wrong sending your message. Please try again or contact us directly.",
-      );
-      return;
+      trackContactConversion();
+      setIsSubmitted(true);
+      setValues(INITIAL_VALUES);
+    } catch {
+      // Network failure or an unexpected thrown error — same user-facing message,
+      // and the finally block below still resets isSubmitting either way.
+      setSubmitError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitted(true);
-    setValues(INITIAL_VALUES);
   }
 
   return (
@@ -155,14 +170,21 @@ export function ContactForm() {
       </Button>
 
       {isSubmitted && (
-        <p role="status" className="text-sm font-medium text-navy-700">
-          Thank you — your message has been received. We'll get back to you shortly.
-        </p>
+        <div
+          role="status"
+          className="flex items-start gap-3 rounded border border-green-200 bg-green-50 p-4"
+        >
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-600" aria-hidden="true" />
+          <p className="text-sm font-medium text-green-800">
+            Thank you! We&apos;ll contact you soon.
+          </p>
+        </div>
       )}
       {submitError && (
-        <p role="alert" className="text-sm font-medium text-red-600">
-          {submitError}
-        </p>
+        <div role="alert" className="flex items-start gap-3 rounded border border-red-200 bg-red-50 p-4">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden="true" />
+          <p className="text-sm font-medium text-red-700">{submitError}</p>
+        </div>
       )}
     </form>
   );

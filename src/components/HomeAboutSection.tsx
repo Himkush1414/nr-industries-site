@@ -104,7 +104,7 @@ export function HomeAboutSection() {
             className="min-h-[28vh] py-6 sm:min-h-[32vh] lg:min-h-[38vh] lg:py-10"
           >
             <p
-              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out sm:text-lg ${
+              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out ${
                 isRevealed(1)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
@@ -123,7 +123,7 @@ export function HomeAboutSection() {
             className="min-h-[28vh] py-6 sm:min-h-[32vh] lg:min-h-[38vh] lg:py-10"
           >
             <p
-              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out sm:text-lg ${
+              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out ${
                 isRevealed(2)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
@@ -142,7 +142,7 @@ export function HomeAboutSection() {
             </p>
 
             <p
-              className={`mt-6 font-heading text-lg font-semibold text-navy-950 transition-all duration-500 ease-out sm:text-xl ${
+              className={`mt-6 font-heading text-lg font-semibold text-navy-950 transition-all duration-500 ease-out ${
                 isRevealed(2)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"

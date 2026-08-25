@@ -11,6 +11,21 @@
   --font-heading: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  /* Fluid type scale — every text-* utility scales continuously with viewport width
+     (375px -> 1536px) instead of jumping at breakpoints. Keeps text legible and
+     proportionate on narrow phones and on phones forcing a "Desktop site" viewport. */
+  --text-xs: clamp(0.75rem, 0.7298rem + 0.0861vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.8548rem + 0.0861vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.9596rem + 0.1723vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.0846rem + 0.1723vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1693rem + 0.3445vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.3789rem + 0.5168vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.7539rem + 0.5168vw, 2.25rem);
+  --text-4xl: clamp(2.25rem, 2.0078rem + 1.0336vw, 3rem);
+  --text-5xl: clamp(3rem, 2.5155rem + 2.0672vw, 4.5rem);
+  --text-6xl: clamp(3.5rem, 3.3385rem + 0.6891vw, 4rem);
+  --text-7xl: clamp(4rem, 3.677rem + 1.3781vw, 5rem);
+
   --color-navy-950: #060f1f;
   --color-navy-900: #0b1f3a;
   --color-navy-800: #102a4c;

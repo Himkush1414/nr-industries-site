@@ -55,7 +55,7 @@ export function AboutPage() {
               <span className="h-px w-6 bg-gold-400" aria-hidden="true" />
               Our Vision
             </span>
-            <p className="font-heading text-2xl leading-snug font-semibold text-white sm:text-3xl">
+            <p className="font-heading text-2xl leading-snug font-semibold text-white">
               {visionStatement}
             </p>
           </Reveal>

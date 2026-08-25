@@ -44,14 +44,14 @@ export function HomePage() {
               <span className="h-px w-8 bg-gold-400" aria-hidden="true" />
               Power &amp; Distribution Equipment Manufacturer
             </span>
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+            <h1 className="font-heading text-5xl font-bold tracking-tight text-white">
               <span className="uppercase">N R</span>{" "}
               <span className="text-gold-400 uppercase">Industries</span>
             </h1>
-            <p className="font-heading text-xl font-semibold text-gold-400 sm:text-2xl">
+            <p className="font-heading text-xl font-semibold text-gold-400">
               Power at Best
             </p>
-            <p className="max-w-2xl text-base leading-relaxed text-navy-100/85 sm:text-lg">
+            <p className="max-w-2xl text-base leading-relaxed text-navy-100/85">
               Manufacturer of Power &amp; Distribution Transformers, Compact Substations, Servo
               Voltage Stabilizers, and HT &amp; LT Panels — engineered for industrial, commercial,
               and utility-scale power distribution.
@@ -108,7 +108,7 @@ export function HomePage() {
       </section>
 
       {/* Why choose us — alternating feature rows */}
-      <section className="py-20 sm:py-24">
+      <section id="why-choose-us" className="py-20 sm:py-24">
         <div className="container-page flex flex-col gap-8">
           <Reveal>
             <SectionHeading

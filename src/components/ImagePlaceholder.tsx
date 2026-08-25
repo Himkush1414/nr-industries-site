@@ -37,7 +37,7 @@ export function ImagePlaceholder({
         src={src}
         alt={label}
         loading="lazy"
-        className={`object-cover ${ASPECT_CLASS[aspectRatio]} ${className}`}
+        className={`w-full object-cover ${ASPECT_CLASS[aspectRatio]} ${className}`}
       />
     );
   }

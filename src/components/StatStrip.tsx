@@ -21,7 +21,7 @@ export function StatStrip() {
           <dt className="order-2 text-[11px] font-semibold tracking-[0.12em] text-navy-100/60 uppercase">
             {stat.label}
           </dt>
-          <dd className="order-1 font-heading text-3xl font-bold text-gold-400 sm:text-4xl">
+          <dd className="order-1 font-heading text-3xl font-bold text-gold-400">
             {stat.value}
           </dd>
         </div>

@@ -32,7 +32,7 @@ export const COMPANY_GOOGLE_MAPS_URL =
 export const COMPANY_GOOGLE_MAPS_EMBED_URL =
   "https://maps.google.com/maps?q=30.5055095,77.4832492&z=17&hl=en&output=embed";
 
-export const COMPANY_NAME = "N R Industries";
+export const COMPANY_NAME = "NR Industries";
 export const COMPANY_TAGLINE = "Power at Best";
 
 /** Generic (non-product) WhatsApp inquiry message, used on the Contact page. */

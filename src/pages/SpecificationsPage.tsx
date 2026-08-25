@@ -40,14 +40,16 @@ export function SpecificationsPage() {
           </Reveal>
 
           <Reveal>
-            <SectionHeading
-              eyebrow="Manufacturing Scale"
-              title="Production Capacity"
-              subtitle="Annual production capacity by transformer rating."
-              as="h2"
-            />
-            <div className="mt-6">
-              <ProductionCapacityChart rows={productionCapacity} />
+            <div id="production-capacity">
+              <SectionHeading
+                eyebrow="Manufacturing Scale"
+                title="Production Capacity"
+                subtitle="Annual production capacity by transformer rating."
+                as="h2"
+              />
+              <div className="mt-6">
+                <ProductionCapacityChart rows={productionCapacity} />
+              </div>
             </div>
           </Reveal>
         </div>

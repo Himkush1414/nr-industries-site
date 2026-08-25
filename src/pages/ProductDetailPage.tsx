@@ -57,10 +57,10 @@ export function ProductDetailPage() {
             </span>
             <span className="text-navy-100/85">{product.name}</span>
           </nav>
-          <h1 className="max-w-3xl font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="max-w-3xl font-heading text-4xl font-bold tracking-tight text-white">
             {product.name}
           </h1>
-          <p className="max-w-2xl text-base leading-relaxed text-gold-400 sm:text-lg">
+          <p className="max-w-2xl text-base leading-relaxed text-gold-400">
             {product.tagline}
           </p>
         </div>
@@ -99,7 +99,7 @@ export function ProductDetailPage() {
         <section className="bg-navy-50 py-16 sm:py-20">
           <div className="container-page flex flex-col gap-10">
             <Reveal>
-              <h2 className="font-heading text-2xl font-bold text-navy-950 sm:text-3xl">
+              <h2 className="font-heading text-2xl font-bold text-navy-950">
                 Key Features
               </h2>
             </Reveal>
@@ -121,7 +121,7 @@ export function ProductDetailPage() {
       <section className="py-16 sm:py-20">
         <div className="container-page flex flex-col gap-10">
           <Reveal>
-            <h2 className="font-heading text-2xl font-bold text-navy-950 sm:text-3xl">
+            <h2 className="font-heading text-2xl font-bold text-navy-950">
               Explore Other Products
             </h2>
           </Reveal>

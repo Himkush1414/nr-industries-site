@@ -35,7 +35,7 @@ export function FeatureRow({
             {eyebrow}
           </span>
         )}
-        <h3 className="font-heading text-2xl font-bold text-navy-950 sm:text-3xl">{title}</h3>
+        <h3 className="font-heading text-2xl font-bold text-navy-950">{title}</h3>
         <p className="text-base leading-relaxed text-ink-500">{description}</p>
         {children}
       </div>

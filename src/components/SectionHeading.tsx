@@ -32,7 +32,7 @@ export function SectionHeading({
         </span>
       )}
       <Heading
-        className={`font-heading text-3xl font-bold tracking-tight sm:text-4xl ${
+        className={`font-heading text-3xl font-bold tracking-tight ${
           light ? "text-white" : "text-navy-950"
         }`}
       >

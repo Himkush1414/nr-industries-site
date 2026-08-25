@@ -61,11 +61,11 @@ export function PageHero({
             <span className="h-px w-6 bg-gold-400" aria-hidden="true" />
             {eyebrow}
           </span>
-          <h1 className="max-w-3xl font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1 className="max-w-3xl font-heading text-4xl font-bold tracking-tight text-white">
             {title}
           </h1>
           {description && (
-            <p className="max-w-2xl text-base leading-relaxed text-navy-100/85 sm:text-lg">
+            <p className="max-w-2xl text-base leading-relaxed text-navy-100/85">
               {description}
             </p>
           )}

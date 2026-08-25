@@ -41,13 +41,13 @@ export function TickerMarquee({
       aria-label={ariaLabel}
     >
       <div
-        className={`flex h-[20px] w-max items-center animate-marquee gap-4 hover:[animation-play-state:paused] sm:h-[22px] sm:gap-6 md:h-[25px] md:gap-8 ${directionClass}`}
+        className={`flex h-[clamp(20px,18.385px+0.4307vw,25px)] w-max items-center animate-marquee gap-[clamp(16px,10.832px+1.3781vw,32px)] hover:[animation-play-state:paused] ${directionClass}`}
         style={{ animationDuration: `${durationSeconds}s` }}
       >
         {track.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className={`flex shrink-0 items-center gap-4 text-[8px] font-semibold tracking-[0.12em] uppercase leading-none sm:gap-6 sm:text-[10px] sm:tracking-[0.16em] md:gap-8 md:text-[11px] md:tracking-[0.18em] ${styles.text}`}
+            className={`flex shrink-0 items-center gap-[clamp(16px,10.832px+1.3781vw,32px)] text-[clamp(0.5rem,0.4394rem+0.2584vw,0.6875rem)] font-semibold tracking-[clamp(0.12em,0.1em+0.03vw,0.18em)] uppercase leading-none ${styles.text}`}
           >
             <span>{item}</span>
             <span className={styles.dot} aria-hidden="true">·</span>

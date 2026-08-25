@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
-import { Reveal } from "@/components/Reveal";
+import { useInView } from "@/hooks/useInView";
 
 interface FeatureRowProps {
   eyebrow?: string;
@@ -23,8 +23,17 @@ export function FeatureRow({
   reverse = false,
   children,
 }: FeatureRowProps) {
+  const { ref, isInView } = useInView<HTMLDivElement>(0.25);
+
   return (
-    <Reveal className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <div
+      ref={ref}
+      className={`grid items-center gap-10 transition-all duration-700 ease-out lg:grid-cols-2 lg:gap-16 ${
+        isInView
+          ? "translate-y-0 opacity-100"
+          : "translate-y-6 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
+      }`}
+    >
       <div className={reverse ? "lg:order-2" : ""}>
         <ImagePlaceholder label={imageLabel} aspectRatio="video" className="rounded" src={imageSrc} />
       </div>
@@ -35,10 +44,31 @@ export function FeatureRow({
             {eyebrow}
           </span>
         )}
-        <h3 className="font-heading text-2xl font-bold text-navy-950">{title}</h3>
-        <p className="text-base leading-relaxed text-ink-500">{description}</p>
+        <div className="inline-block">
+          <h3
+            className={`font-heading text-2xl font-bold text-navy-950 transition-all duration-700 ease-out ${
+              isInView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+            }`}
+          >
+            {title}
+          </h3>
+          {/* Accent underline draws in just after the heading settles. */}
+          <span
+            aria-hidden="true"
+            className={`mt-2 block h-[3px] w-12 origin-left rounded-full bg-gradient-to-r from-gold-500 to-gold-300 transition-transform delay-200 duration-500 ease-out ${
+              isInView ? "scale-x-100" : "scale-x-0"
+            }`}
+          />
+        </div>
+        <p
+          className={`text-base leading-relaxed text-ink-500 transition-all delay-150 duration-700 ease-out ${
+            isInView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
+          }`}
+        >
+          {description}
+        </p>
         {children}
       </div>
-    </Reveal>
+    </div>
   );
 }

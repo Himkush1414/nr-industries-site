@@ -17,7 +17,15 @@
       "Bash(kill 2483 2502)",
       "Bash(chromium-cli --help)",
       "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/screenshot.mjs\" \".tmp-verify\")",
-      "Bash(kill 3116)"
+      "Bash(kill 3116)",
+      "Read(//mnt/c/Users/manik/Downloads/nr-industries-site-cleaned/**)",
+      "Read(//mnt/c/Users/manik/Downloads/**)",
+      "Bash(cat)",
+      "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/sample.mjs\")",
+      "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/clean-logos.mjs\")",
+      "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/convert-rest.mjs\")",
+      "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/verify2.mjs\")",
+      "Bash(\"/mnt/d/Program Files/nodejs/node.exe\" \".tmp-verify/test.mjs\")"
     ]
   }
 }

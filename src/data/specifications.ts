@@ -9,10 +9,10 @@ export const technicalSpecs: SpecRow[] = [
   { label: "Winding Material", value: "Copper / Aluminium" },
   { label: "Tapping Range", value: "As per customer demands" },
   { label: "Temperature Rise", value: "As per Indian Standards" },
-  { label: "Losses", value: "As per IS 1180 & Customer Demand" },
+  { label: "Losses", value: "As per IS 2026 and IS 1180" },
   { label: "Fitting & Accessories", value: "As per IS 1180 & Customer Demand" },
   { label: "Tap Changer", value: "Off Load / On Load Tap Changer" },
-  { label: "Voltage Class", value: "Up to 33 kV Class" },
+  { label: "Voltage Class", value: "Up to 66 kV Class" },
 ];
 
 export const productionCapacity: ProductionCapacityRow[] = [

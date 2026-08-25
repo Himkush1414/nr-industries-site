@@ -75,6 +75,7 @@ export function ProductDetailPage() {
               aspectRatio="video"
               className="rounded"
               src={product.mainImageSrc}
+              fit="contain"
             />
           </Reveal>
           <Reveal className="flex flex-col gap-6">
@@ -127,7 +128,7 @@ export function ProductDetailPage() {
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {relatedProducts.map((related, i) => (
-              <Reveal key={related.slug} delayMs={i * 40}>
+              <Reveal key={related.slug} delayMs={i * 40} className="h-full">
                 <ProductCard product={related} />
               </Reveal>
             ))}

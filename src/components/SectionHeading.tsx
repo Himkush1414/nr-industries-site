@@ -23,23 +23,30 @@ export function SectionHeading({
     <div className={`flex max-w-2xl flex-col gap-3 ${alignClass}`}>
       {eyebrow && (
         <span
-          className={`flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase ${
+          className={`flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase transition-colors duration-500 ${
             light ? "text-gold-400" : "text-gold-600"
           }`}
         >
-          <span className={`h-px w-6 ${light ? "bg-gold-400" : "bg-gold-600"}`} aria-hidden="true" />
+          <span
+            className={`h-px w-6 transition-colors duration-500 ${light ? "bg-gold-400" : "bg-gold-600"}`}
+            aria-hidden="true"
+          />
           {eyebrow}
         </span>
       )}
       <Heading
-        className={`font-heading text-3xl font-bold tracking-tight ${
+        className={`font-heading text-3xl font-bold tracking-tight transition-colors duration-500 ${
           light ? "text-white" : "text-navy-950"
         }`}
       >
         {title}
       </Heading>
       {subtitle && (
-        <p className={`text-base leading-relaxed ${light ? "text-navy-100/85" : "text-ink-500"}`}>
+        <p
+          className={`text-base leading-relaxed transition-colors duration-500 ${
+            light ? "text-navy-100/85" : "text-ink-500"
+          }`}
+        >
           {subtitle}
         </p>
       )}

@@ -1,4 +1,4 @@
-import { Boxes, Factory, Gauge, type LucideIcon, TrendingUp } from "lucide-react";
+import { Factory, Gauge, type LucideIcon, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
@@ -20,8 +20,8 @@ function parseUnits(value: string): number {
   return match ? Number(match[0]) : 0;
 }
 
-function formatNumber(value: number): string {
-  return Math.round(value).toLocaleString("en-IN");
+function formatNumber(value: number, decimals = 0): string {
+  return value.toLocaleString("en-IN", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 }
 
 /** Eases a number from 0 up to `target` once `active` flips true; jumps straight to the
@@ -57,13 +57,17 @@ function StatTile({
   icon: Icon,
   label,
   value,
+  prefix,
   suffix,
+  decimals = 0,
   active,
 }: {
   icon: LucideIcon;
   label: string;
   value: number;
+  prefix?: string;
   suffix?: string;
+  decimals?: number;
   active: boolean;
 }) {
   const display = useCountUp(value, active);
@@ -71,9 +75,10 @@ function StatTile({
   return (
     <div className="flex flex-col gap-1.5">
       <Icon className="h-5 w-5 text-gold-400" aria-hidden="true" />
-      <span className="font-heading text-2xl font-bold text-white">
-        {formatNumber(display)}
-        {suffix && <span className="ml-1 text-sm font-semibold text-navy-100/60">{suffix}</span>}
+      <span className="font-heading text-2xl font-bold text-white sm:text-3xl">
+        {prefix}
+        {formatNumber(display, decimals)}
+        {suffix && <span className="ml-1 text-base font-semibold text-navy-100/70">{suffix}</span>}
       </span>
       <span className="text-[11px] font-semibold tracking-[0.1em] text-navy-100/60 uppercase">
         {label}
@@ -135,25 +140,39 @@ export function ProductionCapacityChart({ rows }: ProductionCapacityChartProps) 
   const distribution = parsed.filter((row) => !row.rating.toUpperCase().includes("MVA"));
   const power = parsed.filter((row) => row.rating.toUpperCase().includes("MVA"));
 
-  const totalUnits = parsed.reduce((sum, row) => sum + row.units, 0);
-  const distributionTotal = distribution.reduce((sum, row) => sum + row.units, 0);
-  const powerTotal = power.reduce((sum, row) => sum + row.units, 0);
-
   return (
     <div ref={ref} className="overflow-hidden rounded-xl border border-ink-100 bg-white shadow-sm">
       <div className="relative overflow-hidden bg-navy-950 px-6 py-8 sm:px-10 sm:py-10">
         <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-20" aria-hidden="true" />
-        <div className="relative grid grid-cols-2 gap-6 sm:grid-cols-4">
-          <StatTile icon={Factory} label="Units / Year" value={totalUnits} active={isInView} />
+        <div
+          className="pointer-events-none absolute -top-20 -right-16 h-64 w-64 rounded-full bg-gold-400/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative grid grid-cols-1 gap-8 sm:grid-cols-3">
           <StatTile
-            icon={Boxes}
-            label="Distribution Class"
-            value={distributionTotal}
-            suffix="/yr"
+            icon={Factory}
+            label="Annual Capacity"
+            value={5000}
+            suffix="+ MVA"
             active={isInView}
           />
-          <StatTile icon={Gauge} label="Power Class" value={powerTotal} suffix="/yr" active={isInView} />
-          <StatTile icon={TrendingUp} label="Rating Classes" value={rows.length} active={isInView} />
+          <StatTile
+            icon={Zap}
+            label="Voltage Class"
+            value={66}
+            prefix="Up to "
+            suffix=" kV"
+            active={isInView}
+          />
+          <StatTile
+            icon={Gauge}
+            label="Max Rating"
+            value={12.5}
+            prefix="Up to "
+            suffix=" MVA"
+            decimals={1}
+            active={isInView}
+          />
         </div>
       </div>
 

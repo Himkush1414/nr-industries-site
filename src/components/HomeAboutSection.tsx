@@ -55,6 +55,22 @@ export function HomeAboutSection() {
 
   const isRevealed = (index: number) => revealedSteps.has(index);
 
+  /** Soft gradient-glass wash behind a step's text — fades and eases up into place
+   * rather than snapping in as a hard-edged panel, and stays translucent enough that
+   * it reads as an ambient highlight rather than a box stamped behind the copy. */
+  function StepPanel({ index }: { index: number }) {
+    return (
+      <span
+        aria-hidden="true"
+        className={`absolute -inset-x-4 -inset-y-3 rounded-2xl border border-gold-100 bg-gradient-to-br from-gold-100/70 via-navy-50/50 to-navy-100/50 shadow-[0_16px_40px_-24px_rgba(11,31,58,0.25)] backdrop-blur-sm transition-all duration-700 ease-out sm:-inset-x-6 sm:-inset-y-4 ${
+          isRevealed(index)
+            ? "translate-y-0 scale-100 opacity-100"
+            : "translate-y-2 scale-[0.97] opacity-0"
+        }`}
+      />
+    );
+  }
+
   return (
     <section className="relative py-20 sm:py-24">
       <div className="container-page grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
@@ -83,17 +99,20 @@ export function HomeAboutSection() {
             className="min-h-[28vh] py-6 sm:min-h-[32vh] lg:min-h-[38vh] lg:py-10"
           >
             <div
-              className={`transition-all duration-500 ease-out ${
+              className={`relative transition-all duration-500 ease-out ${
                 isRevealed(0)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
               }`}
             >
-              <SectionHeading
-                eyebrow="About Us"
-                title="Powering industries with reliable transformer solutions"
-                as="h2"
-              />
+              <StepPanel index={0} />
+              <div className="relative px-5 py-6 sm:px-7 sm:py-7">
+                <SectionHeading
+                  eyebrow="About Us"
+                  title="Powering industries with reliable transformer solutions"
+                  as="h2"
+                />
+              </div>
             </div>
           </div>
 
@@ -103,17 +122,20 @@ export function HomeAboutSection() {
             }}
             className="min-h-[28vh] py-6 sm:min-h-[32vh] lg:min-h-[38vh] lg:py-10"
           >
-            <p
-              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out ${
+            <div
+              className={`relative transition-all duration-500 ease-out ${
                 isRevealed(1)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
               }`}
             >
-              <strong className="font-semibold text-navy-950">N R Industries</strong> manufactures
-              reliable, high-performance transformers and voltage solutions for industrial and
-              commercial applications.
-            </p>
+              <StepPanel index={1} />
+              <p className="relative px-5 py-6 text-base leading-relaxed font-medium text-ink-700 sm:px-7 sm:py-7">
+                <strong className="font-semibold text-navy-950">N R Industries</strong> manufactures
+                reliable, high-performance transformers and voltage solutions for industrial and
+                commercial applications.
+              </p>
+            </div>
           </div>
 
           <div
@@ -122,46 +144,41 @@ export function HomeAboutSection() {
             }}
             className="min-h-[28vh] py-6 sm:min-h-[32vh] lg:min-h-[38vh] lg:py-10"
           >
-            <p
-              className={`text-base leading-relaxed font-medium text-ink-700 transition-all duration-500 ease-out ${
+            <div
+              className={`relative transition-all duration-500 ease-out ${
                 isRevealed(2)
                   ? "translate-y-0 opacity-100"
                   : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
               }`}
             >
-              From{" "}
-              <strong className="font-semibold text-navy-950">
-                Distribution and Power Transformers
-              </strong>{" "}
-              to{" "}
-              <strong className="font-semibold text-navy-950">
-                Furnace, Dry Type, Solar, Pad Mounted Transformers, HT-AVR Transformers, and Servo
-                Voltage Stabilizers
-              </strong>
-              , we provide solutions built for dependable performance.
-            </p>
+              <StepPanel index={2} />
+              <div className="relative px-5 py-6 sm:px-7 sm:py-7">
+                <p className="text-base leading-relaxed font-medium text-ink-700">
+                  From{" "}
+                  <strong className="font-semibold text-navy-950">
+                    Distribution and Power Transformers
+                  </strong>{" "}
+                  to{" "}
+                  <strong className="font-semibold text-navy-950">
+                    Furnace, Dry Type, Solar, Pad Mounted Transformers, HT-AVR Transformers, and
+                    Servo Voltage Stabilizers
+                  </strong>
+                  , we provide solutions built for dependable performance.
+                </p>
 
-            <p
-              className={`mt-6 font-heading text-lg font-semibold text-navy-950 transition-all duration-500 ease-out ${
-                isRevealed(2)
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-5 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
-              }`}
-            >
-              Quality products. On-time delivery. Reliable support.
-            </p>
+                <p className="mt-6 font-heading text-lg font-semibold text-navy-950">
+                  Quality products. On-time delivery. Reliable support.
+                </p>
 
-            <Link
-              to="/about"
-              className={`mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-800 transition-all duration-500 ease-out hover:text-gold-600 ${
-                isRevealed(2)
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-4 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
-              }`}
-            >
-              Learn More About Us
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+                <Link
+                  to="/about"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-navy-800 hover:text-gold-600"
+                >
+                  Learn More About Us
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

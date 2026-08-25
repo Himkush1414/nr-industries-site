@@ -79,10 +79,16 @@ export function Header() {
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           <NavItem to="/" label="Home" end />
 
-          <div ref={dropdownRef} className="relative">
+          <div
+            ref={dropdownRef}
+            className="relative"
+            onMouseEnter={() => setIsProductsOpen(true)}
+            onMouseLeave={() => setIsProductsOpen(false)}
+          >
             <button
               type="button"
               onClick={() => setIsProductsOpen((v) => !v)}
+              onFocus={() => setIsProductsOpen(true)}
               aria-expanded={isProductsOpen}
               aria-haspopup="true"
               className={`flex items-center gap-1 px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${

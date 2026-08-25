@@ -10,6 +10,13 @@ interface ImagePlaceholderProps {
   light?: boolean;
   /** Real photo path under /public. When provided, renders the photo instead of the pending placeholder. */
   src?: string;
+  /**
+   * "cover" (default) fills the frame, cropping to fit — right for full-bleed
+   * environmental/facility photos. "contain" fits the whole image inside the frame
+   * on a neutral backdrop — right for studio product shots where cropping would
+   * cut off part of the product.
+   */
+  fit?: "cover" | "contain";
 }
 
 const ASPECT_CLASS: Record<PlaceholderAspectRatio, string> = {
@@ -30,8 +37,17 @@ export function ImagePlaceholder({
   className = "",
   light = false,
   src,
+  fit = "cover",
 }: ImagePlaceholderProps) {
   if (src) {
+    if (fit === "contain") {
+      return (
+        <div className={`flex items-center justify-center bg-white p-4 ${ASPECT_CLASS[aspectRatio]} ${className}`}>
+          <img src={src} alt={label} loading="lazy" className="h-full w-full object-contain" />
+        </div>
+      );
+    }
+
     return (
       <img
         src={src}

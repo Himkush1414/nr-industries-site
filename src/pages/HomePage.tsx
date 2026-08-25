@@ -9,6 +9,7 @@ import { HomeAboutSection } from "@/components/HomeAboutSection";
 import { IndustryIconChip } from "@/components/IndustryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StatStrip } from "@/components/StatStrip";
 import { industries, whyChooseUs } from "@/data/company";
@@ -24,7 +25,7 @@ export function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[calc(92vh-70px)] flex-col justify-center overflow-hidden bg-navy-950">
+      <section className="relative flex min-h-[60vh] flex-col justify-center overflow-hidden bg-navy-950 sm:min-h-[72vh] lg:min-h-[calc(92vh-70px)]">
         <img
           src="/hero-home.webp"
           alt=""
@@ -38,7 +39,7 @@ export function HomePage() {
         />
         <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
 
-        <div className="container-page relative flex flex-col gap-10 py-24">
+        <div className="container-page relative flex flex-col gap-10 py-16 sm:py-20 lg:py-24">
           <Reveal className="flex max-w-3xl flex-col gap-6">
             <span className="flex items-center gap-2 text-xs font-semibold tracking-[0.22em] text-gold-400 uppercase">
               <span className="h-px w-8 bg-gold-400" aria-hidden="true" />
@@ -87,8 +88,8 @@ export function HomePage() {
       <HomeAboutSection />
 
       {/* Products */}
-      <section className="bg-navy-50 py-20 sm:py-24">
-        <div className="container-page flex flex-col gap-12">
+      <section className="bg-navy-50 py-16 sm:py-20">
+        <div className="container-page flex flex-col gap-10">
           <Reveal>
             <SectionHeading
               eyebrow="Our Products"
@@ -99,7 +100,7 @@ export function HomePage() {
           </Reveal>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product, i) => (
-              <Reveal key={product.slug} delayMs={i * 40}>
+              <Reveal key={product.slug} delayMs={i * 40} className="h-full">
                 <ProductCard product={product} />
               </Reveal>
             ))}
@@ -108,17 +109,17 @@ export function HomePage() {
       </section>
 
       {/* Why choose us — alternating feature rows */}
-      <section id="why-choose-us" className="py-20 sm:py-24">
+      <section id="why-choose-us" className="py-16 sm:py-20">
         <div className="container-page flex flex-col gap-8">
           <Reveal>
             <SectionHeading
               eyebrow="Why Choose Us"
               title="Engineered for performance and longevity"
               align="center"
-              subtitle="Every product is built to hold up under real operating conditions, backed by a team that stays involved after the sale."
+              subtitle="Every product is built to hold up under real operating conditions, backed by a team that stays involved after the sale. From material selection through in-house testing before dispatch, each transformer is engineered to the load, voltage, and environmental demands of the site it's headed for — not built to a generic spec sheet. It's the same approach that keeps our equipment running reliably in power plants, refineries, and utility networks across India."
             />
           </Reveal>
-          <div className="flex flex-col gap-16 pt-6 sm:gap-20">
+          <div className="flex flex-col gap-14 pt-4 sm:gap-16">
             {whyChooseUs.map((item, i) => (
               <FeatureRow
                 key={item.title}
@@ -134,8 +135,9 @@ export function HomePage() {
       </section>
 
       {/* Certifications */}
-      <section className="bg-navy-50 py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-8">
+      <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
+        <SectionBackdrop />
+        <div className="container-page relative flex flex-col gap-8">
           <Reveal>
             <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" />
           </Reveal>
@@ -146,10 +148,16 @@ export function HomePage() {
       </section>
 
       {/* Clients */}
-      <section className="py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-8">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <SectionBackdrop />
+        <div className="container-page relative flex flex-col gap-10">
           <Reveal>
-            <SectionHeading eyebrow="Trusted By" title="Clients across industries" align="center" />
+            <SectionHeading
+              eyebrow="Trusted By"
+              title="Clients across industries"
+              subtitle="From energy majors to national utilities, our equipment runs behind the scenes for organizations across sectors."
+              align="center"
+            />
           </Reveal>
           <Reveal>
             <ClientMarquee />
@@ -158,8 +166,9 @@ export function HomePage() {
       </section>
 
       {/* Industries */}
-      <section className="bg-navy-50 py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-8">
+      <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
+        <SectionBackdrop />
+        <div className="container-page relative flex flex-col gap-8">
           <Reveal>
             <SectionHeading eyebrow="Industries We Serve" title="Powering every sector" align="center" />
           </Reveal>

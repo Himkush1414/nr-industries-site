@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/PageHero";
 import { ProductionCapacityChart } from "@/components/ProductionCapacityChart";
 import { Reveal } from "@/components/Reveal";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SpecTable } from "@/components/SpecTable";
 import { productionCapacity, technicalSpecs } from "@/data/specifications";
@@ -14,7 +15,7 @@ export function SpecificationsPage() {
 
   return (
     <>
-           <PageHero
+      <PageHero
         eyebrow="Technical Specifications"
         title="Specifications & production capacity"
         description="Standard technical parameters across our transformer range, along with annual production capacity by rating."
@@ -26,8 +27,9 @@ export function SpecificationsPage() {
         tickerLabel="Technical specifications"
       />
 
-      <section className="py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-16">
+      <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
+        <SectionBackdrop />
+        <div className="container-page relative flex flex-col gap-16">
           <Reveal>
             <SectionHeading eyebrow="Standard Parameters" title="Technical Specifications" as="h2" />
             <div className="mt-6">

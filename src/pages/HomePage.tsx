@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CertificationMarquee } from "@/components/CertificationMarquee";
 import { ProductMarquee } from "@/components/ProductMarquee";
-import { CertificationsFlowBackground } from "@/components/CertificationsFlowBackground";
+import { AmbientFlowBackground } from "@/components/AmbientFlowBackground";
 import { CertificationStrip } from "@/components/CertificationStrip";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { FeatureRow } from "@/components/FeatureRow";
@@ -89,15 +89,23 @@ export function HomePage() {
 
       {/* Products */}
       <section className="bg-navy-50 py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-10">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Our Products"
-              title="A complete range of power equipment"
-              subtitle="From power plants to precision electronics, engineered products for every stage of the distribution network."
-              align="center"
-            />
-          </Reveal>
+        {/* Intro band only — ambient flow background stops here, not behind
+            the product cards below. */}
+        <div className="relative mb-10 overflow-hidden bg-navy-900 py-16 sm:mb-14 sm:py-20">
+          <AmbientFlowBackground />
+          <div className="container-page relative z-10">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Our Products"
+                title="A complete range of power equipment"
+                subtitle="From power plants to precision electronics, engineered products for every stage of the distribution network."
+                align="center"
+                light
+              />
+            </Reveal>
+          </div>
+        </div>
+        <div className="container-page">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product, i) => (
               <Reveal key={product.slug} delayMs={i * 40} className="h-full">
@@ -110,33 +118,39 @@ export function HomePage() {
 
       {/* Why choose us — alternating feature rows */}
       <section id="why-choose-us" className="py-16 sm:py-20">
-        <div className="container-page flex flex-col gap-8">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Why Choose Us"
-              title="Engineered for performance and longevity"
-              align="center"
-              subtitle="Every transformer is engineered to the load, voltage, and environmental demands of its site — validated through in-house testing, not a generic spec sheet. It's the standard trusted by power plants, refineries, and utility networks across India, backed by our team long after installation."
-            />
-          </Reveal>
-          <div className="flex flex-col gap-14 pt-4 sm:gap-16">
-            {whyChooseUs.map((item, i) => (
-              <FeatureRow
-                key={item.title}
-                title={item.title}
-                description={item.description}
-                imageLabel={item.title}
-                imageSrc={item.imageSrc}
-                reverse={i % 2 === 1}
+        {/* Intro band only — ambient flow background stops here, not behind
+            the rows below (each row has its own separate scroll-linked wipe). */}
+        <div className="relative mb-10 overflow-hidden bg-navy-900 py-16 sm:mb-14 sm:py-20">
+          <AmbientFlowBackground />
+          <div className="container-page relative z-10">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Why Choose Us"
+                title="Engineered for performance and longevity"
+                align="center"
+                subtitle="Every transformer is engineered to the load, voltage, and environmental demands of its site — validated through in-house testing, not a generic spec sheet. It's the standard trusted by power plants, refineries, and utility networks across India, backed by our team long after installation."
+                light
               />
-            ))}
+            </Reveal>
           </div>
+        </div>
+        <div className="container-page flex flex-col gap-14 sm:gap-16">
+          {whyChooseUs.map((item, i) => (
+            <FeatureRow
+              key={item.title}
+              title={item.title}
+              description={item.description}
+              imageLabel={item.title}
+              imageSrc={item.imageSrc}
+              reverse={i % 2 === 1}
+            />
+          ))}
         </div>
       </section>
 
       {/* Certifications */}
-      <section className="relative overflow-hidden bg-navy-900 py-16 sm:py-20">
-        <CertificationsFlowBackground />
+      <section className="relative mb-6 overflow-hidden bg-navy-900 py-16 sm:mb-8 sm:py-20">
+        <AmbientFlowBackground />
         <div className="container-page relative z-10 flex flex-col gap-8">
           <Reveal>
             <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" light />
@@ -148,14 +162,16 @@ export function HomePage() {
       </section>
 
       {/* Clients */}
-      <section className="relative overflow-hidden py-20 sm:py-28">
-        <div className="container-page relative flex flex-col gap-10">
+      <section className="relative overflow-hidden bg-navy-900 py-20 sm:py-28">
+        <AmbientFlowBackground />
+        <div className="container-page relative z-10 flex flex-col gap-10">
           <Reveal>
             <SectionHeading
               eyebrow="Trusted By"
               title="Clients across industries"
               subtitle="From energy majors to national utilities, our equipment runs behind the scenes for organizations across sectors."
               align="center"
+              light
             />
           </Reveal>
           <Reveal>

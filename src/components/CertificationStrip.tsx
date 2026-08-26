@@ -1,8 +1,13 @@
 import { ShieldCheck } from "lucide-react";
 import { certifications } from "@/data/company";
 
+interface CertificationStripProps {
+  /** Set true when rendering over a dark background — flips the code/label text to light tones. */
+  light?: boolean;
+}
+
 /** Real logos render where available; entries without one (e.g. Make in India) fall back to the icon placeholder. */
-export function CertificationStrip() {
+export function CertificationStrip({ light = false }: CertificationStripProps) {
   return (
     <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-8 lg:gap-5">
       {certifications.map((cert) => (
@@ -25,10 +30,14 @@ export function CertificationStrip() {
               <ShieldCheck className="h-8 w-8 text-navy-600" aria-hidden="true" />
             </div>
           )}
-          <span className="text-[11px] leading-tight font-semibold text-navy-950">
+          <span
+            className={`text-[11px] leading-tight font-semibold ${light ? "text-white" : "text-navy-950"}`}
+          >
             {cert.code}
           </span>
-          <span className="text-[10px] leading-tight text-ink-500">{cert.label}</span>
+          <span className={`text-[10px] leading-tight ${light ? "text-navy-100/80" : "text-ink-500"}`}>
+            {cert.label}
+          </span>
         </li>
       ))}
     </ul>

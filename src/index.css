@@ -53,6 +53,9 @@
   --animate-fade-up: fade-up 0.6s ease-out both;
   --animate-character-sway: character-sway 3.5s ease-in-out infinite;
   --animate-grow-up: grow-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-blob-drift-a: blob-drift-a 30s ease-in-out infinite;
+  --animate-blob-drift-b: blob-drift-b 38s ease-in-out infinite;
+  --animate-blob-drift-c: blob-drift-c 34s ease-in-out infinite;
 
   @keyframes marquee {
     from {
@@ -60,6 +63,45 @@
     }
     to {
       transform: translateX(-50%);
+    }
+  }
+  /* Slow, irregular drift paths for the Certifications section's ambient
+     background blobs — each blob is assigned a different one (plus its own
+     duration/delay) so the motion never reads as synchronized or mechanical. */
+  @keyframes blob-drift-a {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(6%, -8%) scale(1.15);
+    }
+    66% {
+      transform: translate(-5%, 6%) scale(0.9);
+    }
+  }
+  @keyframes blob-drift-b {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    40% {
+      transform: translate(-8%, 5%) scale(1.12);
+    }
+    75% {
+      transform: translate(7%, -4%) scale(0.92);
+    }
+  }
+  @keyframes blob-drift-c {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(5%, 9%) scale(1.2);
+    }
+    80% {
+      transform: translate(-6%, -5%) scale(0.95);
     }
   }
   @keyframes fade-up {

@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CertificationMarquee } from "@/components/CertificationMarquee";
 import { ProductMarquee } from "@/components/ProductMarquee";
+import { CertificationsFlowBackground } from "@/components/CertificationsFlowBackground";
 import { CertificationStrip } from "@/components/CertificationStrip";
 import { ClientMarquee } from "@/components/ClientMarquee";
 import { FeatureRow } from "@/components/FeatureRow";
@@ -134,13 +135,14 @@ export function HomePage() {
       </section>
 
       {/* Certifications */}
-      <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
-        <div className="container-page relative flex flex-col gap-8">
+      <section className="relative overflow-hidden bg-navy-900 py-16 sm:py-20">
+        <CertificationsFlowBackground />
+        <div className="container-page relative z-10 flex flex-col gap-8">
           <Reveal>
-            <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" />
+            <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" light />
           </Reveal>
           <Reveal>
-            <CertificationStrip />
+            <CertificationStrip light />
           </Reveal>
         </div>
       </section>

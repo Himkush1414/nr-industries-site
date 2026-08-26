@@ -115,7 +115,7 @@ export function HomePage() {
               eyebrow="Why Choose Us"
               title="Engineered for performance and longevity"
               align="center"
-              subtitle="Every product is built to hold up under real operating conditions, backed by a team that stays involved after the sale. From material selection through in-house testing before dispatch, each transformer is engineered to the load, voltage, and environmental demands of the site it's headed for — not built to a generic spec sheet. It's the same approach that keeps our equipment running reliably in power plants, refineries, and utility networks across India."
+              subtitle="Every transformer is engineered to the load, voltage, and environmental demands of its site — validated through in-house testing, not a generic spec sheet. It's the standard trusted by power plants, refineries, and utility networks across India, backed by our team long after installation."
             />
           </Reveal>
           <div className="flex flex-col gap-14 pt-4 sm:gap-16">

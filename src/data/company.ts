@@ -27,26 +27,23 @@ export const infrastructurePoints = [
 export const whyChooseUs: DifferentiatorItem[] = [
   {
     title: "Precision Engineering",
-    description:
-      "Precisely engineered products for superior performance and longevity, built to hold up under real operating conditions.",
+    description: "Engineered for peak performance and built to withstand real operating conditions.",
     imageSrc: "/industries/power-plant.webp",
   },
   {
     title: "International Standards",
     description:
-      "Designed and manufactured to international standards for safety, efficiency, and reliability across every product line.",
+      "Designed and manufactured to international standards — safety, efficiency, and reliability across every product line.",
     imageSrc: "/industries/refinery.webp",
   },
   {
     title: "Expert Engineering & After-Sales Support",
-    description:
-      "An expert engineering team supports customers through consultation and dependable after-sales service.",
+    description: "Our engineering team stays engaged from consultation through dependable after-sales support.",
     imageSrc: "/industries/solar-power-plants.webp",
   },
   {
     title: "Eco-Friendly Manufacturing",
-    description:
-      "Manufacturing practices oriented toward sustainability, without compromising on performance or durability.",
+    description: "Sustainable manufacturing practices that never compromise on performance or durability.",
     imageSrc: "/industries/windmill-power-projects.webp",
   },
 ];

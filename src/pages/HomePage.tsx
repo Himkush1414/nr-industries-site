@@ -9,7 +9,6 @@ import { HomeAboutSection } from "@/components/HomeAboutSection";
 import { IndustryIconChip } from "@/components/IndustryCard";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/Reveal";
-import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StatStrip } from "@/components/StatStrip";
 import { industries, whyChooseUs } from "@/data/company";
@@ -136,7 +135,6 @@ export function HomePage() {
 
       {/* Certifications */}
       <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
-        <SectionBackdrop />
         <div className="container-page relative flex flex-col gap-8">
           <Reveal>
             <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" />
@@ -149,7 +147,6 @@ export function HomePage() {
 
       {/* Clients */}
       <section className="relative overflow-hidden py-20 sm:py-28">
-        <SectionBackdrop />
         <div className="container-page relative flex flex-col gap-10">
           <Reveal>
             <SectionHeading
@@ -167,7 +164,6 @@ export function HomePage() {
 
       {/* Industries */}
       <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
-        <SectionBackdrop />
         <div className="container-page relative flex flex-col gap-8">
           <Reveal>
             <SectionHeading eyebrow="Industries We Serve" title="Powering every sector" align="center" />

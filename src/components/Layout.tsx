@@ -3,6 +3,11 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { OrganizationSchema } from "@/components/OrganizationSchema";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { AppointmentFab } from "@/experimental-ui/components/AppointmentFab";
+// Unscoped (.exp-appt-fab / .exp-modal-*) styles the fab + its modal need —
+// safe to load site-wide: every other rule in this file is scoped under
+// .exp-root, which only the Home page renders.
+import "@/experimental-ui/styles/experimental.css";
 
 export function Layout() {
   return (
@@ -27,6 +32,9 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+
+      {/* Fixed circular booking button — one instance, present on every route. */}
+      <AppointmentFab />
     </div>
   );
 }

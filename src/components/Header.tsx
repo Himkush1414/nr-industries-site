@@ -78,6 +78,7 @@ export function Header() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           <NavItem to="/" label="Home" end />
+          <NavItem to="/about" label="About" />
 
           <div
             ref={dropdownRef}
@@ -124,7 +125,7 @@ export function Header() {
             )}
           </div>
 
-          {NAV_LINKS.map((link) => (
+          {NAV_LINKS.slice(1).map((link) => (
             <NavItem key={link.to} {...link} />
           ))}
         </nav>

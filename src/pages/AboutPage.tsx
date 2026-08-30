@@ -85,7 +85,7 @@ export function AboutPage() {
         eyebrow="About Us"
         title="Decades of experience in power distribution"
         description="Manufacturer of high-performance transformers and power distribution equipment, built for reliability across small installations and large industrial projects alike."
-        backgroundImage="/hero-factory.webp"
+        backgroundImage="/why-choose-us/precision-engineering.jpeg"
         tickerItems={[
           ...infrastructurePoints,
           ...whyChooseUs.map((item) => item.title),
@@ -101,7 +101,7 @@ export function AboutPage() {
               label="N R Industries manufacturing facility"
               aspectRatio="video"
               className="rounded"
-              src="/about-2.webp"
+              src="/about-1.webp"
             />
           </Reveal>
           <Reveal className="flex flex-col gap-4 rounded-2xl border border-gold-100 bg-gradient-to-br from-gold-100/60 via-navy-50/40 to-navy-100/40 p-8 shadow-[0_16px_40px_-24px_rgba(11,31,58,0.2)] backdrop-blur-sm sm:p-10">
@@ -138,7 +138,7 @@ export function AboutPage() {
               label="Manufacturing infrastructure & testing facility"
               aspectRatio="video"
               className="rounded"
-              src="/products/dry-type-transformer-bg.webp"
+              src="/about-3.webp"
             />
           </Reveal>
           <Reveal className="flex flex-col gap-5 rounded-2xl border border-gold-100 bg-gradient-to-br from-gold-100/60 via-navy-50/40 to-navy-100/40 p-8 shadow-[0_16px_40px_-24px_rgba(11,31,58,0.2)] backdrop-blur-sm sm:p-10 lg:order-1">

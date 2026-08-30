@@ -1,0 +1,670 @@
+/*
+  Experimental UI — "Graphite + Molten Amber" (pass 5 — full replacement).
+
+  Scoped under .exp-root, imported only by the experimental-ui pages, so nothing
+  here loads when ACTIVE_HOMEPAGE_UI === "current".
+
+  Base:   confident warm charcoal-graphite for dark sections.
+  Accent: a single deep amber-orange (#d06c2e) — "molten metal / live power".
+  Light:  warm off-white / warm light-gray, never stark white.
+  Hero:   a bluish duotone wash over a blurred plant photo (the only place blue
+          appears — the accent stays amber everywhere else).
+
+  Section wrappers set context custom-properties (--fg, --hair, --surface, …)
+  via .exp-sec-dark / .exp-sec-light; components read those.
+*/
+
+.exp-root {
+  --exp-graphite: #191c22;
+  --exp-graphite-deep: #111318;
+  --exp-graphite-raised: #23262e;
+  --exp-graphite-line: #34383f;
+
+  --exp-accent: #d06c2e;
+  --exp-accent-bright: #e58a4a;
+  --exp-accent-deep: #a9531d;
+  --exp-accent-faint: rgba(208, 108, 46, 0.16);
+  --exp-accent-ghost: rgba(208, 108, 46, 0.08);
+
+  --exp-paper: #f5f2ea;
+  --exp-paper-2: #ece7dc;
+  --exp-paper-raised: #ffffff;
+
+  --exp-on-dark: #ede9e1;
+  --exp-on-dark-dim: #a29c90;
+  --exp-on-dark-faint: #6d685e;
+
+  --exp-ink: #23262d;
+  --exp-ink-dim: #585a61;
+  --exp-ink-faint: #8d8b85;
+  --exp-ink-line: #e2ddd0;
+
+  --exp-mono: ui-monospace, "SF Mono", "SFMono-Regular", "Roboto Mono", "Menlo",
+    "Consolas", monospace;
+
+  /* default context = dark */
+  --fg: var(--exp-on-dark);
+  --fg-dim: var(--exp-on-dark-dim);
+  --fg-faint: var(--exp-on-dark-faint);
+  --hair: var(--exp-graphite-line);
+  --surface: var(--exp-graphite-raised);
+  --sec-bg: var(--exp-graphite);
+  --accent-ink: var(--exp-accent-bright);
+
+  background-color: var(--exp-graphite);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Section contexts ───────────────────────────────────────────────── */
+.exp-root .exp-sec-dark,
+.exp-root .exp-sec-dark-deep {
+  --fg: var(--exp-on-dark);
+  --fg-dim: var(--exp-on-dark-dim);
+  --fg-faint: var(--exp-on-dark-faint);
+  --hair: var(--exp-graphite-line);
+  --surface: var(--exp-graphite-raised);
+  --accent-ink: var(--exp-accent-bright);
+  color: var(--fg);
+}
+.exp-root .exp-sec-dark { --sec-bg: var(--exp-graphite); background-color: var(--exp-graphite); }
+.exp-root .exp-sec-dark-deep { --sec-bg: var(--exp-graphite-deep); background-color: var(--exp-graphite-deep); }
+
+.exp-root .exp-sec-light,
+.exp-root .exp-sec-light-2 {
+  --fg: var(--exp-ink);
+  --fg-dim: var(--exp-ink-dim);
+  --fg-faint: var(--exp-ink-faint);
+  --hair: var(--exp-ink-line);
+  --surface: var(--exp-paper-raised);
+  --accent-ink: var(--exp-accent-deep);
+  color: var(--fg);
+}
+.exp-root .exp-sec-light { --sec-bg: var(--exp-paper); background-color: var(--exp-paper); }
+.exp-root .exp-sec-light-2 { --sec-bg: var(--exp-paper-2); background-color: var(--exp-paper-2); }
+
+/* Same light (dark-text) context as .exp-sec-light, but a pure-white background. */
+.exp-root .exp-sec-white {
+  --fg: var(--exp-ink);
+  --fg-dim: var(--exp-ink-dim);
+  --fg-faint: var(--exp-ink-faint);
+  --hair: var(--exp-ink-line);
+  --surface: var(--exp-paper-raised);
+  --accent-ink: var(--exp-accent-deep);
+  --sec-bg: #ffffff;
+  background-color: #ffffff;
+  color: var(--fg);
+}
+
+/* ── Surfaces & text ───────────────────────────────────────────────── */
+.exp-root .exp-surface { background-color: var(--surface); }
+.exp-root .exp-hair { border-color: var(--hair); }
+.exp-root .exp-rule { background-color: var(--hair); }
+.exp-root .exp-fill-accent { background-color: var(--exp-accent); }
+.exp-root .exp-card {
+  background-color: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: 1rem;
+}
+
+.exp-root .exp-ink { color: var(--fg); }
+.exp-root .exp-dim { color: var(--fg-dim); }
+.exp-root .exp-faint { color: var(--fg-faint); }
+.exp-root .exp-accent-text { color: var(--accent-ink); }
+
+.exp-root .exp-mono { font-family: var(--exp-mono); font-feature-settings: "tnum" 1; }
+.exp-root .exp-eyebrow {
+  font-family: var(--exp-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.exp-root .exp-kicker {
+  font-family: var(--exp-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.exp-root .exp-display {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.06;
+  color: var(--fg);
+}
+.exp-root .exp-display-hero { font-size: clamp(2.5rem, 5.4vw, 4.2rem); line-height: 1.03; letter-spacing: -0.03em; }
+.exp-root .exp-display-xl { font-size: clamp(2rem, 4.4vw, 3.3rem); line-height: 1.05; letter-spacing: -0.025em; }
+.exp-root .exp-display-lg { font-size: clamp(1.75rem, 3.4vw, 2.6rem); line-height: 1.1; }
+.exp-root .exp-display-md { font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.15; }
+.exp-root .exp-display-sm { font-size: clamp(1.15rem, 1.9vw, 1.4rem); line-height: 1.25; }
+
+.exp-root .exp-body { font-size: 15px; line-height: 1.7; color: var(--fg-dim); }
+.exp-root .exp-body-lg { font-size: 17px; line-height: 1.65; color: var(--fg-dim); }
+.exp-root .exp-body-sm { font-size: 13px; line-height: 1.6; color: var(--fg-dim); }
+
+/* ── Buttons & links ───────────────────────────────────────────────── */
+.exp-root .exp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+}
+.exp-root .exp-btn:hover { transform: translateY(-1px); }
+.exp-root .exp-btn-solid { background-color: var(--exp-accent); color: #fff; }
+.exp-root .exp-btn-solid:hover { background-color: var(--exp-accent-bright); }
+.exp-root .exp-btn-outline { border-color: var(--hair); color: var(--fg); }
+.exp-root .exp-btn-outline:hover { border-color: var(--accent-ink); color: var(--accent-ink); }
+/* hero sits on a dark blue wash — force light-on-dark button treatment there */
+.exp-hero .exp-btn-outline { border-color: rgba(237, 233, 225, 0.5); color: #fff; }
+.exp-hero .exp-btn-outline:hover { border-color: #fff; background-color: rgba(255, 255, 255, 0.1); color: #fff; }
+
+.exp-root .exp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  transition: gap 0.18s, color 0.18s;
+}
+.exp-root .exp-link:hover { gap: 0.65rem; }
+
+.exp-root .exp-value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--accent-ink);
+  font-feature-settings: "tnum" 1;
+}
+
+/* ── Navigation (in-flow, sticky, WHITE, subtle change on scroll) ──── */
+.exp-nav {
+  /* light context so exp-ink / exp-faint / .exp-btn utilities resolve dark-on-white */
+  --fg: var(--exp-ink);
+  --fg-dim: var(--exp-ink-dim);
+  --fg-faint: var(--exp-ink-faint);
+  --hair: var(--exp-ink-line);
+  --accent-ink: var(--exp-accent-deep);
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  color: var(--exp-ink);
+  border-bottom: 1px solid var(--exp-ink-line);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.exp-nav[data-scrolled="true"] {
+  background-color: rgba(255, 255, 255, 0.92);
+  border-bottom-color: var(--exp-ink-line);
+  box-shadow: 0 12px 34px -16px rgba(24, 18, 10, 0.28);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.exp-nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--exp-ink-dim);
+  transition: color 0.15s;
+}
+.exp-nav-link:hover,
+.exp-nav-link[aria-current="page"] { color: var(--exp-accent-deep); }
+.exp-nav-mobile {
+  background-color: #ffffff;
+  border-top: 1px solid var(--exp-ink-line);
+}
+
+/* ── Appointment button (additive, fixed corner FAB) + modal ──────────
+   Purely additive. To remove: delete this block, the <AppointmentFab />
+   wiring in the experimental pages, and AppointmentFab/WaveformIcon/
+   AppointmentModal component files. */
+.exp-appt-fab {
+  position: fixed;
+  right: clamp(1rem, 3.5vw, 2rem);
+  bottom: clamp(1rem, 3.5vw, 2rem);
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--exp-ink-line);
+  background-color: #ffffff;
+  color: #1c2b52;
+  box-shadow: 0 10px 30px -8px rgba(29, 58, 160, 0.35);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.exp-appt-fab:hover {
+  border-color: #9db8ff;
+  box-shadow: 0 14px 38px -8px rgba(29, 58, 160, 0.48);
+  transform: translateY(-2px);
+}
+.exp-appt-fab svg { width: 1.55rem; height: 1.45rem; }
+
+.exp-wave-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes exp-wave {
+  0%, 100% { transform: scaleY(0.72); }
+  50% { transform: scaleY(1.2); }
+}
+.exp-appt-fab:hover .exp-wave-bar { animation: exp-wave 0.82s ease-in-out infinite; }
+.exp-appt-fab:hover .exp-wave-bar:nth-of-type(2) { animation-delay: 0.09s; }
+.exp-appt-fab:hover .exp-wave-bar:nth-of-type(3) { animation-delay: 0.17s; }
+.exp-appt-fab:hover .exp-wave-bar:nth-of-type(4) { animation-delay: 0.12s; }
+.exp-appt-fab:hover .exp-wave-bar:nth-of-type(5) { animation-delay: 0.04s; }
+
+.exp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(9, 16, 40, 0.42);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  animation: exp-modal-fade 0.2s ease both;
+}
+.exp-modal {
+  position: fixed;
+  z-index: 201;
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 460px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.75rem;
+  border-radius: 1.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: linear-gradient(180deg, rgba(232, 240, 255, 0.78), rgba(210, 225, 252, 0.7));
+  -webkit-backdrop-filter: blur(26px) saturate(1.5);
+  backdrop-filter: blur(26px) saturate(1.5);
+  box-shadow: 0 44px 110px -32px rgba(9, 16, 40, 0.55);
+  color: #16213f;
+  font-family: var(--font-body);
+  animation: exp-modal-pop 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes exp-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes exp-modal-pop {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.exp-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(22, 33, 63, 0.16);
+  background: rgba(255, 255, 255, 0.6);
+  color: #16213f;
+  transition: background-color 0.15s ease;
+}
+.exp-modal-close:hover { background: rgba(255, 255, 255, 0.95); }
+.exp-modal-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.3rem;
+  text-align: center;
+}
+.exp-modal-logo { height: 2.3rem; width: auto; }
+.exp-modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #13214a;
+}
+.exp-modal-sub {
+  max-width: 22rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #46557d;
+}
+.exp-modal-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.exp-modal-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.exp-modal-label { font-size: 0.8rem; font-weight: 600; color: #1c2b52; }
+.exp-modal-field input,
+.exp-modal-field textarea {
+  width: 100%;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(28, 43, 82, 0.18);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #16213f;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.exp-modal-field textarea { resize: vertical; min-height: 5rem; }
+.exp-modal-field input:focus,
+.exp-modal-field textarea:focus {
+  border-color: #2f6bff;
+  box-shadow: 0 0 0 3px rgba(47, 107, 255, 0.18);
+}
+.exp-modal-field .is-error { border-color: #dd554d; }
+.exp-modal-fielderr { font-size: 0.74rem; font-weight: 500; color: #c2352d; }
+.exp-modal-err { font-size: 0.8rem; font-weight: 500; color: #c2352d; }
+.exp-modal-submit {
+  margin-top: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.78rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(180deg, #3f7bff, #1e40af);
+  box-shadow: 0 10px 24px -10px rgba(30, 64, 175, 0.65);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.exp-modal-submit:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.exp-modal-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+.exp-modal-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.25rem;
+  text-align: center;
+}
+.exp-modal-done p { font-size: 0.95rem; line-height: 1.55; color: #1c2b52; }
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-appt-fab:hover .exp-wave-bar { animation: none !important; }
+  .exp-modal-backdrop,
+  .exp-modal { animation: none !important; }
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────── */
+.exp-hero-oval {
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6);
+}
+.exp-hero-oval img { animation: exp-kenburns 24s ease-in-out infinite alternate; }
+@keyframes exp-kenburns {
+  from { transform: scale(1.03); }
+  to { transform: scale(1.13) translate(-1.5%, 1.5%); }
+}
+
+/* ScrollExpand hero: the vendored component's pre-scroll title picks its own
+   font-size via a JS-computed --se-title-size custom property (capped at
+   84px) — set inline, so it can't be overridden through that property. We
+   target its own generated utility class directly instead (stable: it's
+   part of the vendor's rendered output, not something we're relying on DOM
+   position for) to push the size up further on desktop and add a soft
+   radial "spotlight" + layered glow behind the text for legibility against
+   a busy photo, without a flat box. */
+.exp-hero-scroll [class~="[font-size:var(--se-title-size)]"] {
+  background: radial-gradient(closest-side, rgba(6, 4, 10, 0.55), rgba(6, 4, 10, 0.18) 62%, transparent 78%);
+  text-shadow:
+    0 0 18px rgba(0, 0, 0, 0.85),
+    0 0 42px rgba(0, 0, 0, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.75) !important;
+}
+@media (min-width: 640px) {
+  .exp-hero-scroll [class~="[font-size:var(--se-title-size)]"] {
+    font-size: clamp(2.5rem, 5.5vw, 5.25rem) !important;
+  }
+}
+
+/* ── Card image overlay (highlight row) ────────────────────────────── */
+.exp-card-scrim {
+  background: linear-gradient(to top, rgba(8, 6, 4, 0.85) 4%, rgba(8, 6, 4, 0.25) 46%, transparent 76%);
+}
+
+/* ── Curved panels (sections 4 & 7) ───────────────────────────────── */
+.exp-curved {
+  border-radius: 1.75rem;
+  overflow: hidden;
+}
+@media (min-width: 1024px) {
+  .exp-curved { border-radius: 2rem 5.5rem 2rem 5.5rem; }
+}
+.exp-panel-visual { background-color: var(--exp-graphite); }
+.exp-panel-fade { background: radial-gradient(130% 110% at 12% 50%, transparent, var(--exp-graphite-deep) 92%); }
+
+/* ── Trust block ──────────────────────────────────────────────────── */
+.exp-trust-bg {
+  background-image:
+    radial-gradient(72% 52% at 50% 6%, rgba(208, 108, 46, 0.14), transparent 72%),
+    linear-gradient(180deg, rgba(208, 108, 46, 0.05) 0%, transparent 42%, rgba(24, 18, 10, 0.045) 100%);
+}
+.exp-trust-box {
+  background-color: var(--exp-paper-raised);
+  border-radius: 1.75rem;
+  box-shadow: 0 55px 130px -34px rgba(18, 11, 5, 0.42), 0 0 90px rgba(18, 11, 5, 0.1);
+}
+/* Trust block: crossfade between rotating AccordionGallery pages. */
+.exp-accfade-in { animation: exp-accfade-in 600ms ease both; }
+.exp-accfade-out { animation: exp-accfade-out 600ms ease both; }
+@keyframes exp-accfade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes exp-accfade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+/* Trust block: the vendored AccordionGallery's grayscale + dark-overlay
+   treatment is tuned for photography. Company logos — often transparent-
+   background PNGs — need a light backing to stay legible against the
+   panel's dark background, in both the active and inactive state. */
+.exp-trust-accordion img {
+  background-color: #f7f4ee;
+  object-fit: contain !important;
+  padding: 12px;
+  box-sizing: border-box;
+}
+/* Trust block: mobile stack of independently-cycling rows. Each row grows on
+   tap the same way a desktop accordion panel grows on hover. */
+.exp-trust-row {
+  transition: flex-grow 400ms ease;
+}
+.exp-trust-row:focus-visible {
+  outline: 2px solid var(--exp-accent);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .exp-trust-row { transition: none; }
+}
+
+/* ── Product showcase (sequential sliding one-per-view) ──────────────── */
+.exp-showcase-stage {
+  position: relative;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid var(--exp-ink-line);
+  background-color: var(--exp-paper-raised);
+  box-shadow: 0 30px 70px -34px rgba(18, 11, 5, 0.18);
+}
+@media (min-width: 640px) {
+  .exp-showcase-stage { height: 500px; }
+}
+@media (min-width: 1024px) {
+  .exp-showcase-stage { height: 440px; }
+}
+/* faint warm pool + floor shade so the floating cut-out reads as grounded on white */
+.exp-showcase-glow {
+  background-image:
+    radial-gradient(50% 62% at 30% 55%, rgba(208, 108, 46, 0.07), transparent 70%),
+    linear-gradient(180deg, transparent 55%, rgba(18, 11, 5, 0.035));
+}
+
+/* ── Company overview video panel (full-bleed, chrome-free) ───────── */
+/* Phone: a comfortable ~4:3 block with a centred crop of the landscape video. */
+.exp-video-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+  height: max(75vw, 250px);
+  max-height: 72vh;
+}
+.exp-video-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+/* Tablet / desktop: full 16:9, with 200px clipped off the top (the media is
+   200px taller than the frame, bottom-anchored, and the overflow hides it). */
+@media (min-width: 768px) {
+  .exp-video-frame {
+    height: max(56.25vw - 200px, 200px);
+    max-height: none;
+  }
+  .exp-video-media {
+    inset: auto 0 0 0;
+    height: max(56.25vw, 400px);
+  }
+}
+
+/* ── Hero video section (own full-bleed section, directly below the hero) ──────
+   Isolated/reversible: remove this block, components/HeroVideoSection.tsx, and
+   the <HeroVideoSection /> line in ExperimentalHomePage.tsx to revert.
+   The source is 1920×1080 (16:9). The frame is a full-width 16:9 box with ~50px
+   trimmed off the BOTTOM: the media keeps its full 16:9 height, is top-anchored,
+   and the last 50px is clipped by the frame's overflow. Nothing on the sides or
+   top is cropped — phones included. */
+.exp-herovid-frame {
+  position: relative;
+  width: 100%;
+  height: calc(56.25vw - 50px);
+  overflow: hidden;
+  background-color: #000;
+}
+.exp-herovid-media {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: 56.25vw;
+  object-fit: cover;
+  object-position: center top;
+}
+/* Decorative cover over the "Made in Raylight" watermark baked into the hero
+   video's bottom-right corner (the 50px bottom trim already hides most of it —
+   this masks the sliver that peeks above the trim on wide screens). Purely
+   cosmetic, no interaction. Sized/placed to the watermark: the company-overview
+   panel covers the same mark at ~15.5vw × 5vw, 0.3vw in from the right. Shown
+   only on desktop — the element carries `hidden lg:block` in the markup. */
+.exp-herovid-watermark-cover {
+  position: absolute;
+  right: 0.3vw;
+  bottom: 0;
+  width: 15.5vw;
+  height: 5vw;
+  z-index: 3;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: linear-gradient(120deg, #d6e9fc 0%, #a9d1f1 48%, #c8e1f8 100%);
+  background-size: 220% 220%;
+  animation: exp-herovid-wm-shimmer 7s ease-in-out infinite;
+}
+@keyframes exp-herovid-wm-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: brightness(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .exp-herovid-watermark-cover {
+    animation: none;
+  }
+}
+
+/* CTA badge covering the "Made in Raylight" watermark baked into the video's
+   bottom-right corner. Styled to match its white rounded-pill look. Remove this
+   block + the <Link> in VideoPanel.tsx to revert to the watermark-visible state. */
+.exp-root .exp-video-badge {
+  position: absolute;
+  right: 2.5vw;
+  bottom: 3.5vw;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.55em 1em;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #1b1b1b;
+  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.exp-root .exp-video-badge:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-1px);
+}
+.exp-root .exp-video-badge svg {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+@media (min-width: 768px) {
+  .exp-root .exp-video-badge {
+    right: 0.3vw;
+    bottom: 0.45vw;
+    min-width: 15.5vw;
+    min-height: 5vw;
+    padding: 0.6em 1.15em;
+    font-size: clamp(0.78rem, 1.5vw, 1.2rem);
+  }
+}
+
+/* ── Industries carousel cross-fade + synced text ─────────────────── */
+.exp-fade-layer { transition: opacity 900ms cubic-bezier(0.4, 0, 0.2, 1); }
+@keyframes exp-textswap {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.exp-text-swap { animation: exp-textswap 460ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ── Dot-mesh drift (reused abstract visual) ──────────────────────── */
+@keyframes exp-dotmesh { to { transform: translateX(calc(-1 * var(--tile-w, 416px))); } }
+.exp-dotmesh-scroll { animation: exp-dotmesh 26s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .exp-dotmesh-scroll,
+  .exp-hero-oval img,
+  .exp-text-swap { animation: none !important; }
+  .exp-fade-layer { transition: none !important; }
+}
+
+/* While an experimental page is mounted, the site's own sticky header is
+   replaced by this experiment's nav. Self-disables the moment .exp-root leaves
+   the DOM and never applies when ACTIVE_HOMEPAGE_UI === "current". */
+body:has(.exp-root) header {
+  display: none !important;
+}

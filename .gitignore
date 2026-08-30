@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Environment / secrets — never push credentials, API keys, or connection info
+.env
+.env.*
+!.env.example
+
+# Claude Code local instructions/context — kept locally, never pushed
+.claude/
+*claude*.local.*
+CLAUDE.md
+.claude.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

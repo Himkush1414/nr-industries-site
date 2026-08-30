@@ -1,7 +1,6 @@
 import { whyChooseUs } from "@/data/company";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { CertificationsSection } from "../components/CertificationsSection";
-import { ExpNavBar } from "../components/ExpNavBar";
 import { Hero } from "../components/Hero";
 import { HeroVideoSection } from "../components/HeroVideoSection";
 import { HighlightRow } from "../components/HighlightRow";
@@ -13,12 +12,11 @@ import { VideoPanel } from "../components/VideoPanel";
 import "../styles/experimental.css";
 
 /**
- * Experimental homepage — pass 5 (full replacement of the pass-4 "Schneider"
- * direction). In-flow sticky nav → split hero with an oversized oval photo →
- * four highlight cards → "Find your best suited product" curved panel → trust
- * block → certifications → "Industries we serve" carousel panel → company
- * overview video panel. The site's existing contact/footer block (below, from
- * Layout) is untouched. See ACTIVE_HOMEPAGE_UI.
+ * Homepage — split hero with an oversized oval photo → four highlight cards →
+ * "Find your best suited product" curved panel → trust block → certifications
+ * → "Industries we serve" carousel panel → company overview video panel.
+ * Navigation is the site's shared <Header> (rendered by <Layout>, same as
+ * every other page) — this page no longer renders its own nav.
  */
 export function ExperimentalHomePage() {
   useDocumentMeta(
@@ -28,7 +26,6 @@ export function ExperimentalHomePage() {
 
   return (
     <div className="exp-root">
-      <ExpNavBar />
       <Hero />
       <HeroVideoSection />
 

@@ -1,6 +1,8 @@
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/contact";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import logo from "../assets/nr-logo.png";
 
 const LINKS = [
@@ -13,12 +15,13 @@ const LINKS = [
 ];
 
 /**
- * In-flow sticky navigation: logo left, primary links + a CTA on the right.
- * Subtle background/shadow shift once the page is scrolled. Replaces the site's
- * own <header> (hidden via experimental.css while an experimental page is
- * mounted).
+ * In-flow sticky navigation: logo, centered primary links, phone + WhatsApp
+ * actions — same layout pattern as the site's own <Header>, kept as its own
+ * component for the scroll-triggered background/shadow shift over the hero.
+ * Replaces the site's own <header> (hidden via experimental.css while an
+ * experimental page is mounted).
  *
- * The appointment box now lives in the fixed corner button (<AppointmentFab>),
+ * The appointment box lives in the fixed corner button (<AppointmentFab>),
  * not here — same modal, same pipeline, just a different trigger location.
  */
 export function ExpNavBar() {
@@ -53,12 +56,10 @@ export function ExpNavBar() {
 
   return (
     <div className="exp-nav" data-scrolled={scrolled}>
-      <div className="container-page flex h-[55px] items-center gap-4 py-3 sm:gap-6">
+      <div className="container-page flex h-[55px] items-center justify-between gap-4 py-3">
         <NavLink to="/" className="shrink-0" aria-label="N R Industries — home">
           <img src={logo} alt="N R Industries" width={440} height={138} className="h-9 w-auto lg:h-10" />
         </NavLink>
-
-        <div className="min-w-0 flex-1" />
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {LINKS.map((l) => (
@@ -68,20 +69,26 @@ export function ExpNavBar() {
           ))}
         </nav>
 
-        <NavLink to="/contact" className="exp-btn exp-btn-solid hidden shrink-0 !py-2.5 !text-[13px] lg:inline-flex">
-          Get a Quote
-          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-        </NavLink>
+        <div className="flex items-center gap-2">
+          <a
+            href={buildTelLink()}
+            aria-label={`Call ${COMPANY_PHONE_DISPLAY}`}
+            className="hidden h-[33px] w-[33px] items-center justify-center rounded-full border border-ink-100 text-navy-800 transition-colors duration-150 hover:border-navy-800 sm:flex"
+          >
+            <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+          <WhatsAppButton compact />
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label="Toggle menu"
-          className="shrink-0 exp-ink lg:hidden"
-        >
-          {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
-        </button>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label="Toggle menu"
+            className="shrink-0 exp-ink lg:hidden"
+          >
+            {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -98,14 +105,16 @@ export function ExpNavBar() {
                 {l.label}
               </NavLink>
             ))}
-            <NavLink
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="exp-btn exp-btn-solid mt-3 justify-center"
-            >
-              Get a Quote
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </NavLink>
+            <div className="mt-3 flex gap-3">
+              <WhatsAppButton className="flex-1" />
+              <a
+                href={buildTelLink()}
+                className="exp-ink flex flex-1 items-center justify-center gap-2 rounded-lg border border-ink-100 px-5 py-3 text-sm font-semibold"
+              >
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                Call
+              </a>
+            </div>
           </div>
         </div>
       )}

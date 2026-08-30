@@ -13,6 +13,12 @@ import ScrollExpand from "../vendor/ScrollExpand";
 // images" pass, which read as soft once stretched full-bleed on desktop.
 const HERO_IMAGE_SRC = "/about-3.webp";
 
+// The original industry/factory photo used as this page's hero backdrop
+// before the ScrollExpand rebuild — an electrical substation/transformer
+// installation shot. Restored here as the backdrop behind the ScrollExpand
+// frame (the frame's own photo above is unrelated and untouched).
+const BACKDROP_IMAGE_SRC = "/hero-home.webp";
+
 /**
  * Scroll-scrubbed expanding hero (React Bits' ScrollExpand, vendored at
  * ../vendor/ScrollExpand — see that file for why it's hand-vendored instead
@@ -68,11 +74,11 @@ export function Hero() {
       {showBackdrop && (
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           <img
-            src={HERO_IMAGE_SRC}
+            src={BACKDROP_IMAGE_SRC}
             alt=""
-            className="h-full w-full scale-110 object-cover opacity-45 blur-3xl"
+            className="h-full w-full scale-110 object-cover opacity-80 blur-md"
           />
-          <div className="absolute inset-0 bg-[var(--exp-graphite)]/55" />
+          <div className="absolute inset-0 bg-[var(--exp-graphite)]/40" />
         </div>
       )}
 
@@ -99,11 +105,17 @@ export function Hero() {
             its load and validated in our own test facility before it ships.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-            <Link to="/products" className="exp-btn exp-btn-solid">
+            <Link
+              to="/products"
+              className="exp-btn exp-btn-solid !bg-yellow-400 !text-black hover:!bg-yellow-300"
+            >
               Explore our range
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
-            <Link to="/contact" className="exp-btn exp-btn-outline">
+            <Link
+              to="/contact"
+              className="exp-btn exp-btn-outline !border-black !bg-black !text-white hover:!bg-neutral-800"
+            >
               Request a quote
             </Link>
           </div>

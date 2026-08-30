@@ -30,7 +30,10 @@ export function ProductPanel() {
             Seven transformer families plus stabilizers, substations and panels — filter by rating,
             application and site conditions to find the right fit.
           </p>
-          <Link to="/products" className="exp-btn exp-btn-solid mt-1">
+          <Link
+            to="/products"
+            className="exp-btn exp-btn-solid mt-1 !bg-yellow-400 !text-black hover:!bg-yellow-300"
+          >
             Explore the range
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

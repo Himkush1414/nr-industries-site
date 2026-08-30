@@ -662,9 +662,3 @@
   .exp-fade-layer { transition: none !important; }
 }
 
-/* While an experimental page is mounted, the site's own sticky header is
-   replaced by this experiment's nav. Self-disables the moment .exp-root leaves
-   the DOM and never applies when ACTIVE_HOMEPAGE_UI === "current". */
-body:has(.exp-root) header {
-  display: none !important;
-}

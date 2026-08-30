@@ -103,7 +103,10 @@ export function IndustriesPanel() {
             <p className="exp-display exp-display-sm exp-accent-text">{current.name}</p>
             <p className="exp-body max-w-sm">{current.description}</p>
           </div>
-          <Link to="/industries" className="exp-btn exp-btn-solid mt-1">
+          <Link
+            to="/industries"
+            className="exp-btn exp-btn-solid mt-1 !bg-yellow-400 !text-black hover:!bg-yellow-300"
+          >
             View all industries
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

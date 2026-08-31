@@ -5,9 +5,9 @@ import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
  * Hero video — its own full-bleed section, directly below <Hero>. Separate from
  * the company-overview <VideoPanel> that sits near the footer.
  *
- * Source: /public/hero-bg.mp4 (1920×1080, i.e. exactly 16:9). The frame is a
- * full-width 16:9 box with ~50px trimmed off the bottom (see .exp-herovid-*);
- * nothing on the sides or top is cropped — phone screens included.
+ * Source: /public/hero-video.mp4. The frame is a full-width 16:9 box with
+ * ~50px trimmed off the bottom (see .exp-herovid-*); nothing on the sides or
+ * top is cropped — phone screens included.
  *
  * Chrome-free, muted + autoplay + loop. The <video> lazy-mounts when the
  * section is close, plays only while it's on-screen, and pauses when scrolled
@@ -18,7 +18,7 @@ import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
  * Reversible / isolated: delete this file, its `.exp-herovid-*` CSS block, and
  * the <HeroVideoSection /> line in ExperimentalHomePage.tsx to revert.
  */
-const HERO_VIDEO_SRC = "/hero-bg.mp4";
+const HERO_VIDEO_SRC = "/hero-video.mp4";
 
 export function HeroVideoSection() {
   const reduced = usePrefersReducedMotion();

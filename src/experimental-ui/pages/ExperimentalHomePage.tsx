@@ -27,14 +27,22 @@ export function ExperimentalHomePage() {
   return (
     <div className="exp-root">
       <Hero />
-      <HeroVideoSection />
 
-      {/* Four-card highlight row — directly under the hero video */}
-      <section className="exp-sec-light pt-16 pb-24 sm:pt-20 sm:pb-28">
+      {/* Four-card highlight row — directly under the hero, above the hero video.
+          `relative isolate` (same as HeroVideoSection, which used to sit in this
+          spot): Hero is a positioned (`relative`) stacking context, so per the
+          CSS painting-order rules a plain non-positioned sibling paints *before*
+          it regardless of DOM order — letting Hero's own fixed background layer
+          show through on top of this section instead of staying behind it. Once
+          this section is itself positioned, DOM order (this section after Hero)
+          decides paint order again, as intended. */}
+      <section className="exp-sec-light relative isolate pt-16 pb-24 sm:pt-20 sm:pb-28">
         <div className="container-page">
           <HighlightRow items={whyChooseUs} />
         </div>
       </section>
+
+      <HeroVideoSection />
 
       <ProductPanel />
       <ProductShowcase />

@@ -435,6 +435,17 @@
 
 /* ── Curved panels (sections 4 & 7) ───────────────────────────────── */
 .exp-curved {
+  /* The text-content half (CurvedPanel's `children` side) has no background
+     of its own — it was relying entirely on this always sitting flush against
+     a section whose own background happens to match. That's fragile: RevealBlock
+     drives this panel's fade/translate-in with `transform` + `will-change`,
+     and during that scroll-triggered transition the transparent half could
+     momentarily show through to whatever's behind the compositing layer
+     instead of the section colour, reading as a black flash. Pinning it to
+     the current section's own `--sec-bg` (set by every .exp-sec-* context)
+     makes the match explicit instead of incidental — a no-op at rest, since
+     the value is always identical to what was already showing through. */
+  background-color: var(--sec-bg);
   border-radius: 1.75rem;
   overflow: hidden;
 }
@@ -551,11 +562,20 @@
    and the last 50px is clipped by the frame's overflow. Nothing on the sides or
    top is cropped — phones included. */
 .exp-herovid-frame {
+  /* Was a hardcoded #000 — visibly different from this section's actual
+     background (--exp-graphite, #191c22). On a fresh page load the poster
+     image (loading="lazy") hasn't necessarily fetched/decoded by the time
+     the frame is scrolled into view, so this fallback colour is what's
+     actually visible for a moment — the mismatch against the section
+     around it read as a background glitch. It only ever showed on a fresh
+     load because on a warm cache the image decodes near-instantly, well
+     before the frame is anywhere near the viewport. Matching the section's
+     own background makes that gap invisible instead of trying to outrace it. */
   position: relative;
   width: 100%;
   height: calc(56.25vw - 50px);
   overflow: hidden;
-  background-color: #000;
+  background-color: var(--sec-bg);
 }
 .exp-herovid-media {
   position: absolute;
@@ -572,6 +592,16 @@
    panel covers the same mark at ~15.5vw × 5vw, 0.3vw in from the right. Shown
    only on desktop — the element carries `hidden lg:block` in the markup. */
 .exp-herovid-watermark-cover {
+  /* Was a hardcoded light-blue gradient (#d6e9fc/#a9d1f1/#c8e1f8) with no
+     relation to this section's actual (dark graphite) background — a third
+     instance of the same hardcoded/mismatched-background pattern as the
+     .exp-curved and .exp-herovid-frame fixes, just easier to miss since it's
+     a small corner badge rather than a full section. It only becomes
+     visible once the video frame scrolls into view, and being a light patch
+     against an otherwise all-dark section (plus its own animated shimmer),
+     it read as a bright flash right at this boundary. Rebuilt from the
+     section's own dark tones instead, so it still visually covers the
+     baked-in watermark but no longer clashes with what's around it. */
   position: absolute;
   right: 0.3vw;
   bottom: 0;
@@ -579,7 +609,7 @@
   height: 5vw;
   z-index: 3;
   border-radius: 0.5rem 0.5rem 0 0;
-  background: linear-gradient(120deg, #d6e9fc 0%, #a9d1f1 48%, #c8e1f8 100%);
+  background: linear-gradient(120deg, var(--exp-graphite) 0%, var(--exp-graphite-raised) 48%, var(--exp-graphite) 100%);
   background-size: 220% 220%;
   animation: exp-herovid-wm-shimmer 7s ease-in-out infinite;
 }

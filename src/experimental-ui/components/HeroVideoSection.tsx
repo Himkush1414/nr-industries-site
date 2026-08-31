@@ -77,7 +77,7 @@ export function HeroVideoSection() {
   }, [mounted, reduced]);
 
   return (
-    <section className="exp-sec-dark">
+    <section className="exp-sec-dark relative isolate">
       <div ref={frameRef} className="exp-herovid-frame">
         <img src={POSTER_SRC} alt="" aria-hidden="true" loading="lazy" className="exp-herovid-media" />
         {!reduced && mounted && (

@@ -50,21 +50,22 @@ export function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [showBackdrop, setShowBackdrop] = useState(false);
 
-  // Mount the blurred backdrop only while the hero is anywhere near the
-  // viewport — it's `position: fixed`, so keeping it mounted for the whole
-  // page would have it paint behind every section for the rest of the
-  // scroll (harmless given every later section has an opaque background,
-  // but wasteful and untidy). It only needs to be visible during the brief
-  // window the small starting frame doesn't yet cover the full screen.
+  // Mount the blurred backdrop only while the hero section itself genuinely
+  // overlaps the viewport — it's `position: fixed`, so it visually pins to
+  // the viewport regardless of DOM nesting. A previous version used a 200px
+  // rootMargin buffer, which kept it mounted (and therefore paintable) for
+  // up to 200px of extra scroll *after* the hero had fully scrolled past —
+  // long enough to overlap the video section directly below and, on a
+  // fixed-position element under active scroll compositing, occasionally
+  // show through for a frame. No margin: it unmounts the instant the hero
+  // section stops overlapping the viewport at all, closing that window.
   useEffect(() => {
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") {
       setShowBackdrop(true);
       return;
     }
-    const io = new IntersectionObserver(([e]) => setShowBackdrop(Boolean(e?.isIntersecting)), {
-      rootMargin: "200px 0px",
-    });
+    const io = new IntersectionObserver(([e]) => setShowBackdrop(Boolean(e?.isIntersecting)));
     io.observe(el);
     return () => io.disconnect();
   }, []);

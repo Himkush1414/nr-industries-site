@@ -1,7 +1,12 @@
 import { X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { COMPANY_NAME } from "@/config/contact";
+import {
+  buildAppointmentWhatsAppMessage,
+  buildWhatsAppLink,
+  COMPANY_NAME,
+  WHATSAPP_NUMBER_2,
+} from "@/config/contact";
 import { supabase } from "@/lib/supabaseClient";
 import { validateContactForm } from "@/utils/contactFormValidation";
 import logo from "../assets/nr-logo.png";
@@ -12,7 +17,10 @@ import logo from "../assets/nr-logo.png";
  * Submission reuses the Contact page's exact pipeline: the shared
  * `validateContactForm` validator, an insert into the same Supabase
  * `contact_submissions` table with the same column shape, and the same Google
- * Ads conversion event. No new backend, table, or handler.
+ * Ads conversion event. No new backend, table, or handler. On success it also
+ * opens a wa.me link (new tab) pre-filled with the submitted details, to
+ * WHATSAPP_NUMBER_2 — a different number from the header's WhatsAppButton,
+ * which stays on WHATSAPP_NUMBER and is untouched by this.
  */
 
 /** Same conversion event the Contact form fires on a completed submission. */
@@ -83,6 +91,12 @@ function AppointmentModal({ onClose }: { onClose: () => void }) {
         return;
       }
       trackConversion();
+
+      // Hand off to WhatsApp with the submitted details pre-filled — a
+      // distinct number from the header's WhatsAppButton (WHATSAPP_NUMBER).
+      const waMessage = buildAppointmentWhatsAppMessage(values);
+      window.open(buildWhatsAppLink(waMessage, WHATSAPP_NUMBER_2), "_blank", "noopener,noreferrer");
+
       setSubmitted(true);
       setValues(EMPTY);
     } catch {

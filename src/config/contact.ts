@@ -12,6 +12,8 @@ export const COMPANY_PHONE_TEL_2 = "+91 80919 30019";
 
 // PLACEHOLDER — replace before launch (digits only, country code first, no + no spaces — wa.me format)
 export const WHATSAPP_NUMBER = "+917018288734";
+/** Second WhatsApp number — used only for the bottom-right appointment-form redirect, distinct from WHATSAPP_NUMBER above. */
+export const WHATSAPP_NUMBER_2 = "+918091930019";
 
 export const COMPANY_EMAIL = "info@nrenergy.in";
 export const COMPANY_WEBSITE_DISPLAY = "nrpower.in";
@@ -44,9 +46,22 @@ export function buildProductWhatsAppMessage(productName: string): string {
   return `Hi, I'm interested in ${productName}. I found this on your website and would like to know more about pricing, specifications, and availability.`;
 }
 
+/** Builds the pre-filled WhatsApp message from the appointment form's fields. */
+export function buildAppointmentWhatsAppMessage({
+  name,
+  phone,
+  message,
+}: {
+  name: string;
+  phone: string;
+  message: string;
+}): string {
+  return `Hi, I'd like to book an appointment.\nName: ${name}\nPhone: ${phone}\nMessage: ${message}`;
+}
+
 /** wa.me deep link — opens WhatsApp Web or the app automatically, pre-filled. */
-export function buildWhatsAppLink(message: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+export function buildWhatsAppLink(message: string, number: string = WHATSAPP_NUMBER): string {
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
 export function buildTelLink(number: string = COMPANY_PHONE_TEL): string {

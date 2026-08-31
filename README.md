@@ -1,5 +1,12 @@
 # N R Industries — Corporate Website
 
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-backend-3FCF8E?logo=supabase&logoColor=white)
+![Lint](https://img.shields.io/badge/lint-clean-brightgreen)
+
 The official corporate website for **N R Industries**, a manufacturer of power and distribution transformers, compact substations, servo voltage stabilizers, and HT & LT panels, based in Himachal Pradesh, India. N R Industries designs, builds, and tests power equipment for industrial, commercial, and utility-scale distribution networks — every unit engineered to its load and validated in-house before it ships.
 
 This repository is the source for the live production site.
@@ -12,6 +19,7 @@ This repository is the source for the live production site.
 
 - [Overview](#overview)
 - [Features & Design](#features--design)
+- [Codebase Health & SEO](#codebase-health--seo)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Routes](#routes)
@@ -22,6 +30,7 @@ This repository is the source for the live production site.
   - [Available Scripts](#available-scripts)
 - [Deployment](#deployment)
 - [Contact](#contact)
+- [Author](#author)
 
 ---
 
@@ -43,6 +52,40 @@ It covers the company's full product catalogue, technical specifications and pro
 - **Consistent page pattern** — every interior page (About, Products, Specifications, Industries, Contact) shares a common header treatment, section rhythm, and typography system, so the site reads as one coherent product regardless of which page a visitor lands on.
 - **Responsive, accessible by default** — every interactive section has a deliberate mobile layout (not just a squeezed desktop layout), respects `prefers-reduced-motion`, and keeps animation-heavy components out of the initial bundle until they're actually needed.
 - **Performance-conscious throughout** — route-based code-splitting, lazy-mounted media and heavy UI chunks, and images/video deferred until they're within reach of the viewport, so first paint stays fast even on a content-heavy homepage.
+
+## Codebase Health & SEO
+
+This repo gets audited periodically to keep it lean, correct, and search-ready. Most recent pass, verified end to end:
+
+### Cleanup
+
+- **Dead code removed** — an entire unrouted, duplicate About-page implementation (5 component files) plus the CSS that only they used, confirmed unreachable from any route before deletion.
+- **Unused assets removed** — 1 orphaned image and 1 orphaned video (~14.5 MB combined), each confirmed unused via two independent methods (repo-wide text search *and* a check against every content data file) before deletion.
+- **A real rendering bug fixed** — the company-overview video's frame had a hardcoded `background-color: #000`, causing a black flash against the page's actual dark background before the video/poster painted. Same class of bug already fixed once elsewhere on the site; this instance had been missed. Now uses the section's actual background variable.
+- **Video error handling added** — both `<video>` elements now fall back cleanly to a poster or solid background if the file fails to load, instead of leaving a broken player on screen.
+- **Build & lint clean** — `tsc -b`, `vite build`, and `oxlint` all run with zero errors and zero warnings.
+
+### Image optimization
+
+Five client-logo images were shipping far larger than their actual on-screen size warranted. Downscaled to a realistic resolution and losslessly recompressed — pixel-verified against the originals, no visible quality loss:
+
+| Asset | Before | After | Saved |
+| --- | ---: | ---: | ---: |
+| `clients/kpdcl.png` | 1362 KB | 116 KB | 91% |
+| `clients/carbon-minus.png` | 337 KB | 19 KB | 94% |
+| `clients/hpsebl.png` | 321 KB | 86 KB | 73% |
+| `clients/hegatech.png` | 286 KB | 24 KB | 92% |
+| `clients/sbpcl.png` | 179 KB | 44 KB | 75% |
+
+**~2.1 MB saved** across five files.
+
+### SEO
+
+- **Structured data (JSON-LD)** — sitewide `Organization` schema upgraded to `["Organization", "LocalBusiness"]`, carrying full address, city/region, and geo-coordinates: the schema.org signal that actually strengthens local search relevance. Added `ItemList` structured data to the product catalogue page, alongside the existing per-product `Product` schema on every detail page.
+- **Meta tags** — every route ships a specific, purpose-written `<title>` and meta description (no placeholders), now centralized in `src/data/seo.ts` for easy editing without touching page code.
+- **Sitemap & robots.txt** — verified `sitemap.xml` lists every real route, including all 9 product detail pages, matched 1:1 against the live route table; `robots.txt` correctly allows full indexing.
+- **Internal linking** — added the cross-links that were missing between related pages: product detail → specifications, specifications → products, industries → products.
+- **Analytics-ready** — Google Analytics (GA4) and Google Search Console verification snippets are wired into `index.html`, ready to activate once real IDs are supplied.
 
 ## Tech Stack
 
@@ -70,8 +113,8 @@ src/
                      Industries, Contact, product detail, 404).
   experimental-ui/  The homepage's design system and components (hero, video
                      sections, product showcase, trust wall, etc.).
-  data/              Typed content — products, company info, specifications —
-                     kept separate from presentation.
+  data/              Typed content — products, company info, specifications,
+                     per-page SEO copy — kept separate from presentation.
   config/            Single source of truth for contact details (phone,
                      WhatsApp, email, address, map links).
   hooks/             Shared hooks (document meta tags, scroll-reveal, etc.).
@@ -138,3 +181,11 @@ The site deploys to [Vercel](https://vercel.com) with zero additional configurat
 - **Website:** [nrpower.in](https://nrpower.in)
 - **Email:** info@nrenergy.in
 - **Address:** Vill. Rampur Banjaran, PO Dhaulakuan, Tehsil Paonta Sahib, Distt. Sirmaur, Himachal Pradesh 173031, India
+
+## Author
+
+Built solo, top to bottom, by **Manik Rana**.
+
+Every scroll-driven animation, every lazy-loaded video, every product page, the Supabase-backed lead pipeline, the structured data under the hood — no agency, no template, no team. One developer, one codebase, shipped to production.
+
+**[nrpower.in](https://nrpower.in)** is the live result.

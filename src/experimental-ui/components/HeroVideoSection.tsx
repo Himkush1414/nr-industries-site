@@ -12,14 +12,13 @@ import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
  * Chrome-free, muted + autoplay + loop. The <video> lazy-mounts when the
  * section is close, plays only while it's on-screen, and pauses when scrolled
  * away or the tab is hidden. Under prefers-reduced-motion the <video> is never
- * mounted — the poster still fills the same space.
+ * mounted — the frame's own solid background fills the same space, no
+ * fallback image.
  *
  * Reversible / isolated: delete this file, its `.exp-herovid-*` CSS block, and
  * the <HeroVideoSection /> line in ExperimentalHomePage.tsx to revert.
  */
 const HERO_VIDEO_SRC = "/hero-bg.mp4";
-/** Poster / reduced-motion still — a plant-floor photo already in the project. */
-const POSTER_SRC = "/hero-home.webp";
 
 export function HeroVideoSection() {
   const reduced = usePrefersReducedMotion();
@@ -79,13 +78,11 @@ export function HeroVideoSection() {
   return (
     <section className="exp-sec-dark relative isolate">
       <div ref={frameRef} className="exp-herovid-frame">
-        <img src={POSTER_SRC} alt="" aria-hidden="true" loading="lazy" className="exp-herovid-media" />
         {!reduced && mounted && (
           <video
             ref={videoRef}
             className="exp-herovid-media"
             src={HERO_VIDEO_SRC}
-            poster={POSTER_SRC}
             autoPlay
             muted
             loop

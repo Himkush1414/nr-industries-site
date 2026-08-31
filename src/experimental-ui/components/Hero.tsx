@@ -13,11 +13,11 @@ import ScrollExpand from "../vendor/ScrollExpand";
 // images" pass, which read as soft once stretched full-bleed on desktop.
 const HERO_IMAGE_SRC = "/about-3.webp";
 
-// The original industry/factory photo used as this page's hero backdrop
-// before the ScrollExpand rebuild — an electrical substation/transformer
-// installation shot. Restored here as the backdrop behind the ScrollExpand
-// frame (the frame's own photo above is unrelated and untouched).
-const BACKDROP_IMAGE_SRC = "/hero-home.webp";
+// Exact backdrop colour the "Neon Ring" gradient layers below are tuned
+// against — their screen/multiply blend modes read correctly only on this
+// specific dark base, so it's set as the section's own background (not the
+// generic --exp-graphite the rest of the dark sections use).
+const HERO_BG_COLOR = "#100e0b";
 
 /**
  * Scroll-scrubbed expanding hero (React Bits' ScrollExpand, vendored at
@@ -48,38 +48,61 @@ const BACKDROP_IMAGE_SRC = "/hero-home.webp";
 export function Hero() {
   const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [showBackdrop, setShowBackdrop] = useState(false);
+  const [showFx, setShowFx] = useState(false);
 
-  // Mount the blurred backdrop only while the hero section itself genuinely
-  // overlaps the viewport — it's `position: fixed`, so it visually pins to
-  // the viewport regardless of DOM nesting. A previous version used a 200px
-  // rootMargin buffer, which kept it mounted (and therefore paintable) for
-  // up to 200px of extra scroll *after* the hero had fully scrolled past —
-  // long enough to overlap the video section directly below and, on a
-  // fixed-position element under active scroll compositing, occasionally
-  // show through for a frame. No margin: it unmounts the instant the hero
-  // section stops overlapping the viewport at all, closing that window.
+  // Same reasoning/pattern as the section's former image backdrop: the
+  // effect layers below are `position: fixed` so they read as one
+  // viewport-pinned background rather than stretching across the section's
+  // actual (scroll-driven, ~2.7 viewport-heights tall) rendered height. Mount
+  // them only while the section itself overlaps the viewport, and with no
+  // rootMargin buffer, so they don't keep painting behind later sections.
   useEffect(() => {
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setShowBackdrop(true);
+      setShowFx(true);
       return;
     }
-    const io = new IntersectionObserver(([e]) => setShowBackdrop(Boolean(e?.isIntersecting)));
+    const io = new IntersectionObserver(([e]) => setShowFx(Boolean(e?.isIntersecting)));
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="exp-hero exp-sec-dark relative isolate">
-      {showBackdrop && (
+    <section
+      ref={sectionRef}
+      className="exp-hero exp-sec-dark relative isolate"
+      style={{ backgroundColor: HERO_BG_COLOR }}
+    >
+      {showFx && (
+        // Neon Ring - Aura (prism) — pure CSS gradient layers, no image.
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <img
-            src={BACKDROP_IMAGE_SRC}
-            alt=""
-            className="h-full w-full scale-110 object-cover opacity-80 blur-md"
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 blur-[70px] md:blur-[101px]"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, transparent 34%, rgba(34,211,238,0.22) 38%, rgba(59,130,246,0.22) 42%, rgba(139,92,246,0.20) 46%, rgba(236,72,153,0.18) 50%, rgba(245,158,11,0.14) 54%, transparent 61%)",
+              mixBlendMode: "screen",
+            }}
           />
-          <div className="absolute inset-0 bg-[var(--exp-graphite)]/40" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 blur-[30px] md:blur-[43px]"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, transparent 42%, rgba(255,255,255,0.16) 46%, transparent 51%)",
+              mixBlendMode: "screen",
+              opacity: 0.85,
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 blur-[20px] md:blur-[29px]"
+            style={{
+              background: "radial-gradient(circle at 50% 50%, #030306 0%, #030306 34%, transparent 35%)",
+              mixBlendMode: "multiply",
+            }}
+          />
         </div>
       )}
 

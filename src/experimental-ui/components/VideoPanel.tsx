@@ -8,8 +8,8 @@ import { RevealText } from "./RevealText";
 /**
  * Company overview video — the last section before the footer.
  *
- * The file lives at /public/company-overview.mp4. To swap it, replace that file
- * or repoint this constant.
+ * The file lives at /public/company-overview-updated.mp4. To swap it, replace
+ * that file or repoint this constant.
  *
  * Full-bleed (edge to edge, no frame) and chrome-free (no native player UI).
  * Muted + autoplay + loop so it plays cleanly on its own; the observers pause it
@@ -26,6 +26,7 @@ export function VideoPanel() {
   const frameRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [videoErrored, setVideoErrored] = useState(false);
 
   // Defer putting the <video> in the DOM until the panel is ~1 screen away.
   useEffect(() => {
@@ -98,7 +99,7 @@ export function VideoPanel() {
       <RevealBlock distance={30} className="mt-10 w-full">
         <div ref={frameRef} className="exp-video-frame">
           <img src={POSTER_SRC} alt="" aria-hidden="true" loading="lazy" className="exp-video-media" />
-          {!reduced && mounted && (
+          {!reduced && mounted && !videoErrored && (
             <video
               ref={videoRef}
               className="exp-video-media"
@@ -113,6 +114,10 @@ export function VideoPanel() {
               disablePictureInPicture
               preload="metadata"
               tabIndex={-1}
+              // If the file 404s or fails to decode, unmount rather than leave a
+              // broken/frozen <video> box — the poster <img> above (always
+              // rendered) is then the only thing visible, a clean fallback.
+              onError={() => setVideoErrored(true)}
             />
           )}
           {/* Covers the "Made in Raylight" watermark baked into the video's

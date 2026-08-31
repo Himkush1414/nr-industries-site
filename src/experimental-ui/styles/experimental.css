@@ -185,43 +185,6 @@
   font-feature-settings: "tnum" 1;
 }
 
-/* ── Navigation (in-flow, sticky, WHITE, subtle change on scroll) ──── */
-.exp-nav {
-  /* light context so exp-ink / exp-faint / .exp-btn utilities resolve dark-on-white */
-  --fg: var(--exp-ink);
-  --fg-dim: var(--exp-ink-dim);
-  --fg-faint: var(--exp-ink-faint);
-  --hair: var(--exp-ink-line);
-  --accent-ink: var(--exp-accent-deep);
-
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background-color: #ffffff;
-  color: var(--exp-ink);
-  border-bottom: 1px solid var(--exp-ink-line);
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.exp-nav[data-scrolled="true"] {
-  background-color: rgba(255, 255, 255, 0.92);
-  border-bottom-color: var(--exp-ink-line);
-  box-shadow: 0 12px 34px -16px rgba(24, 18, 10, 0.28);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-}
-.exp-nav-link {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--exp-ink-dim);
-  transition: color 0.15s;
-}
-.exp-nav-link:hover,
-.exp-nav-link[aria-current="page"] { color: var(--exp-accent-deep); }
-.exp-nav-mobile {
-  background-color: #ffffff;
-  border-top: 1px solid var(--exp-ink-line);
-}
-
 /* ── Appointment button (additive, fixed corner FAB) + modal ──────────
    Purely additive. To remove: delete this block, the <AppointmentFab />
    wiring in the experimental pages, and AppointmentFab/WaveformIcon/
@@ -396,17 +359,6 @@
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────── */
-.exp-hero-oval {
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6);
-}
-.exp-hero-oval img { animation: exp-kenburns 24s ease-in-out infinite alternate; }
-@keyframes exp-kenburns {
-  from { transform: scale(1.03); }
-  to { transform: scale(1.13) translate(-1.5%, 1.5%); }
-}
-
 /* ScrollExpand hero: the vendored component's pre-scroll title picks its own
    font-size via a JS-computed --se-title-size custom property (capped at
    84px) — set inline, so it can't be overridden through that property. We
@@ -529,7 +481,11 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background-color: #000;
+  /* Matches --sec-bg (the section's own dark background, #191c22) rather than a
+     hardcoded #000 — same fix already applied to .exp-herovid-frame: a pure-black
+     fallback flashes visibly against this section's actual dark-graphite
+     background before the poster/video paints. */
+  background-color: var(--sec-bg);
   height: max(75vw, 250px);
   max-height: 72vh;
 }
@@ -687,7 +643,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .exp-dotmesh-scroll,
-  .exp-hero-oval img,
   .exp-text-swap { animation: none !important; }
   .exp-fade-layer { transition: none !important; }
 }

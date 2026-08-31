@@ -13,13 +13,11 @@ import {
   buildMailtoLink,
   buildTelLink,
 } from "@/config/contact";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export function ContactPage() {
-  useDocumentMeta(
-    "Contact Us",
-    "Get in touch with N R Industries - Vill. Rampur Banjaran, Dhaulakuan, Sirmaur, Himachal Pradesh. Call, WhatsApp, or send us a message.",
-  );
+  useDocumentMeta(PAGE_META.contact.title, PAGE_META.contact.description);
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { whyChooseUs } from "@/data/company";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { CertificationsSection } from "../components/CertificationsSection";
 import { Hero } from "../components/Hero";
@@ -19,10 +20,7 @@ import "../styles/experimental.css";
  * every other page) — this page no longer renders its own nav.
  */
 export function ExperimentalHomePage() {
-  useDocumentMeta(
-    "N R Industries",
-    "N R Industries manufactures Power, Distribution, Furnace, Dry Type & Solar Inverter Duty Transformers, Servo Voltage Stabilizers, Compact Substations and HT & LT Panels from Himachal Pradesh, India.",
-  );
+  useDocumentMeta(PAGE_META.home.title, PAGE_META.home.description);
 
   return (
     <div className="exp-root">

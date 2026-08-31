@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { aboutFull, infrastructurePoints, visionStatement, whyChooseUs } from "@/data/company";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useInView } from "@/hooks/useInView";
 
@@ -74,10 +75,7 @@ function WhyChooseTile({
 }
 
 export function AboutPage() {
-  useDocumentMeta(
-    "About Us",
-    "Learn about N R Industries — our vision, infrastructure, and why industrial and commercial clients across India choose our power distribution equipment.",
-  );
+  useDocumentMeta(PAGE_META.about.title, PAGE_META.about.description);
 
   return (
     <>

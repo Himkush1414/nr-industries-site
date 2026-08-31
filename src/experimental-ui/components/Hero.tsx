@@ -110,7 +110,7 @@ export function Hero() {
         src={HERO_IMAGE_SRC}
         mediaType="image"
         alt="Rows of finished transformers on the N R Industries factory floor, ready for dispatch"
-        title="N R Industries"
+        title="N R INDUSTRIES"
         scrollHint="Scroll to explore"
         useWindowScroll
         startWidth={isMobile ? 88 : 46}

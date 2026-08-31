@@ -25,6 +25,7 @@ export function HeroVideoSection() {
   const frameRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [videoErrored, setVideoErrored] = useState(false);
 
   // Defer putting the <video> in the DOM until the section is ~1 screen away.
   useEffect(() => {
@@ -78,7 +79,7 @@ export function HeroVideoSection() {
   return (
     <section className="exp-sec-dark relative isolate">
       <div ref={frameRef} className="exp-herovid-frame">
-        {!reduced && mounted && (
+        {!reduced && mounted && !videoErrored && (
           <video
             ref={videoRef}
             className="exp-herovid-media"
@@ -92,6 +93,10 @@ export function HeroVideoSection() {
             disablePictureInPicture
             preload="metadata"
             tabIndex={-1}
+            // If the file 404s or fails to decode, unmount rather than leave a
+            // broken/frozen <video> box — the frame's own solid background
+            // (.exp-herovid-frame) is then the only thing visible, a clean fallback.
+            onError={() => setVideoErrored(true)}
           />
         )}
         {/* Decorative, non-interactive cover over the baked-in "Made in Raylight"

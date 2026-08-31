@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export function NotFoundPage() {
-  useDocumentMeta("Page Not Found", "The page you're looking for doesn't exist.");
+  useDocumentMeta(PAGE_META.notFound.title, PAGE_META.notFound.description);
 
   return (
     <section className="container-page flex min-h-[60vh] flex-col items-center justify-center gap-4 py-24 text-center">

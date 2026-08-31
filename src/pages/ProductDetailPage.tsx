@@ -90,6 +90,13 @@ export function ProductDetailPage() {
               </span>
             </div>
 
+            <Link
+              to="/specifications"
+              className="text-sm font-semibold text-navy-700 hover:text-gold-600"
+            >
+              View full technical specifications →
+            </Link>
+
             <ContactCtaGroup productName={product.name} />
           </Reveal>
         </div>

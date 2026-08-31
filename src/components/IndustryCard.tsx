@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import type { IndustryItem } from "@/types/content";
 
-export const ICON_BY_INDUSTRY: Record<string, LucideIcon> = {
+const ICON_BY_INDUSTRY: Record<string, LucideIcon> = {
   "Food Industry": Beef,
   "Paper Industry": Recycle,
   "Plastic Industry": FlaskConical,

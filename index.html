@@ -9,7 +9,19 @@
       gtag('js', new Date());
 
       gtag('config', 'AW-18382965681');
+
+      // TODO (Google Analytics / GA4): this site has no GA4 property connected yet.
+      // Create one in analytics.google.com, then replace G-XXXXXXXXXX below with the
+      // real Measurement ID. The gtag.js loader above is shared — no second script
+      // tag needed, just this one extra config call.
+      gtag('config', 'G-XXXXXXXXXX');
     </script>
+    <!-- TODO (Google Search Console): verify this property in
+         search.google.com/search-console, then replace the content value below
+         with the verification code Search Console gives you (or use the DNS/HTML
+         file method instead, whichever you prefer — this meta-tag method is just
+         the one that fits here without an extra file). -->
+    <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_VERIFICATION_CODE" />
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

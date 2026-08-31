@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PageHero } from "@/components/PageHero";
 import { ProductionCapacityChart } from "@/components/ProductionCapacityChart";
 import { Reveal } from "@/components/Reveal";
@@ -5,13 +6,11 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SpecTable } from "@/components/SpecTable";
 import { productionCapacity, technicalSpecs } from "@/data/specifications";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export function SpecificationsPage() {
-  useDocumentMeta(
-    "Technical Specifications",
-    "Technical specifications and annual production capacity for N R Industries' transformer range — rating, cooling, vector group, tap changer, and more.",
-  );
+  useDocumentMeta(PAGE_META.specifications.title, PAGE_META.specifications.description);
 
   return (
     <>
@@ -53,6 +52,19 @@ export function SpecificationsPage() {
                 <ProductionCapacityChart rows={productionCapacity} />
               </div>
             </div>
+          </Reveal>
+
+          <Reveal className="flex flex-col items-start gap-2">
+            <p className="text-sm text-ink-500">
+              Looking for a specific transformer or panel? See the full range with pricing
+              inquiries and detail pages.
+            </p>
+            <Link
+              to="/products"
+              className="text-sm font-semibold text-navy-700 hover:text-gold-600"
+            >
+              Browse our products →
+            </Link>
           </Reveal>
         </div>
       </section>

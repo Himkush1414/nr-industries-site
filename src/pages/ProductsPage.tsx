@@ -1,16 +1,16 @@
 import { PageHero } from "@/components/PageHero";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductListSchema } from "@/components/ProductListSchema";
 import { Reveal } from "@/components/Reveal";
 import { products } from "@/data/products";
+import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export function ProductsPage() {
-  useDocumentMeta(
-    "Products",
-    "Explore N R Industries' full range: Power, Distribution, Furnace, Dry Type & Solar Inverter Duty Transformers, Servo Voltage Stabilizers, Compact Substations, and HT & LT Panels.",
-  );
+  useDocumentMeta(PAGE_META.products.title, PAGE_META.products.description);
   return (
     <>
+      <ProductListSchema products={products} />
       <PageHero
         eyebrow="Our Products"
         title="A complete range of power equipment"

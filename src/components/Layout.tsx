@@ -4,9 +4,7 @@ import { Header } from "@/components/Header";
 import { OrganizationSchema } from "@/components/OrganizationSchema";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AppointmentFab } from "@/experimental-ui/components/AppointmentFab";
-// Unscoped (.exp-appt-fab / .exp-modal-*) styles the fab + its modal need —
-// safe to load site-wide: every other rule in this file is scoped under
-// .exp-root, which only the Home page renders.
+// Styles for the fab + its modal only — safe to load site-wide.
 import "@/experimental-ui/styles/experimental.css";
 
 export function Layout() {

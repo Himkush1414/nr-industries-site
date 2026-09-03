@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { HomePage } from "@/pages/HomePage";
 
 // Code-split every route except Home: Home is what most visitors land on directly, so it
 // stays in the main bundle to avoid an extra request waterfall on first paint. Everything
@@ -27,14 +28,6 @@ const SpecificationsPage = lazy(() =>
   import("@/pages/SpecificationsPage").then((m) => ({ default: m.SpecificationsPage })),
 );
 
-// The Home page — implementation lives in src/experimental-ui/ (originally built as a UI
-// experiment, now promoted to the default and only Home experience).
-const ExperimentalHomePage = lazy(() =>
-  import("@/experimental-ui/pages/ExperimentalHomePage").then((m) => ({
-    default: m.ExperimentalHomePage,
-  })),
-);
-
 /** Minimal, layout-neutral fallback — avoids a flash of empty white or a jarring spinner
  * while a route chunk loads (typically well under 200ms on a reasonable connection). */
 function RouteFallback() {
@@ -50,14 +43,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route element={<Layout />}>
-          <Route
-            index
-            element={
-              <Suspense fallback={<RouteFallback />}>
-                <ExperimentalHomePage />
-              </Suspense>
-            }
-          />
+          <Route index element={<HomePage />} />
           <Route
             path="about"
             element={

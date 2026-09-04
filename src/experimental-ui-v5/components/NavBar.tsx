@@ -4,9 +4,31 @@ import { NavLink, useLocation } from "react-router-dom";
 import { COMPANY_NAME, COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/contact";
 import { products } from "@/data/products";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { ThemeToggle } from "@/experimental-ui-v5/components/ThemeToggle";
-import { useHomeTheme } from "@/hooks/useHomeTheme";
+import { ThemeToggle, type V5Theme } from "@/experimental-ui-v5/components/ThemeToggle";
 
+/**
+ * Source: the real production nav, src/components/Header.tsx — copied
+ * exactly for structure, links, dropdown, and mobile menu (confirmed it has
+ * no existing light/dark toggle). Two categories of change from the source:
+ *   1. The logo/"Home" targets point at /lab/v5 instead of "/" (same
+ *      self-referencing pattern every Lab's copied nav already uses).
+ *   2. A ThemeToggle is grafted into the right-side actions row (desktop)
+ *      and the mobile menu — additive, not a replacement of any link.
+ *
+ * Fix (round 2, item 5): the real nav's hardcoded navy-950/ink-500/etc.
+ * Tailwind classes never responded to this page's toggle, even though the
+ * toggle is wired to visibly affect the nav — every color-bearing class
+ * below is now the theme-aware v5-nav- or v5-chrome- prefixed equivalent
+ * instead (see experimental-v5.css). Layout/spacing/structure are untouched.
+ *
+ * Fix (round 3, logo): /logo.webp has an opaque white backing baked in (no
+ * alpha channel — confirmed via metadata, channels: 3, hasAlpha: false), so
+ * it rendered as a visible rectangular tile on the nav bar. That file is
+ * shared by the real site and every other lab, so it isn't touched here —
+ * instead this is a genuinely transparent PNG cut from it (the source backed
+ * onto a flat near-white, so a calibrated white-key + color-decontamination
+ * pass removed it cleanly with no fringe) saved as its own V5-only asset.
+ */
 const NAV_LINKS = [
   { to: "/about", label: "About" },
   { to: "/specifications", label: "Specifications" },
@@ -19,40 +41,25 @@ function NavItem({ to, label, end }: { to: string; label: string; end?: boolean 
     <NavLink
       to={to}
       end={end}
-      className={({ isActive }) =>
-        `px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
-          isActive ? "text-navy-950" : "text-ink-500 hover:text-navy-950"
-        }`
-      }
+      className="v5-nav-link px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150"
+      style={({ isActive }) => (isActive ? { color: "var(--v5-chrome-fg)" } : undefined)}
     >
       {label}
     </NavLink>
   );
 }
 
-export function Header() {
+export function NavBar({ theme, onToggleTheme }: { theme: V5Theme; onToggleTheme: () => void }) {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { theme, toggleTheme } = useHomeTheme();
-  // Task 3: the toggle is visible on every page for nav consistency, but only
-  // does anything on the homepage — HomePage.tsx is the only page that reads
-  // `theme` to render differently, so a click anywhere else would be inert
-  // regardless, but gating it here keeps that explicit and avoids writing to
-  // localStorage from pages the toggle has no visible effect on.
-  const isHomeRoute = location.pathname === "/";
-  const handleThemeToggle = () => {
-    if (isHomeRoute) toggleTheme();
-  };
 
-  // Close menus on route change.
   useEffect(() => {
     setIsProductsOpen(false);
     setIsMobileOpen(false);
   }, [location.pathname]);
 
-  // Close products dropdown on outside click / Escape.
   useEffect(() => {
     function onClick(e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -73,24 +80,10 @@ export function Header() {
   const isProductsRouteActive = location.pathname.startsWith("/products");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur">
+    <header className="v5-nav-surface sticky top-0 z-50 border-b backdrop-blur">
       <div className="container-page flex h-[55px] items-center justify-between gap-4 py-3">
-        {/* Logo
-            Fix (Task 2): the prior fix for the opaque-box logo was never an
-            SVG (searched git log + the codebase — none exists anywhere).
-            It was a transparent PNG: /logo.webp has no alpha channel at all
-            (confirmed via metadata — channels: 3, hasAlpha: false), so it
-            rendered as a visible rectangular tile; the fix was a calibrated
-            white-key + color-decontamination pass producing a genuinely
-            transparent PNG, applied only to Lab V5's own nav clone
-            (src/experimental-ui-v5/components/NavBar.tsx) at the time. Now
-            that V5's content is the real homepage but this real, shared
-            Header renders its nav (not V5's clone — see HomePage.tsx), that
-            fix had never reached here. Reusing the same asset (not
-            re-deriving it, not inventing a new treatment) makes it apply
-            site-wide in one place, since this Header is the only nav on
-            every real page. */}
-        <NavLink to="/" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
+        {/* Logo */}
+        <NavLink to="/lab/v5" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
           <img
             src="/logo-v5-transparent.png"
             alt={COMPANY_NAME}
@@ -103,7 +96,7 @@ export function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-          <NavItem to="/" label="Home" end />
+          <NavItem to="/lab/v5" label="Home" end />
           <NavItem to="/about" label="About" />
 
           <div
@@ -118,9 +111,8 @@ export function Header() {
               onFocus={() => setIsProductsOpen(true)}
               aria-expanded={isProductsOpen}
               aria-haspopup="true"
-              className={`flex items-center gap-1 px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
-                isProductsRouteActive ? "text-navy-950" : "text-ink-500 hover:text-navy-950"
-              }`}
+              className="v5-nav-link flex items-center gap-1 px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150"
+              style={isProductsRouteActive ? { color: "var(--v5-chrome-fg)" } : undefined}
             >
               Products
               <ChevronDown
@@ -129,13 +121,13 @@ export function Header() {
               />
             </button>
             {isProductsOpen && (
-              <div className="absolute top-full left-1/2 z-50 mt-2 w-[26rem] -translate-x-1/2 rounded border border-ink-100 bg-white p-3 shadow-xl shadow-navy-950/10">
+              <div className="v5-nav-dropdown absolute top-full left-1/2 z-50 mt-2 w-[26rem] -translate-x-1/2 rounded border p-3 shadow-xl">
                 <div className="grid grid-cols-2 gap-1">
                   {products.map((product) => (
                     <NavLink
                       key={product.slug}
                       to={`/products/${product.slug}`}
-                      className="rounded px-3 py-2 text-sm font-medium text-ink-700 hover:bg-navy-50 hover:text-navy-950"
+                      className="v5-nav-dropdown-item rounded px-3 py-2 text-sm font-medium"
                     >
                       {product.name}
                     </NavLink>
@@ -143,7 +135,7 @@ export function Header() {
                 </div>
                 <NavLink
                   to="/products"
-                  className="mt-2 flex items-center justify-between rounded bg-navy-50 px-3 py-2 text-sm font-semibold text-navy-800 hover:bg-navy-100"
+                  className="v5-nav-chip mt-2 flex items-center justify-between rounded px-3 py-2 text-sm font-semibold"
                 >
                   View All Products
                 </NavLink>
@@ -158,20 +150,11 @@ export function Header() {
 
         {/* Right-side actions */}
         <div className="flex items-center gap-2">
-          {/* Task 3: present on every page, only wired to actually toggle on
-              the homepage (handleThemeToggle no-ops elsewhere). ThemeToggle's
-              own styling reads CSS custom properties that only resolve
-              inside a ".v5-root"-classed ancestor (see experimental-v5.css)
-              — HomePage.tsx supplies that on "/", but this button also
-              renders on every other page, so it gets its own tiny scoped
-              wrapper rather than relying on inherited/unset colors there. */}
-          <span className="v5-root inline-flex">
-            <ThemeToggle theme={theme} onToggle={handleThemeToggle} />
-          </span>
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <a
             href={buildTelLink()}
             aria-label={`Call ${COMPANY_PHONE_DISPLAY}`}
-            className="hidden h-[33px] w-[33px] items-center justify-center rounded-full border border-ink-100 text-navy-800 transition-colors duration-150 hover:border-navy-800 sm:flex"
+            className="v5-nav-icon-btn hidden h-[33px] w-[33px] items-center justify-center rounded-full border transition-colors duration-150 sm:flex"
           >
             <Phone className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
@@ -182,7 +165,7 @@ export function Header() {
             onClick={() => setIsMobileOpen((v) => !v)}
             aria-expanded={isMobileOpen}
             aria-label="Toggle menu"
-            className="flex h-10 w-10 items-center justify-center rounded border border-ink-100 text-navy-950 lg:hidden"
+            className="v5-nav-icon-btn flex h-10 w-10 items-center justify-center rounded border lg:hidden"
           >
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -191,49 +174,35 @@ export function Header() {
 
       {/* Mobile menu */}
       {isMobileOpen && (
-        <nav
-          aria-label="Mobile primary"
-          className="max-h-[calc(100vh-55px)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
-        >
+        <nav aria-label="Mobile primary" className="v5-nav-surface-solid max-h-[calc(100vh-55px)] overflow-y-auto border-t lg:hidden">
           <div className="container-page flex flex-col gap-1 py-4">
-            <NavLink
-              to="/"
-              end
-              className="rounded px-3 py-2.5 text-sm font-semibold text-ink-700 hover:bg-navy-50"
-            >
+            <NavLink to="/lab/v5" end className="v5-nav-dropdown-item rounded px-3 py-2.5 text-sm font-semibold">
               Home
             </NavLink>
-            <NavLink to="/about" className="rounded px-3 py-2.5 text-sm font-semibold text-ink-700 hover:bg-navy-50">
+            <NavLink to="/about" className="v5-nav-dropdown-item rounded px-3 py-2.5 text-sm font-semibold">
               About
             </NavLink>
 
-            <span className="px-3 pt-3 pb-1 text-xs font-semibold tracking-wide text-ink-300 uppercase">
+            <span className="v5-chrome-fg-faint px-3 pt-3 pb-1 text-xs font-semibold tracking-wide uppercase">
               Products
             </span>
             {products.map((product) => (
               <NavLink
                 key={product.slug}
                 to={`/products/${product.slug}`}
-                className="rounded px-3 py-2 text-sm text-ink-700 hover:bg-navy-50"
+                className="v5-nav-dropdown-item rounded px-3 py-2 text-sm"
               >
                 {product.name}
               </NavLink>
             ))}
-            <NavLink
-              to="/products"
-              className="rounded px-3 py-2.5 text-sm font-semibold text-navy-800 hover:bg-navy-50"
-            >
+            <NavLink to="/products" className="v5-nav-chip rounded px-3 py-2.5 text-sm font-semibold">
               View All Products
             </NavLink>
 
-            <div className="my-2 h-px bg-ink-100" />
+            <div className="my-2 h-px" style={{ backgroundColor: "var(--v5-chrome-border)" }} />
 
             {NAV_LINKS.slice(1).map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className="rounded px-3 py-2.5 text-sm font-semibold text-ink-700 hover:bg-navy-50"
-              >
+              <NavLink key={link.to} to={link.to} className="v5-nav-dropdown-item rounded px-3 py-2.5 text-sm font-semibold">
                 {link.label}
               </NavLink>
             ))}
@@ -242,14 +211,12 @@ export function Header() {
               <WhatsAppButton className="flex-1" />
               <a
                 href={buildTelLink()}
-                className="flex flex-1 items-center justify-center gap-2 rounded border border-navy-800 px-5 py-3 text-sm font-semibold text-navy-800"
+                className="v5-nav-icon-btn flex flex-1 items-center justify-center gap-2 rounded border px-5 py-3 text-sm font-semibold"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 Call
               </a>
-              <span className="v5-root inline-flex">
-                <ThemeToggle theme={theme} onToggle={handleThemeToggle} />
-              </span>
+              <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             </div>
           </div>
         </nav>

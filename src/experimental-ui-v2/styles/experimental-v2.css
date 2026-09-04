@@ -1,0 +1,187 @@
+/*
+  Experiment v2 — isolated design tokens. Everything here is scoped under
+  .v2-root (only rendered on the /lab/v2 route) so it never affects the
+  live site's styling. Light is the default; [data-theme="dark"] on the
+  same root overrides the palette for the toggle.
+*/
+
+.v2-root {
+  --v2-bg: #f7f6f3;
+  --v2-bg-raised: #ffffff;
+  --v2-fg: #131318;
+  --v2-fg-dim: #5a5a66;
+  --v2-fg-faint: #8b8b96;
+  --v2-border: #e6e5e0;
+  --v2-accent: #4338ca;
+  --v2-accent-bright: #4f46e5;
+  --v2-accent-fg: #ffffff;
+  --v2-accent-soft: rgba(67, 56, 202, 0.08);
+
+  /* The carousel's "dark card" motif is a fixed design choice from the
+     reference (dark cards on a light page) — independent of the light/dark
+     toggle, so it does not change between themes. */
+  --v2-card-dark-bg: #131318;
+  --v2-card-dark-bg-raised: #1c1c24;
+  --v2-card-dark-fg: #f3f3f6;
+  --v2-card-dark-border: #2c2c36;
+
+  /* Footer is deliberately always light, per spec — independent of the toggle. */
+  --v2-footer-bg: #ffffff;
+  --v2-footer-fg: #131318;
+  --v2-footer-fg-dim: #6b6b76;
+  --v2-footer-border: #e6e5e0;
+
+  background-color: var(--v2-bg);
+  color: var(--v2-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v2-root[data-theme="dark"] {
+  --v2-bg: #0b0b0f;
+  --v2-bg-raised: #16161d;
+  --v2-fg: #f2f2f6;
+  --v2-fg-dim: #a6a6b3;
+  --v2-fg-faint: #6e6e7a;
+  --v2-border: #26262f;
+  --v2-accent: #6366f1;
+  --v2-accent-bright: #818cf8;
+  --v2-accent-fg: #ffffff;
+  --v2-accent-soft: rgba(99, 102, 241, 0.14);
+}
+
+.v2-surface { background-color: var(--v2-bg); color: var(--v2-fg); }
+.v2-surface-raised { background-color: var(--v2-bg-raised); }
+.v2-border { border-color: var(--v2-border); }
+.v2-fg { color: var(--v2-fg); }
+.v2-fg-dim { color: var(--v2-fg-dim); }
+.v2-fg-faint { color: var(--v2-fg-faint); }
+.v2-accent-text { color: var(--v2-accent); }
+.v2-root[data-theme="dark"] .v2-accent-text { color: var(--v2-accent-bright); }
+
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.v2-btn:hover { transform: translateY(-1px); }
+.v2-btn-solid {
+  background-color: var(--v2-accent);
+  color: var(--v2-accent-fg);
+  box-shadow: 0 12px 28px -12px var(--v2-accent);
+}
+.v2-btn-solid:hover { background-color: var(--v2-accent-bright); }
+.v2-btn-outline {
+  border: 1px solid var(--v2-border);
+  color: var(--v2-fg);
+}
+.v2-btn-outline:hover { border-color: var(--v2-accent); color: var(--v2-accent); }
+
+.v2-card {
+  background-color: var(--v2-bg-raised);
+  border: 1px solid var(--v2-border);
+  border-radius: 1.25rem;
+}
+
+/* ── Dark carousel cards (fixed dark, independent of the toggle) ────────── */
+.v2-card-dark {
+  background-color: var(--v2-card-dark-bg);
+  border: 1px solid var(--v2-card-dark-border);
+  color: var(--v2-card-dark-fg);
+  border-radius: 1.5rem;
+}
+
+/* ── Theme toggle switch ──────────────────────────────────────────────── */
+.v2-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--v2-border);
+  color: var(--v2-fg);
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+.v2-theme-toggle:hover {
+  border-color: var(--v2-accent);
+  color: var(--v2-accent);
+}
+
+/* ── Halftone photo treatment (hero + closing CTA) ───────────────────────
+   Real transformer photograph, desaturated + contrast-boosted, with a dot-
+   screen layer blended on top so the underlying luminance modulates dot
+   visibility — a CSS/SVG approximation of a print halftone screen, not a
+   pixel-level canvas render. Cheap, reliable across viewport sizes and both
+   themes, and doesn't require reprocessing the source image. */
+.v2-halftone {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+}
+.v2-halftone img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.28) brightness(0.94);
+}
+.v2-halftone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--v2-accent) 1.15px, transparent 1.15px);
+  background-size: 6px 6px;
+  mix-blend-mode: hard-light;
+  opacity: 0.9;
+}
+.v2-halftone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 40%, var(--v2-bg) 130%);
+  opacity: 0.55;
+}
+
+/* ── Carousel track ──────────────────────────────────────────────────── */
+.v2-carousel-track {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.v2-carousel-track::-webkit-scrollbar { display: none; }
+.v2-carousel-item { scroll-snap-align: start; }
+
+.v2-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background-color: var(--v2-border);
+  transition: background-color 0.2s ease, width 0.2s ease;
+}
+.v2-dot[data-active="true"] {
+  width: 1.4rem;
+  background-color: var(--v2-accent);
+}
+
+.v2-arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--v2-border);
+  color: var(--v2-fg);
+  transition: border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+.v2-arrow-btn:hover:not(:disabled) { border-color: var(--v2-accent); color: var(--v2-accent); }
+.v2-arrow-btn:disabled { opacity: 0.35; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-root * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+}

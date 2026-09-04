@@ -1,0 +1,172 @@
+/*
+  Lab V3 — isolated design tokens, sampled from the reference recording's
+  near-monochrome indigo system. Scoped under .v3-root (only rendered on the
+  /lab/v3 route) so it never affects the live site or Lab V2.
+*/
+
+.v3-root {
+  --v3-bg-start: #000000;
+  --v3-bg-end: #1a1b3d;
+
+  --v3-glass-start: #2b2e44;
+  --v3-glass-end: #3f427d;
+  --v3-glass-border: rgba(223, 224, 243, 0.1);
+
+  --v3-accent-start: #494f8d;
+  --v3-accent-end: #564b96;
+
+  --v3-highlight-start: #dfe0f3;
+  --v3-highlight-end: #fcfbfe;
+
+  --v3-fg: var(--v3-highlight-end);
+  --v3-fg-dim: #a7a8c9;
+  --v3-fg-faint: #6f7099;
+
+  background: var(--v3-bg-start);
+  color: var(--v3-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v3-page-bg {
+  background: radial-gradient(ellipse 120% 60% at 50% 0%, var(--v3-bg-end), var(--v3-bg-start) 70%);
+}
+
+.v3-fg { color: var(--v3-fg); }
+.v3-fg-dim { color: var(--v3-fg-dim); }
+.v3-fg-faint { color: var(--v3-fg-faint); }
+.v3-accent-text {
+  background: linear-gradient(135deg, var(--v3-highlight-start), var(--v3-highlight-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.v3-micro-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--v3-fg-faint);
+}
+
+.v3-glass {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--v3-glass-start) 65%, transparent), color-mix(in srgb, var(--v3-glass-end) 45%, transparent));
+  border: 1px solid var(--v3-glass-border);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.v3-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.v3-btn:hover { transform: translateY(-2px); }
+.v3-btn-solid {
+  background: linear-gradient(135deg, var(--v3-accent-start), var(--v3-accent-end));
+  color: var(--v3-highlight-end);
+  box-shadow: 0 16px 40px -16px var(--v3-accent-end);
+}
+.v3-btn-outline {
+  border: 1px solid var(--v3-glass-border);
+  color: var(--v3-fg);
+}
+.v3-btn-outline:hover { border-color: var(--v3-highlight-start); }
+
+/* ── Soft ambient glow — reused behind headings/CTAs and as the hero's
+   fallback when the R3F cursor blob is skipped (reduced-motion / no WebGL).
+   CSS-blur radial gradient in the palette's highlight/accent range. ── */
+.v3-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--v3-highlight-start) 55%, transparent) 0%, color-mix(in srgb, var(--v3-accent-end) 45%, transparent) 45%, transparent 72%);
+  filter: blur(60px);
+}
+
+.v3-border { border-color: var(--v3-glass-border); }
+
+/* ── Bulge hover card ─────────────────────────────────────────────────── */
+.v3-bulge-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  transform: perspective(800px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.v3-bulge-card img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.v3-bulge-card:hover img {
+  transform: scale(1.12);
+}
+.v3-bulge-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 10%, rgba(0, 0, 0, 0.1) 55%, transparent 80%);
+}
+
+/* ── Stats bars ───────────────────────────────────────────────────────── */
+.v3-bar-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--v3-glass-end) 40%, transparent);
+  overflow: hidden;
+}
+.v3-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--v3-accent-start), var(--v3-highlight-start));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ── Carousel dots / arrows (shared with Lab V2's naming, different tokens) */
+.v3-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--v3-glass-end);
+  transition: background-color 0.2s ease, width 0.2s ease;
+}
+.v3-dot[data-active="true"] {
+  width: 1.4rem;
+  background: var(--v3-highlight-start);
+}
+.v3-arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--v3-glass-border);
+  color: var(--v3-fg);
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+.v3-arrow-btn:hover:not(:disabled) { border-color: var(--v3-highlight-start); }
+.v3-arrow-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* ── Accordion ────────────────────────────────────────────────────────── */
+.v3-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v3-accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.v3-accordion-panel > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-root * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+}

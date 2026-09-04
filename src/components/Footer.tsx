@@ -22,37 +22,62 @@ const QUICK_LINKS = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+/**
+ * Fix (round: PRODUCTION ROUTING CHANGE follow-ups): this used to accept a
+ * `variant` prop ("dark" default everywhere, "light" only on the homepage,
+ * via Layout.tsx's own route check) after the homepage's duplicate-footer
+ * fix ported ClosingStatementSection's giant low-opacity background
+ * wordmark in here. A later task asked for that same white/watermarked
+ * treatment on every real page, not just the homepage — which leaves no
+ * remaining caller for the dark variant, so it's removed rather than kept
+ * as a dead code path: this is now the one footer, unconditionally, for
+ * every real page (Layout.tsx renders it with no prop). It is intentionally
+ * static — it does not read the homepage's light/dark toggle state
+ * (useHomeTheme) at all, on any page, including the homepage itself.
+ *
+ * Colors are the same white-surface set picked during the original
+ * homepage-only fix: navy/gold/ink tokens already used elsewhere on light
+ * surfaces across this site (e.g. ProductCard.tsx, Header.tsx), not new
+ * ones invented for this component.
+ */
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-950 text-navy-100">
-      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+    <footer className="relative overflow-hidden border-t border-ink-100 bg-white text-ink-500">
+      <span
+        aria-hidden="true"
+        className="font-heading pointer-events-none absolute -bottom-[6vw] left-1/2 -translate-x-1/2 text-[18vw] leading-none font-bold whitespace-nowrap text-navy-950 opacity-[0.04] select-none"
+      >
+        {COMPANY_NAME.toUpperCase()}
+      </span>
+
+      <div className="container-page relative z-10 grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         {/* Company */}
         <div className="flex flex-col gap-4 lg:col-span-1">
           <div className="flex items-center gap-3">
             <div
               role="img"
               aria-label="Company logo — pending"
-              className="flex h-10 w-10 items-center justify-center rounded bg-white/10 text-sm font-bold text-gold-400"
+              className="flex h-10 w-10 items-center justify-center rounded bg-navy-950 text-sm font-bold text-gold-400"
             >
               NR
             </div>
-            <span className="font-heading text-lg font-bold text-white">{COMPANY_NAME}</span>
+            <span className="font-heading text-lg font-bold text-navy-950">{COMPANY_NAME}</span>
           </div>
-          <p className="text-sm leading-relaxed text-navy-100/70">
+          <p className="text-sm leading-relaxed text-ink-500">
             Manufacturer of Power &amp; Distribution Transformers, Compact Substations, Servo
             Voltage Stabilizers, and HT &amp; LT Panels — built on decades of experience in power
             distribution.
           </p>
-          <span className="text-xs font-medium tracking-wide text-gold-400 uppercase">
+          <span className="text-xs font-medium tracking-wide text-gold-600 uppercase">
             {COMPANY_WEBSITE_DISPLAY}
           </span>
         </div>
 
         {/* Quick links */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold tracking-wide text-white uppercase">
+          <h3 className="mb-4 text-sm font-semibold tracking-wide text-navy-950 uppercase">
             Quick Links
           </h3>
           <ul className="flex flex-col gap-2.5">
@@ -60,7 +85,7 @@ export function Footer() {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className="text-sm text-navy-100/70 transition-colors duration-150 hover:text-gold-400"
+                  className="text-sm text-ink-500 transition-colors duration-150 hover:text-gold-600"
                 >
                   {link.label}
                 </Link>
@@ -71,7 +96,7 @@ export function Footer() {
 
         {/* Products */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold tracking-wide text-white uppercase">
+          <h3 className="mb-4 text-sm font-semibold tracking-wide text-navy-950 uppercase">
             Products
           </h3>
           <ul className="flex flex-col gap-2.5">
@@ -79,7 +104,7 @@ export function Footer() {
               <li key={product.slug}>
                 <Link
                   to={`/products/${product.slug}`}
-                  className="text-sm text-navy-100/70 transition-colors duration-150 hover:text-gold-400"
+                  className="text-sm text-ink-500 transition-colors duration-150 hover:text-gold-600"
                 >
                   {product.name}
                 </Link>
@@ -90,12 +115,12 @@ export function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="mb-4 text-sm font-semibold tracking-wide text-white uppercase">
+          <h3 className="mb-4 text-sm font-semibold tracking-wide text-navy-950 uppercase">
             Get in Touch
           </h3>
-          <ul className="flex flex-col gap-3 text-sm text-navy-100/70">
+          <ul className="flex flex-col gap-3 text-sm text-ink-500">
             <li className="flex items-start gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" aria-hidden="true" />
               <span>
                 {COMPANY_ADDRESS_LINES.map((line) => (
                   <span key={line} className="block">
@@ -105,19 +130,19 @@ export function Footer() {
               </span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
+              <Phone className="h-4 w-4 shrink-0 text-gold-600" aria-hidden="true" />
               <div className="flex flex-col gap-1">
-                <a href={buildTelLink()} className="hover:text-gold-400">
+                <a href={buildTelLink()} className="hover:text-gold-600">
                   {COMPANY_PHONE_DISPLAY}
                 </a>
-                <a href={buildTelLink(COMPANY_PHONE_TEL_2)} className="hover:text-gold-400">
+                <a href={buildTelLink(COMPANY_PHONE_TEL_2)} className="hover:text-gold-600">
                   {COMPANY_PHONE_DISPLAY_2}
                 </a>
               </div>
             </li>
             <li className="flex items-center gap-2.5">
-              <Mail className="h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
-              <a href={buildMailtoLink()} className="hover:text-gold-400">
+              <Mail className="h-4 w-4 shrink-0 text-gold-600" aria-hidden="true" />
+              <a href={buildMailtoLink()} className="hover:text-gold-600">
                 {COMPANY_EMAIL}
               </a>
             </li>
@@ -125,8 +150,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-navy-100/60 sm:flex-row">
+      <div className="relative z-10 border-t border-ink-100">
+        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-ink-500 sm:flex-row">
           <span>
             © {year} {COMPANY_NAME}. All rights reserved.
           </span>

@@ -1,0 +1,108 @@
+/*
+  Lab V4 — isolated design tokens. Deliberately the opposite direction from
+  Lab V3: light/white base, dark text, blue as the one accent (not purple/
+  indigo). Scoped under .v4-root (only rendered on the /lab/v4 route) so it
+  never affects the live site, Lab V2, or Lab V3.
+*/
+
+.v4-root {
+  --v4-bg: #ffffff;
+  --v4-bg-alt: #f6f8ff;
+  --v4-surface: #ffffff;
+  --v4-border: #e2e8f5;
+
+  --v4-fg: #0f172a;
+  --v4-fg-dim: #475569;
+  --v4-fg-faint: #94a3b8;
+
+  --v4-accent: #2563eb;
+  --v4-accent-bright: #3b82f6;
+  --v4-accent-soft: rgba(37, 99, 235, 0.08);
+  --v4-accent-fg: #ffffff;
+
+  background-color: var(--v4-bg);
+  color: var(--v4-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v4-fg { color: var(--v4-fg); }
+.v4-fg-dim { color: var(--v4-fg-dim); }
+.v4-fg-faint { color: var(--v4-fg-faint); }
+.v4-accent-text { color: var(--v4-accent); }
+
+.v4-micro-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v4-accent);
+}
+
+.v4-card {
+  background-color: var(--v4-surface);
+  border: 1px solid var(--v4-border);
+  border-radius: 1.25rem;
+}
+
+.v4-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.v4-btn:hover { transform: translateY(-2px); }
+.v4-btn-solid {
+  background-color: var(--v4-accent);
+  color: var(--v4-accent-fg);
+  box-shadow: 0 16px 36px -16px var(--v4-accent);
+}
+.v4-btn-solid:hover { background-color: var(--v4-accent-bright); }
+.v4-btn-outline {
+  border: 1px solid var(--v4-border);
+  color: var(--v4-fg);
+}
+.v4-btn-outline:hover { border-color: var(--v4-accent); color: var(--v4-accent); }
+
+/* Soft ambient blue glow, reused behind headings/CTAs — same "glow language" as
+   the rest of this page's accent treatment, just tuned to the light backdrop. */
+.v4-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, rgba(37, 99, 235, 0.1) 45%, transparent 72%);
+  filter: blur(60px);
+}
+
+.v4-bar-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--v4-bg-alt);
+  overflow: hidden;
+}
+.v4-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--v4-accent), var(--v4-accent-bright));
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.v4-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v4-accordion-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.v4-accordion-panel > div {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v4-root * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+}

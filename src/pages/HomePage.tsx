@@ -1,207 +1,64 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { CertificationMarquee } from "@/components/CertificationMarquee";
-import { ProductMarquee } from "@/components/ProductMarquee";
-import { AmbientFlowBackground } from "@/components/AmbientFlowBackground";
-import { CertificationStrip } from "@/components/CertificationStrip";
-import { ClientMarquee } from "@/components/ClientMarquee";
-import { FeatureRow } from "@/components/FeatureRow";
-import { HomeAboutSection } from "@/components/HomeAboutSection";
-import { IndustryIconChip } from "@/components/IndustryCard";
-import { ProductCard } from "@/components/ProductCard";
-import { Reveal } from "@/components/Reveal";
-import { SectionHeading } from "@/components/SectionHeading";
-import { StatStrip } from "@/components/StatStrip";
-import { industries, whyChooseUs } from "@/data/company";
-import { products } from "@/data/products";
+import { AboutSection } from "@/experimental-ui-v5/components/AboutSection";
+import { Hero } from "@/experimental-ui-v5/components/Hero";
+import { IndustriesShowcaseSection } from "@/experimental-ui-v5/components/IndustriesShowcaseSection";
+import { ProductsSection } from "@/experimental-ui-v5/components/ProductsSection";
+import { StatsStrip } from "@/experimental-ui-v5/components/StatsSection";
+import { TestedCertifiedSection } from "@/experimental-ui-v5/components/TestedCertifiedSection";
+import { TrustedSection } from "@/experimental-ui-v5/components/TrustedSection";
+import "@/experimental-ui-v5/styles/experimental-v5.css";
 import { PAGE_META } from "@/data/seo";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { useHomeTheme } from "@/hooks/useHomeTheme";
 
+/**
+ * PRODUCTION ROUTING CHANGE: this is now Lab V5's homepage content, promoted
+ * to the real production homepage route (see the task of that name). The
+ * former content living here is preserved unaltered at src/experimental-ui-v1
+ * (/lab/v1). Lab V5 itself (src/experimental-ui-v5/, /lab/v5) is untouched —
+ * every component imported below is used exactly as V5 defines it.
+ *
+ * Differs from V5's own /lab/v5 page assembly
+ * (src/experimental-ui-v5/pages/ExperimentalV5HomePage.tsx) in three ways,
+ * all because this page is wrapped in the real <Layout>
+ * (src/components/Layout.tsx) rather than being a standalone lab page:
+ *   1. No <NavBar/>. V5's own NavBar is a clone of the real Header that
+ *      diverged to add a light/dark toggle (confirmed — see NavBar.tsx's own
+ *      comments). Layout already renders the one real, shared <Header/> for
+ *      every production page, so using V5's cloned nav here would duplicate
+ *      shared layout AND leave two different nav implementations live at
+ *      once. This page relies entirely on Layout's Header instead.
+ *   2. No <ClosingStatementSection/>. Fix (Task 1, follow-up task): this
+ *      used to render directly above the real <Footer/>, producing two
+ *      near-identical "company info / quick links / products / get in
+ *      touch / copyright" blocks stacked back to back. It's removed here
+ *      entirely; its one genuinely distinct visual element (the giant
+ *      low-opacity background wordmark) now lives in Footer.tsx's own
+ *      variant="light" treatment instead (see Footer.tsx and Layout.tsx),
+ *      which only applies on this route.
+ *   3. Hero's theme prop and this wrapper's data-theme now come from
+ *      useHomeTheme() (Task 3: site-wide toggle button, homepage-only
+ *      effect) instead of a hardcoded "light" — Header.tsx renders the
+ *      toggle on every page via the same shared context, but only ever
+ *      calls toggleTheme() when the current route is "/", so this is the
+ *      only place that reads the resulting theme value.
+ * useDocumentMeta below is unchanged from what this route always called —
+ * same PAGE_META.home data, so title/description/canonical/OG/Twitter tags
+ * all carry over exactly as they were (canonical + OG url are derived from
+ * the current pathname, which is still "/").
+ */
 export function HomePage() {
   useDocumentMeta(PAGE_META.home.title, PAGE_META.home.description);
+  const { theme } = useHomeTheme();
 
   return (
-    <>
-      {/* Hero */}
-      <section className="relative flex min-h-[60vh] flex-col justify-center overflow-hidden bg-navy-950 sm:min-h-[72vh] lg:min-h-[calc(92vh-70px)]">
-        <img
-          src="/hero-home.webp"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          decoding="async"
-          fetchPriority="high"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-950/85 via-navy-950/70 to-navy-950/90"
-          aria-hidden="true"
-        />
-        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
-
-        <div className="container-page relative flex flex-col gap-10 py-16 sm:py-20 lg:py-24">
-          <Reveal className="flex max-w-3xl flex-col gap-6">
-            <span className="flex items-center gap-2 text-xs font-semibold tracking-[0.22em] text-gold-400 uppercase">
-              <span className="h-px w-8 bg-gold-400" aria-hidden="true" />
-              Power &amp; Distribution Equipment Manufacturer
-            </span>
-            <h1 className="font-heading text-5xl font-bold tracking-tight text-white">
-              <span className="uppercase">N R</span>{" "}
-              <span className="text-gold-400 uppercase">Industries</span>
-            </h1>
-            <p className="font-heading text-xl font-semibold text-gold-400">
-              Power at Best
-            </p>
-            <p className="max-w-2xl text-base leading-relaxed text-navy-100/85">
-              Manufacturer of Power &amp; Distribution Transformers, Compact Substations, Servo
-              Voltage Stabilizers, and HT &amp; LT Panels — engineered for industrial, commercial,
-              and utility-scale power distribution.
-            </p>
-            <div className="flex flex-wrap items-center gap-5 pt-2">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 rounded bg-gold-500 px-7 py-4 text-sm font-semibold tracking-wide text-navy-950 shadow-lg shadow-gold-900/20 transition-all duration-150 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                View Our Products
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white/90 transition-colors duration-150 hover:text-gold-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Contact Us
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-          </Reveal>
-
-          <Reveal delayMs={150}>
-            <StatStrip />
-          </Reveal>
-        </div>
-      </section>
-
-      <CertificationMarquee />
-      <ProductMarquee />
-
-      {/* About teaser */}
-      <HomeAboutSection />
-
-      {/* Products */}
-      <section className="bg-navy-50 py-16 sm:py-20">
-        {/* Intro band only — ambient flow background stops here, not behind
-            the product cards below. */}
-        <div className="relative mb-10 overflow-hidden bg-navy-900 py-16 sm:mb-14 sm:py-20">
-          <AmbientFlowBackground />
-          <div className="container-page relative z-10">
-            <Reveal>
-              <SectionHeading
-                eyebrow="Our Products"
-                title="A complete range of power equipment"
-                subtitle="From power plants to precision electronics, engineered products for every stage of the distribution network."
-                align="center"
-                light
-              />
-            </Reveal>
-          </div>
-        </div>
-        <div className="container-page">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {products.map((product, i) => (
-              <Reveal key={product.slug} delayMs={i * 40} className="h-full">
-                <ProductCard product={product} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why choose us — alternating feature rows */}
-      <section id="why-choose-us" className="py-16 sm:py-20">
-        {/* Intro band only — ambient flow background stops here, not behind
-            the rows below (each row has its own separate scroll-linked wipe). */}
-        <div className="relative mb-10 overflow-hidden bg-navy-900 py-16 sm:mb-14 sm:py-20">
-          <AmbientFlowBackground />
-          <div className="container-page relative z-10">
-            <Reveal>
-              <SectionHeading
-                eyebrow="Why Choose Us"
-                title="Engineered for performance and longevity"
-                align="center"
-                subtitle="Every transformer is engineered to the load, voltage, and environmental demands of its site — validated through in-house testing, not a generic spec sheet. It's the standard trusted by power plants, refineries, and utility networks across India, backed by our team long after installation."
-                light
-              />
-            </Reveal>
-          </div>
-        </div>
-        <div className="container-page flex flex-col gap-14 sm:gap-16">
-          {whyChooseUs.map((item, i) => (
-            <FeatureRow
-              key={item.title}
-              title={item.title}
-              description={item.description}
-              imageLabel={item.title}
-              imageSrc={item.imageSrc}
-              reverse={i % 2 === 1}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Certifications */}
-      <section className="relative mb-6 overflow-hidden bg-navy-900 py-16 sm:mb-8 sm:py-20">
-        <AmbientFlowBackground />
-        <div className="container-page relative z-10 flex flex-col gap-8">
-          <Reveal>
-            <SectionHeading eyebrow="Certifications" title="Built to recognized standards" align="center" light />
-          </Reveal>
-          <Reveal>
-            <CertificationStrip light />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Clients */}
-      <section className="relative overflow-hidden bg-navy-900 py-20 sm:py-28">
-        <AmbientFlowBackground />
-        <div className="container-page relative z-10 flex flex-col gap-10">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Trusted By"
-              title="Clients across industries"
-              subtitle="From energy majors to national utilities, our equipment runs behind the scenes for organizations across sectors."
-              align="center"
-              light
-            />
-          </Reveal>
-          <Reveal>
-            <ClientMarquee />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Industries */}
-      <section className="relative overflow-hidden bg-navy-50 py-16 sm:py-20">
-        <div className="container-page relative flex flex-col gap-8">
-          <Reveal>
-            <SectionHeading eyebrow="Industries We Serve" title="Powering every sector" align="center" />
-          </Reveal>
-          <Reveal>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-              {industries.map((industry, i) => (
-                <IndustryIconChip key={industry.name} industry={industry} index={i} />
-              ))}
-            </div>
-          </Reveal>
-          <Reveal className="flex justify-center">
-            <Link
-              to="/industries"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-navy-800 hover:text-gold-600"
-            >
-              View All Industries
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-    </>
+    <div className="v5-root" data-theme={theme}>
+      <Hero theme={theme} />
+      <TestedCertifiedSection />
+      <StatsStrip />
+      <ProductsSection />
+      <AboutSection />
+      <TrustedSection />
+      <IndustriesShowcaseSection />
+    </div>
   );
 }

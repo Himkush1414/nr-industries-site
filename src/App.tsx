@@ -39,46 +39,25 @@ const ExperimentalV1HomePage = lazy(() =>
   })),
 );
 
-// Isolated visual experiment #2 — its own folder (src/experimental-ui-v2/), its own
-// route, not linked anywhere in the live nav. Rendered outside <Layout> (it has its
-// own nav bar + footer), so it shares nothing with and has zero effect on the rest
-// of the site. Reach it directly at /lab/v2.
-const ExperimentalV2HomePage = lazy(() =>
-  import("@/experimental-ui-v2/pages/ExperimentalV2HomePage").then((m) => ({
-    default: m.ExperimentalV2HomePage,
-  })),
-);
-
-// Isolated visual experiment #3 — same pattern as #2 above: its own folder
-// (src/experimental-ui-v3/), its own route, not linked anywhere in the live
-// nav, rendered outside <Layout>. Does not touch Lab V2's files. Reach it
-// directly at /lab/v3.
-const ExperimentalV3HomePage = lazy(() =>
-  import("@/experimental-ui-v3/pages/ExperimentalV3HomePage").then((m) => ({
-    default: m.ExperimentalV3HomePage,
-  })),
-);
-
-// Isolated visual experiment #4 — same pattern as #2/#3 above: its own folder
-// (src/experimental-ui-v4/), its own route, not linked anywhere in the live
-// nav, rendered outside <Layout>. Does not touch Lab V2 or Lab V3's files.
-// Reach it directly at /lab/v4.
-const ExperimentalV4HomePage = lazy(() =>
-  import("@/experimental-ui-v4/pages/ExperimentalV4HomePage").then((m) => ({
-    default: m.ExperimentalV4HomePage,
-  })),
-);
-
-// Isolated visual experiment #5 — same pattern as #2/#3/#4 above: its own
-// folder (src/experimental-ui-v5/), its own route, not linked anywhere in
-// the live nav, rendered outside <Layout>. Remixes pieces read and copied
-// from V2/V3/V4 and the real site, but does not modify any of them. Reach
-// it directly at /lab/v5.
-const ExperimentalV5HomePage = lazy(() =>
-  import("@/experimental-ui-v5/pages/ExperimentalV5HomePage").then((m) => ({
-    default: m.ExperimentalV5HomePage,
-  })),
-);
+// Fix (Vercel build failure): Labs V2-V5 (src/experimental-ui-v2/ through
+// -v5/) are gitignored and untracked on purpose — "disposable design lab
+// scaffolding," explicitly required to never reach GitHub (see the commit
+// that added the .gitignore rule for them). They still exist locally on
+// disk, which is why `tsc -b && vite build` passed on this machine, but a
+// clean clone (Vercel's build environment) has no such files, so the four
+// `import("@/experimental-ui-vN/...")` calls that used to be here failed
+// with TS2307 "Cannot find module" at build time — confirmed by diffing
+// what's in the last pushed commit's tree (nothing under those paths)
+// against what App.tsx still imported (all four). Removed those lazy
+// imports and their /lab/v2-v5 routes below entirely, since the only way to
+// guarantee this class of error can never recur on a future deploy is for
+// the pushed source to hold zero references to paths it doesn't contain.
+// The lab folders themselves are untouched — still on disk, still reachable
+// by running the dev server locally and wiring a route back in temporarily
+// if needed, just not part of what ships. Lab V1 (src/experimental-ui-v1/)
+// is deliberately NOT part of this — it's tracked and pushed (an archived
+// snapshot of the real former homepage, not throwaway scaffolding), so its
+// route below is untouched.
 
 /** Minimal, layout-neutral fallback — avoids a flash of empty white or a jarring spinner
  * while a route chunk loads (typically well under 200ms on a reasonable connection). */
@@ -99,38 +78,6 @@ export default function App() {
           element={
             <Suspense fallback={<RouteFallback />}>
               <ExperimentalV1HomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="lab/v2"
-          element={
-            <Suspense fallback={<RouteFallback />}>
-              <ExperimentalV2HomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="lab/v3"
-          element={
-            <Suspense fallback={<RouteFallback />}>
-              <ExperimentalV3HomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="lab/v4"
-          element={
-            <Suspense fallback={<RouteFallback />}>
-              <ExperimentalV4HomePage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="lab/v5"
-          element={
-            <Suspense fallback={<RouteFallback />}>
-              <ExperimentalV5HomePage />
             </Suspense>
           }
         />

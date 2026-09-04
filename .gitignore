@@ -23,6 +23,15 @@ dist-ssr
 CLAUDE.md
 .claude.md
 
+# Disposable design-lab scaffolding — local-only, must never reach GitHub.
+# Lab V1 (src/experimental-ui-v1/) is a deliberate exception: it's an
+# archived snapshot of the real former homepage, not throwaway scaffolding,
+# so it stays tracked.
+src/experimental-ui-v2/
+src/experimental-ui-v3/
+src/experimental-ui-v4/
+src/experimental-ui-v5/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

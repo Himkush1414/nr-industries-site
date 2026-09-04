@@ -4,8 +4,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import { COMPANY_NAME, COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/contact";
 import { products } from "@/data/products";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { ThemeToggle } from "@/experimental-ui-v5/components/ThemeToggle";
-import { useHomeTheme } from "@/hooks/useHomeTheme";
 
 const NAV_LINKS = [
   { to: "/about", label: "About" },
@@ -35,16 +33,6 @@ export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { theme, toggleTheme } = useHomeTheme();
-  // Task 3: the toggle is visible on every page for nav consistency, but only
-  // does anything on the homepage — HomePage.tsx is the only page that reads
-  // `theme` to render differently, so a click anywhere else would be inert
-  // regardless, but gating it here keeps that explicit and avoids writing to
-  // localStorage from pages the toggle has no visible effect on.
-  const isHomeRoute = location.pathname === "/";
-  const handleThemeToggle = () => {
-    if (isHomeRoute) toggleTheme();
-  };
 
   // Close menus on route change.
   useEffect(() => {
@@ -158,16 +146,6 @@ export function Header() {
 
         {/* Right-side actions */}
         <div className="flex items-center gap-2">
-          {/* Task 3: present on every page, only wired to actually toggle on
-              the homepage (handleThemeToggle no-ops elsewhere). ThemeToggle's
-              own styling reads CSS custom properties that only resolve
-              inside a ".v5-root"-classed ancestor (see experimental-v5.css)
-              — HomePage.tsx supplies that on "/", but this button also
-              renders on every other page, so it gets its own tiny scoped
-              wrapper rather than relying on inherited/unset colors there. */}
-          <span className="v5-root inline-flex">
-            <ThemeToggle theme={theme} onToggle={handleThemeToggle} />
-          </span>
           <a
             href={buildTelLink()}
             aria-label={`Call ${COMPANY_PHONE_DISPLAY}`}
@@ -238,7 +216,7 @@ export function Header() {
               </NavLink>
             ))}
 
-            <div className="mt-3 flex items-center gap-3">
+            <div className="mt-3 flex gap-3">
               <WhatsAppButton className="flex-1" />
               <a
                 href={buildTelLink()}
@@ -247,9 +225,6 @@ export function Header() {
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 Call
               </a>
-              <span className="v5-root inline-flex">
-                <ThemeToggle theme={theme} onToggle={handleThemeToggle} />
-              </span>
             </div>
           </div>
         </nav>

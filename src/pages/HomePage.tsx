@@ -222,6 +222,7 @@ export function HomePage() {
               imageLabel={item.title}
               imageSrc={item.imageSrc}
               reverse={i % 2 === 1}
+              staggerIndex={i}
             />
           ))}
         </div>

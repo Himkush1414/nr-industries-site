@@ -12,8 +12,24 @@ interface FeatureRowProps {
   imageSrc?: string;
   /** When true, image sits on the right instead of the left. */
   reverse?: boolean;
+  /**
+   * This row's position among sibling rows rendered together (e.g. the
+   * "why choose us" list) — offsets this row's whole entrance cascade by
+   * `staggerIndex * STAGGER_STEP_MS` so consecutive rows animate in shortly
+   * after one another instead of in lockstep, without changing anything
+   * about each row's own internal choreography (title → underline →
+   * paragraph). Each row still only fires once, the first time it scrolls
+   * into view, via `useInView` below (disconnects its observer after the
+   * first hit — see src/hooks/useInView.ts).
+   */
+  staggerIndex?: number;
   children?: ReactNode;
 }
+
+// Reuses the stagger step already established for sibling-block entrances
+// elsewhere on this page (see HomeAboutCarousel's <Reveal delayMs={120}/>),
+// rather than picking a new value for this component.
+const STAGGER_STEP_MS = 120;
 
 export function FeatureRow({
   eyebrow,
@@ -22,9 +38,11 @@ export function FeatureRow({
   imageLabel,
   imageSrc,
   reverse = false,
+  staggerIndex = 0,
   children,
 }: FeatureRowProps) {
   const { ref, isInView } = useInView<HTMLDivElement>(0.25);
+  const baseDelayMs = staggerIndex * STAGGER_STEP_MS;
   const wipeDesktopRef = useRef<HTMLDivElement | null>(null);
   const wipeMobileRef = useRef<HTMLDivElement | null>(null);
 
@@ -109,21 +127,25 @@ export function FeatureRow({
         )}
         <div className="inline-block">
           <h3
-            className={`font-heading text-2xl font-bold text-navy-950 transition-all duration-700 ease-out ${
+            className={`font-heading text-2xl font-bold text-navy-950 transition-all duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${
               isInView ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
             }`}
+            style={{ transitionDelay: `${baseDelayMs}ms` }}
           >
             {title}
           </h3>
           {/* Accent underline draws in just after the heading settles. */}
           <span
             aria-hidden="true"
-            className={`mt-2 block h-[3px] w-12 origin-left rounded-full bg-gradient-to-r from-gold-500 to-gold-300 transition-transform delay-200 duration-500 ease-out ${
+            className={`mt-2 block h-[3px] w-12 origin-left rounded-full bg-gradient-to-r from-gold-500 to-gold-300 transition-transform duration-500 ease-out motion-reduce:scale-x-100 ${
               isInView ? "scale-x-100" : "scale-x-0"
             }`}
+            style={{ transitionDelay: `${baseDelayMs + 200}ms` }}
           />
         </div>
-        {/* Staggered word-by-word fade-up, cascading in just after the underline. */}
+        {/* Staggered word-by-word fade-up, cascading in just after the underline —
+            offset by this row's own baseDelayMs on top of the per-word stagger, so
+            the four rows' text cascades don't all start at once (see staggerIndex). */}
         <p className="text-base leading-relaxed text-ink-500">
           {words.map((word, i) => (
             <span
@@ -131,7 +153,7 @@ export function FeatureRow({
               className={`inline-block transition-all duration-500 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 ${
                 isInView ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
               }`}
-              style={{ transitionDelay: `${350 + i * 22}ms` }}
+              style={{ transitionDelay: `${baseDelayMs + 350 + i * 22}ms` }}
             >
               {word}&nbsp;
             </span>

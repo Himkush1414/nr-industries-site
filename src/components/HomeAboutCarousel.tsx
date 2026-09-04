@@ -11,9 +11,15 @@ import { Reveal } from "@/components/Reveal";
  * CTA text, and all three card title/captions — the current section's copy
  * is shaped for a totally different step-by-step layout, so nothing about
  * it "obviously carries over" onto a card format; not spending time
- * rewriting either version's copy, per spec. Card photos are the same real
- * assets V2 itself uses (public/why-choose-us/*.jpeg — shared with the
- * About page, not V2-exclusive).
+ * rewriting either version's copy, per spec. Card photos were originally
+ * the same real assets V2 itself uses (public/why-choose-us/*.jpeg — shared
+ * with the About page, not V2-exclusive); the After-Sales Support card's
+ * photo (round: image swap task) now points at a new file instead
+ * (after-sales-support-new.jpeg) — the original after-sales-support.jpeg
+ * is still what Lab V2's own CardCarousel.tsx shows, and that file was left
+ * untouched rather than overwritten in place so V2's own reference render
+ * doesn't silently change too. Precision Engineering and International
+ * Standards still point at the original shared files.
  *
  * Visuals are re-expressed with this site's own tokens rather than V2's
  * --v2-* custom properties (same approach as the earlier Footer/Stats
@@ -47,7 +53,7 @@ const CARDS = [
     caption: "Designed and manufactured to international safety and efficiency standards.",
   },
   {
-    image: "/why-choose-us/after-sales-support.jpeg",
+    image: "/why-choose-us/after-sales-support-new.jpeg",
     title: "After-Sales Support",
     caption: "Our engineering team stays engaged well past commissioning.",
   },

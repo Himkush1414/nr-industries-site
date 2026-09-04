@@ -11,11 +11,14 @@ import { useInView } from "@/hooks/useInView";
 const WHY_CHOOSE_ICONS = [Target, Globe2, Headset, Leaf];
 
 /** Index-matched to `whyChooseUs` (Precision Engineering, International Standards,
- * Expert Engineering & After-Sales Support, Eco-Friendly Manufacturing). */
+ * Expert Engineering & After-Sales Support, Eco-Friendly Manufacturing).
+ * Index 2 (round: image swap task) points at a new file, after-sales-support-new.jpeg,
+ * instead of the original after-sales-support.jpeg — that original is still what Lab
+ * V2's own CardCarousel.tsx shows, left untouched rather than overwritten in place. */
 const WHY_CHOOSE_IMAGES = [
   "/why-choose-us/precision-engineering.jpeg",
   "/why-choose-us/international-standards.jpeg",
-  "/why-choose-us/after-sales-support.jpeg",
+  "/why-choose-us/after-sales-support-new.jpeg",
   "/why-choose-us/eco-friendly-manufacturing.jpeg",
 ];
 

@@ -1,4 +1,6 @@
 import { Reveal } from "@/components/Reveal";
+import { useCountUp } from "@/hooks/useCountUp";
+import { useInView } from "@/hooks/useInView";
 
 /**
  * Fix (round: hero animation + stats restyle task, Task 2): the homepage's
@@ -61,12 +63,41 @@ const STATS = [
   },
 ];
 
+/** Splits "12.5 MVA" into a numeric part (counted up) and the trailing unit/symbol (static). */
+function StatValue({ value, start }: { value: string; start: boolean }) {
+  const match = value.match(/^([\d.]+)(.*)$/);
+  const numeric = match?.[1] ?? "";
+  const suffix = match?.[2] ?? "";
+  const target = Number.parseFloat(numeric);
+  const display = useCountUp(Number.isNaN(target) ? 0 : target, start);
+
+  if (!match) return <>{value}</>;
+
+  return (
+    <>
+      {display}
+      {suffix}
+    </>
+  );
+}
+
 export function HomeStatsSection() {
+  // Change #6: the four stat numbers live in their own container that
+  // slides in from the right (independent of <Reveal/>'s fade-up used
+  // elsewhere on this page), and the same scroll-into-view moment triggers
+  // each number's count-up.
+  const { ref, isInView } = useInView<HTMLDListElement>();
+
   return (
     <section className="bg-navy-50 py-4">
       <div className="container-page">
         <Reveal>
-          <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-4">
+          <dl
+            ref={ref}
+            className={`grid grid-cols-1 gap-x-8 gap-y-10 transition-all duration-700 ease-out sm:grid-cols-4 ${
+              isInView ? "translate-x-0 opacity-100" : "translate-x-24 opacity-0"
+            }`}
+          >
             {STATS.map((stat, i) => (
               <div
                 key={stat.label}
@@ -77,7 +108,9 @@ export function HomeStatsSection() {
                   <p className="text-sm leading-relaxed text-ink-500">{stat.description}</p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <dd className="font-heading text-3xl font-bold text-gold-600">{stat.value}</dd>
+                  <dd className="font-heading text-3xl font-bold text-gold-600">
+                    <StatValue value={stat.value} start={isInView} />
+                  </dd>
                   <p className="text-xs font-semibold tracking-wide text-ink-500 uppercase">{stat.caption}</p>
                 </div>
               </div>

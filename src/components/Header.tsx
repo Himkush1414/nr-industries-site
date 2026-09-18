@@ -4,6 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { COMPANY_NAME, COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/contact";
 import { products } from "@/data/products";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { useNavScroll } from "@/hooks/useNavScroll";
 
 const NAV_LINKS = [
   { to: "/about", label: "About" },
@@ -18,8 +19,8 @@ function NavItem({ to, label, end }: { to: string; label: string; end?: boolean 
       to={to}
       end={end}
       className={({ isActive }) =>
-        `px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
-          isActive ? "text-navy-950" : "text-ink-500 hover:text-navy-950"
+        `rounded-full px-4 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
+          isActive ? "bg-navy-950 text-white" : "text-ink-500 hover:text-navy-950"
         }`
       }
     >
@@ -60,9 +61,36 @@ export function Header() {
 
   const isProductsRouteActive = location.pathname.startsWith("/products");
 
+  // Change #3 (navbar scroll behavior): a single 0-1 progress value derived
+  // from scroll position. 0 = resting state (top of page, or bottom of
+  // page); 1 = fully scrolled-past-hero state. Logo/actions ride this to
+  // shift + fade, the pill nav rides it to slide up out of view, and a
+  // slight backdrop blur is only present while progress is strictly between
+  // the two (mid-transition) — never at rest, never once fully hidden.
+  const navProgress = useNavScroll();
+  const isTransitioning = navProgress > 0 && navProgress < 1;
+  const isFullyHidden = navProgress >= 1;
+
+  const logoStyle = {
+    transform: `translateX(-${navProgress * 36}px)`,
+    opacity: 1 - navProgress,
+  };
+  const actionsStyle = {
+    transform: `translateX(${navProgress * 36}px)`,
+    opacity: 1 - navProgress,
+  };
+  const pillStyle = {
+    transform: `translate(-50%, calc(-50% - ${navProgress * 96}px))`,
+    opacity: 1 - navProgress,
+  };
+
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur">
-      <div className="container-page flex h-[55px] items-center justify-between gap-4 py-3">
+    <header
+      className={`sticky top-0 z-50 transition-[background-color,backdrop-filter] duration-300 ${
+        isTransitioning ? "bg-white/10 backdrop-blur-md" : "bg-transparent"
+      } ${isFullyHidden ? "pointer-events-none" : ""}`}
+    >
+      <div className="relative flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         {/* Logo
             Fix (Task 2): the prior fix for the opaque-box logo was never an
             SVG (searched git log + the codebase — none exists anywhere).
@@ -78,19 +106,29 @@ export function Header() {
             re-deriving it, not inventing a new treatment) makes it apply
             site-wide in one place, since this Header is the only nav on
             every real page. */}
-        <NavLink to="/" className="flex min-w-0 shrink items-center" aria-label={`${COMPANY_NAME} home`}>
+        <NavLink
+          to="/"
+          className="flex min-w-0 shrink items-center transition-transform duration-300 ease-out"
+          style={logoStyle}
+          aria-label={`${COMPANY_NAME} home`}
+        >
           <img
             src="/logo-v5-transparent.png"
             alt={COMPANY_NAME}
             width={248}
             height={44}
-            className="h-10 w-auto max-w-[min(220px,52vw)] object-contain object-left sm:h-12 sm:max-w-[260px] lg:h-14 lg:max-w-[300px]"
+            className="h-[60px] w-auto max-w-[min(260px,52vw)] object-contain object-left"
             decoding="async"
           />
         </NavLink>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        {/* Desktop nav — curved floating pill strip, centered independently
+            of the logo/actions flex flow so it stays true-center. */}
+        <nav
+          className="pointer-events-auto absolute top-1/2 left-1/2 hidden items-center gap-1 rounded-full border border-ink-100 bg-white/90 px-2 py-1.5 shadow-lg shadow-navy-950/10 backdrop-blur-sm transition-transform duration-300 ease-out lg:flex"
+          style={pillStyle}
+          aria-label="Primary"
+        >
           <NavItem to="/" label="Home" end />
           <NavItem to="/about" label="About" />
 
@@ -106,8 +144,8 @@ export function Header() {
               onFocus={() => setIsProductsOpen(true)}
               aria-expanded={isProductsOpen}
               aria-haspopup="true"
-              className={`flex items-center gap-1 px-1 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
-                isProductsRouteActive ? "text-navy-950" : "text-ink-500 hover:text-navy-950"
+              className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold tracking-wide transition-colors duration-150 ${
+                isProductsRouteActive ? "bg-navy-950 text-white" : "text-ink-500 hover:text-navy-950"
               }`}
             >
               Products
@@ -145,7 +183,10 @@ export function Header() {
         </nav>
 
         {/* Right-side actions */}
-        <div className="flex items-center gap-2">
+        <div
+          className="flex items-center gap-2 transition-transform duration-300 ease-out"
+          style={actionsStyle}
+        >
           <a
             href={buildTelLink()}
             aria-label={`Call ${COMPANY_PHONE_DISPLAY}`}
@@ -171,7 +212,7 @@ export function Header() {
       {isMobileOpen && (
         <nav
           aria-label="Mobile primary"
-          className="max-h-[calc(100vh-55px)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
+          className="pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
         >
           <div className="container-page flex flex-col gap-1 py-4">
             <NavLink

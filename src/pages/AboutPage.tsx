@@ -139,7 +139,7 @@ export function AboutPage() {
               label="Manufacturing infrastructure & testing facility"
               aspectRatio="video"
               className="rounded"
-              src="/about-3.webp"
+              src="/about-infrastructure.jpeg"
             />
           </Reveal>
           <Reveal className="flex flex-col gap-5 rounded-2xl border border-gold-100 bg-gradient-to-br from-gold-100/60 via-navy-50/40 to-navy-100/40 p-8 shadow-[0_16px_40px_-24px_rgba(11,31,58,0.2)] backdrop-blur-sm sm:p-10 lg:order-1">

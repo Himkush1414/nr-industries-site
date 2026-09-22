@@ -1,8 +1,8 @@
-import { Menu, Phone, X } from "lucide-react";
+import { Phone } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { buildTelLink, buildWhatsAppLink, COMPANY_PHONE_DISPLAY, WHATSAPP_GENERAL_MESSAGE } from "@/config/contact";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { MobileNavPanel, MobileNavTrigger } from "@/components/MobileNavMenu";
 
 // Single shared breakpoint for every responsive override in this file.
 const MOBILE_BREAKPOINT = 767;
@@ -277,33 +277,26 @@ export function HomeHeader() {
         </a>
       </div>
 
-      {/* Mobile-only hamburger button, panel-4 position (right edge, same
+      {/* Mobile-only hamburger trigger, panel-4 position (right edge, same
           clamp()-based inset as the logo's left inset for a symmetric
-          margin). Toggles the full-screen menu below. */}
-      <button
-        type="button"
+          margin). The `site-nav-hamburger` class on this wrapper (not on
+          the button itself) is what the media query above actually toggles
+          — MobileNavTrigger is the exact same component Header.tsx uses on
+          every other route, unmodified, so it keeps its own `lg:hidden`
+          class too, but that alone would show it up to 1024px instead of
+          this bar's own 767px breakpoint; the wrapper's display:none/flex
+          is what enforces the correct breakpoint here. */}
+      <div
         className="site-nav-hamburger"
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
-        aria-expanded={menuOpen}
-        onClick={() => setMenuOpen((v) => !v)}
         style={{
           position: "absolute",
           right: "clamp(16px, 4vw, 30px)",
           top: "50%",
           transform: "translateY(-50%)",
-          width: "40px",
-          height: "40px",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "8px",
-          border: `1px solid ${TEXT_CREAM}`,
-          backgroundColor: "transparent",
-          color: TEXT_CREAM,
-          cursor: "pointer",
         }}
       >
-        {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-      </button>
+        <MobileNavTrigger isOpen={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
+      </div>
     </nav>
 
     {/* Mobile menu — a SIBLING of <nav>, not a descendant: <nav> has
@@ -312,47 +305,16 @@ export function HomeHeader() {
         of a 90px-tall nav would resolve its own top/bottom edges relative
         to that 90px box instead of the viewport. Living outside <nav>
         avoids that entirely.
-        Per an explicit request, this reuses the original Header.tsx's
-        light dropdown panel look (white background, navy text, sliding in
-        directly below the bar) instead of Lv9Nav's own full-screen dark
-        takeover — just `position: fixed` with an explicit `top: NAV_HEIGHT`
-        instead of the original's `sticky`-header-relative flow position,
-        since this bar reserves no space in normal document flow. */}
+        Per an explicit request, this is the exact same MobileNavPanel
+        Header.tsx uses on every other route (not a separate/lookalike
+        version) — just wrapped here with `position: fixed` and an explicit
+        `top: NAV_HEIGHT` instead of the original's `sticky`-header-relative
+        flow position, since this bar reserves no space in normal document
+        flow. */}
     {menuOpen && (
-        <nav
-          aria-label="Mobile primary"
-          className="pointer-events-auto fixed right-0 left-0 z-[1000] max-h-[calc(100vh-90px)] overflow-y-auto border-t border-ink-100 bg-white"
-          style={{ top: `${NAV_HEIGHT}px` }}
-        >
-          <div className="container-page flex flex-col gap-1 py-4">
-            {TABS.map((tab) => (
-              <NavLink
-                key={tab.to}
-                to={tab.to}
-                end={tab.end}
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) =>
-                  `rounded px-3 py-2.5 text-sm font-semibold ${
-                    isActive ? "bg-navy-950 text-white" : "text-ink-700 hover:bg-navy-50"
-                  }`
-                }
-              >
-                {tab.label}
-              </NavLink>
-            ))}
-
-            <div className="mt-3 flex gap-3">
-              <WhatsAppButton className="flex-1" />
-              <a
-                href={buildTelLink()}
-                className="flex flex-1 items-center justify-center gap-2 rounded border border-navy-800 px-5 py-3 text-sm font-semibold text-navy-800"
-              >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                Call
-              </a>
-            </div>
-          </div>
-        </nav>
+        <div style={{ position: "fixed", top: `${NAV_HEIGHT}px`, left: 0, right: 0, zIndex: 1000 }}>
+          <MobileNavPanel />
+        </div>
     )}
     </>
   );

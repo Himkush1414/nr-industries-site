@@ -206,17 +206,8 @@ function HeroLocationTime() {
           rather than as inline styles a class could never out-specificity. */}
       <style>{`
         .lv9-hero-location-time { top: 95px; left: calc(30px + (100% - 60px) * 0.75); right: 30px; }
-        .lv9-hero-location-paragraph { display: block; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {
           .lv9-hero-location-time { top: 106px; left: 16px; right: 16px; }
-          /* The full address paragraph below the "Based in..." line adds
-             enough height at mobile widths to collide with the hero's own
-             eyebrow/headline (both anchored independently — the eyebrow to
-             the vertically-centered hero content block, this box to a
-             fixed top offset). Hiding it keeps just the short one-line
-             summary, avoiding the overlap without needing to coordinate
-             two independently-positioned blocks' heights. */
-          .lv9-hero-location-paragraph { display: none; }
         }
       `}</style>
       <span
@@ -229,21 +220,6 @@ function HeroLocationTime() {
       >
         Based in Paonta Sahib, HP &middot; {time} IST &middot; Welcome
       </span>
-      <p
-        className="lv9-hero-location-paragraph"
-        style={{
-          marginTop: "12px",
-          fontSize: "clamp(8px, 2.4vw, 10px)",
-          lineHeight: 1.5,
-          textAlign: "justify",
-          color: "rgb(198, 192, 180)",
-        }}
-      >
-        NR Industries designs and manufactures power &amp; distribution transformers, compact
-        substations, servo voltage stabilizers, and HT/LT panels for industrial, commercial, and
-        utility-scale power distribution. Every product is engineered, tested, and certified
-        in-house, built to run reliably in the field for decades, not just to pass a spec sheet.
-      </p>
     </div>
   );
 }

@@ -12,14 +12,25 @@ const WHY_CHOOSE_ICONS = [Target, Globe2, Headset, Leaf];
 
 /** Index-matched to `whyChooseUs` (Precision Engineering, International Standards,
  * Expert Engineering & After-Sales Support, Eco-Friendly Manufacturing).
- * Index 2 (round: image swap task) points at a new file, after-sales-support-new.jpeg,
- * instead of the original after-sales-support.jpeg — that original is still what Lab
- * V2's own CardCarousel.tsx shows, left untouched rather than overwritten in place. */
+ *
+ * All 4 use the "-hover" suffixed files (a later, distinct image-swap round),
+ * NOT the plain `/why-choose-us/<name>.jpeg` filenames — those plain names
+ * are shared across other, unrelated sections that reuse the same real
+ * photos for a different purpose (e.g. this page's own PageHero background
+ * below, LV5/LV6's "Decades of hands-on expertise" / "Power isn't just what
+ * we build" sections) and must NOT change when this tile grid's images do.
+ * A prior attempt overwrote those shared files in place, which silently
+ * broke those other sections too — reverted, and these dedicated "-hover"
+ * copies added instead, specifically so this grid's images can change
+ * without touching anything else that happens to reuse the same original
+ * filenames. Index 2 additionally keeps the older after-sales-support ->
+ * after-sales-support-new swap (a separate, earlier round) as its base
+ * before layering this "-hover" round on top. */
 const WHY_CHOOSE_IMAGES = [
-  "/why-choose-us/precision-engineering.jpeg",
-  "/why-choose-us/international-standards.jpeg",
-  "/why-choose-us/after-sales-support-new.jpeg",
-  "/why-choose-us/eco-friendly-manufacturing.jpeg",
+  "/why-choose-us/precision-engineering-hover.jpeg",
+  "/why-choose-us/international-standards-hover.jpeg",
+  "/why-choose-us/after-sales-support-hover.jpeg",
+  "/why-choose-us/eco-friendly-manufacturing-hover.jpeg",
 ];
 
 /** Uniform tile: all four cards share the same image height, padding, and type

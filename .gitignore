@@ -31,6 +31,14 @@ src/experimental-ui-v2/
 src/experimental-ui-v3/
 src/experimental-ui-v4/
 src/experimental-ui-v5/
+src/lab-lv2/
+src/lab-lv3/
+src/lab-lv4/
+src/lab-lv5/
+src/lab-lv6/
+src/lab-lv7/
+src/lab-lv8/
+src/lab-lv9/
 
 # Editor directories and files
 .vscode/*

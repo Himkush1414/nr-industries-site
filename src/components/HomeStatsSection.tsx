@@ -89,12 +89,12 @@ export function HomeStatsSection() {
   const { ref, isInView } = useInView<HTMLDListElement>();
 
   return (
-    <section className="bg-navy-50 py-4">
-      <div className="container-page">
+    <section className="bg-navy-50 py-12 sm:py-16">
+      <div className="mx-auto w-full max-w-[96rem] px-4 sm:px-6 lg:px-10">
         <Reveal>
           <dl
             ref={ref}
-            className={`grid grid-cols-1 gap-x-8 gap-y-10 transition-all duration-700 ease-out sm:grid-cols-4 ${
+            className={`grid grid-cols-1 gap-x-12 gap-y-10 transition-all duration-700 ease-out sm:grid-cols-4 ${
               isInView ? "translate-x-0 opacity-100" : "translate-x-24 opacity-0"
             }`}
           >
@@ -108,7 +108,7 @@ export function HomeStatsSection() {
                   <p className="text-sm leading-relaxed text-ink-500">{stat.description}</p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <dd className="font-heading text-3xl font-bold text-gold-600">
+                  <dd className="font-heading text-4xl font-bold text-gold-600">
                     <StatValue value={stat.value} start={isInView} />
                   </dd>
                   <p className="text-xs font-semibold tracking-wide text-ink-500 uppercase">{stat.caption}</p>

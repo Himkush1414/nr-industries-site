@@ -80,6 +80,7 @@ export const clients: ClientItem[] = [
   { name: "Hegatech", logoSrc: "/clients/hegatech.png" },
   { name: "HPSEBL", logoSrc: "/clients/hpsebl.png" },
   { name: "KPDCL", logoSrc: "/clients/kpdcl.png" },
+  { name: "NBPDCL", logoSrc: "/clients/nbpdcl.png" },
   { name: "Premier Energies", logoSrc: "/clients/premier-energies.png" },
 ];
 

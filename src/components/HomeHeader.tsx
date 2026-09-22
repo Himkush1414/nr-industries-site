@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { buildTelLink, buildWhatsAppLink, COMPANY_PHONE_DISPLAY, WHATSAPP_GENERAL_MESSAGE } from "@/config/contact";
 import { MobileNavPanel, MobileNavTrigger } from "@/components/MobileNavMenu";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 
 // Single shared breakpoint for every responsive override in this file.
 const MOBILE_BREAKPOINT = 767;
@@ -126,6 +127,10 @@ function WhatsAppIcon() {
 export function HomeHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Background content must not scroll while the mobile menu is open —
+  // same behavior as the original Header.tsx's mobile menu.
+  useLockBodyScroll(menuOpen);
+
   return (
     <>
     <nav
@@ -137,10 +142,13 @@ export function HomeHeader() {
         right: 0,
         height: `${NAV_HEIGHT}px`,
         zIndex: 1000,
-        // No background color/fill at all — just blurs whatever scrolls
+        // No background color/fill at rest — just blurs whatever scrolls
         // behind the bar, so it reads as one soft blurred patch of the
-        // page itself rather than a distinct colored strip sitting on
-        // top of it.
+        // page itself rather than a distinct colored strip sitting on top
+        // of it. While the mobile menu is open, this becomes a solid white
+        // fill instead (logo included) — matching the original Header.tsx,
+        // whose bar also goes solid while its own mobile menu is open.
+        backgroundColor: menuOpen ? "#ffffff" : "transparent",
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
       }}

@@ -5,6 +5,7 @@ import { COMPANY_NAME, COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/cont
 import { products } from "@/data/products";
 import { MobileNavPanel, MobileNavTrigger } from "@/components/MobileNavMenu";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { useNavScroll } from "@/hooks/useNavScroll";
 
 const NAV_LINKS = [
@@ -42,6 +43,9 @@ export function Header() {
     setIsMobileOpen(false);
   }, [location.pathname]);
 
+  // Background content must not scroll while the mobile menu is open.
+  useLockBodyScroll(isMobileOpen);
+
   // Close products dropdown on outside click / Escape.
   useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -72,14 +76,15 @@ export function Header() {
   const isTransitioning = navProgress > 0 && navProgress < 1;
   const isFullyHidden = navProgress >= 1;
 
-  const logoStyle = {
-    transform: `translateX(-${navProgress * 36}px)`,
-    opacity: 1 - navProgress,
-  };
-  const actionsStyle = {
-    transform: `translateX(${navProgress * 36}px)`,
-    opacity: 1 - navProgress,
-  };
+  // While the mobile menu is open, the bar must read as a fully visible,
+  // solid white surface (logo included) regardless of scroll position —
+  // overrides the scroll-driven fade/hide above rather than fighting it.
+  const logoStyle = isMobileOpen
+    ? { transform: "translateX(0px)", opacity: 1 }
+    : { transform: `translateX(-${navProgress * 36}px)`, opacity: 1 - navProgress };
+  const actionsStyle = isMobileOpen
+    ? { transform: "translateX(0px)", opacity: 1 }
+    : { transform: `translateX(${navProgress * 36}px)`, opacity: 1 - navProgress };
   const pillStyle = {
     transform: `translate(-50%, calc(-50% - ${navProgress * 96}px))`,
     opacity: 1 - navProgress,
@@ -88,8 +93,8 @@ export function Header() {
   return (
     <header
       className={`sticky top-0 z-50 transition-[background-color,backdrop-filter] duration-300 ${
-        isTransitioning ? "bg-white/10 backdrop-blur-md" : "bg-transparent"
-      } ${isFullyHidden ? "pointer-events-none" : ""}`}
+        isMobileOpen ? "bg-white" : isTransitioning ? "bg-white/10 backdrop-blur-md" : "bg-transparent"
+      } ${isFullyHidden && !isMobileOpen ? "pointer-events-none" : ""}`}
     >
       <div className="relative flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         {/* Logo

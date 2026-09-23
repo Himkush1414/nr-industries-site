@@ -36,10 +36,14 @@
       name="description"
       content="N R Industries — manufacturer of Power, Distribution, Furnace, Dry Type & Solar Inverter Duty Transformers, Servo Voltage Stabilizers, Compact Substations and HT/LT Panels. Himachal Pradesh, India."
     />
-    <!-- Home page's hero image is the LCP element. This is a client-rendered SPA, so
-         without a preload the browser wouldn't discover the <img> tag (and start
-         fetching it) until after the JS bundle downloads, parses, and React mounts —
-         this preload starts the fetch immediately, in parallel with that. -->
+    <!-- Chrome's LCP API consistently credits Layout.tsx's fixed brand watermark
+         (rendered on every route, first in the DOM) as the actual LCP element here,
+         not the Home hero photo underneath its own dark overlay — confirmed via
+         repeated Lighthouse trace runs. This is a client-rendered SPA, so without a
+         preload the browser wouldn't discover either <img> tag until after the JS
+         bundle downloads, parses, and React mounts — these preloads start both
+         fetches immediately, in parallel with that. -->
+    <link rel="preload" as="image" href="/brand-logo.webp" fetchpriority="high" />
     <link
       rel="preload"
       as="image"

@@ -238,6 +238,7 @@ function ImageStatsBlock({
         <img
           src={imageSrc}
           alt={imageAlt}
+          loading="lazy"
           style={{
             width: "100%",
             height: "100%",
@@ -595,6 +596,7 @@ export function IndustriesCertificationsSection() {
             <img
               src={industry.image}
               alt={industry.name}
+              loading="lazy"
               className="absolute inset-0"
               style={{ width: "100%", height: `${BOX_IMAGE_HEIGHT}px`, objectFit: "cover", filter: INDUSTRY_IMAGE_TINT }}
             />
@@ -729,6 +731,7 @@ export function IndustriesCertificationsSection() {
             key={slot.cert.name}
             src={slot.cert.image}
             alt={slot.cert.name}
+            loading="lazy"
             style={{
               maxHeight: "170px",
               maxWidth: "80%",
@@ -853,6 +856,7 @@ export function IndustriesCertificationsSection() {
               <img
                 src={industry.image}
                 alt={industry.name}
+                loading="lazy"
                 style={{ width: "100%", height: "160px", objectFit: "cover", filter: INDUSTRY_IMAGE_TINT, borderRadius: "2px" }}
               />
               <div style={{ marginTop: "12px" }}>
@@ -923,6 +927,7 @@ export function IndustriesCertificationsSection() {
               key={panel3Cert.cert.name}
               src={panel3Cert.cert.image}
               alt={panel3Cert.cert.name}
+              loading="lazy"
               style={{
                 maxHeight: "100%",
                 maxWidth: "80%",
@@ -1003,6 +1008,7 @@ function MobileImageStatsBlock({
       <img
         src={imageSrc}
         alt={imageAlt}
+        loading="lazy"
         style={{ width: "100%", height: "200px", objectFit: "cover", filter: "grayscale(85%) brightness(0.5) contrast(1.05)", borderRadius: "2px" }}
       />
       <div style={{ marginTop: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>

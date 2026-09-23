@@ -107,6 +107,7 @@ export function HomeAboutSection() {
                     : "opacity-0"
                 }`}
                 style={{ zIndex: index }}
+                loading={index === 0 ? "eager" : "lazy"}
                 decoding="async"
               />
             ))}

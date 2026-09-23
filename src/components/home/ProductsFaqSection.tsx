@@ -321,6 +321,7 @@ function LogoMarqueeBand() {
             key={`${client.name}-${i}`}
             src={client.logoSrc}
             alt={client.name}
+            loading="lazy"
             style={{
               height: `${LOGO_MARQUEE_HEIGHT}px`,
               width: "auto",
@@ -519,11 +520,13 @@ export function ProductsFaqSection() {
   }
 
   return (
-    <section
-      ref={mainSectionRef}
-      className="relative overflow-hidden lv9-lv6-section"
-      style={{ width: "100%", height: totalHeight !== null ? `${totalHeight}px` : "300vh" }}
-    >
+    <>
+      <FaqSchema />
+      <section
+        ref={mainSectionRef}
+        className="relative overflow-hidden lv9-lv6-section"
+        style={{ width: "100%", height: totalHeight !== null ? `${totalHeight}px` : "300vh" }}
+      >
       {/* `totalHeight` is JS-computed (a cascading chain of live
           measurements), so — same reasoning as LV4's own section — this
           uses `!important` to override the inline height on mobile rather
@@ -657,6 +660,7 @@ export function ProductsFaqSection() {
               <img
                 src={slot.product.image}
                 alt={slot.product.name}
+                loading="lazy"
                 style={{ width: "100%", flex: 1, objectFit: "contain", minHeight: 0 }}
               />
               <span className="font-heading" style={{ fontSize: "16px", fontWeight: 600, color: MATTE_BLACK, textAlign: "center" }}>
@@ -770,6 +774,7 @@ export function ProductsFaqSection() {
               <img
                 src={photo.image}
                 alt=""
+                loading="lazy"
                 style={{ width: "100%", height: "100%", objectFit: "cover", filter: PHOTO_TINT }}
               />
             </div>
@@ -974,6 +979,7 @@ export function ProductsFaqSection() {
               <img
                 src={slot.product.image}
                 alt={slot.product.name}
+                loading="lazy"
                 style={{ width: "110px", height: "110px", objectFit: "contain", flexShrink: 0 }}
               />
               <div>
@@ -1045,6 +1051,7 @@ export function ProductsFaqSection() {
               <img
                 src={photo.image}
                 alt=""
+                loading="lazy"
                 style={{ width: "100%", height: "200px", objectFit: "cover", filter: PHOTO_TINT, borderRadius: "2px" }}
               />
               <div className="flex items-center justify-between" style={{ marginTop: "14px", gap: "12px" }}>
@@ -1076,7 +1083,34 @@ export function ProductsFaqSection() {
           ))}
         </div>
       </div>
-    </section>
+      </section>
+    </>
+  );
+}
+
+/** FAQPage structured data (JSON-LD) for the section's Q&A — same FAQS content
+ * rendered visually above, so search engines and AI answer engines can cite it
+ * directly (AEO). */
+function FaqSchema() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      // Safe to inject: built entirely from the FAQS constant above, never from user input.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
   );
 }
 
@@ -1134,6 +1168,7 @@ function FaqItem({
         <img
           src="/faq-question-mark.png"
           alt=""
+          loading="lazy"
           aria-hidden="true"
           style={{ width: "120px", height: "120px", objectFit: "contain", mixBlendMode: "multiply" }}
         />

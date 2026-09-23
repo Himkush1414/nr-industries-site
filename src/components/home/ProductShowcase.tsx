@@ -71,6 +71,7 @@ export function ProductShowcase() {
         key={index}
         src={product.image}
         alt={product.name}
+        loading="lazy"
         className="absolute inset-0 h-full w-full"
         style={{
           objectFit: "contain",

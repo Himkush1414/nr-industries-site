@@ -247,6 +247,7 @@ function BrandMarqueeItem({ item }: { item: MarqueeItem }) {
       <img
         src="/company-logo-black-2-cropped.png"
         alt=""
+        loading="lazy"
         style={{ height: "clamp(44px, 12vw, 100px)", width: "auto", flexShrink: 0, marginRight: `${MARQUEE_ITEM_GAP_PX}px` }}
       />
     );
@@ -462,6 +463,7 @@ export function WhyChooseUsSection() {
         <img
           src="/company-logo-black-2-cropped.png"
           alt="Company logo"
+          loading="lazy"
           style={{ height: "40px", width: "auto" }}
         />
         <span className="font-heading" style={{ fontSize: "25px", fontWeight: 600, color: LOGO_MATTE_BLACK }}>
@@ -664,6 +666,7 @@ export function WhyChooseUsSection() {
                 key={point.title}
                 src={point.image}
                 alt=""
+                loading="lazy"
                 className="absolute inset-0"
                 style={{
                   width: "100%",
@@ -816,6 +819,7 @@ export function WhyChooseUsSection() {
               <img
                 src="/company-logo-black-2-cropped.png"
                 alt="Company logo"
+                loading="lazy"
                 style={{ height: "36px", width: "auto" }}
               />
               <span className="font-heading" style={{ fontSize: "19px", fontWeight: 600, color: LOGO_MATTE_BLACK }}>
@@ -874,7 +878,7 @@ export function WhyChooseUsSection() {
         />
 
         <div className="flex items-center" style={{ gap: "10px", marginBottom: "24px" }}>
-          <img src="/company-logo-black-2-cropped.png" alt="Company logo" style={{ height: "30px", width: "auto" }} />
+          <img src="/company-logo-black-2-cropped.png" alt="Company logo" loading="lazy" style={{ height: "30px", width: "auto" }} />
           <span className="font-heading" style={{ fontSize: "20px", fontWeight: 600, color: LOGO_MATTE_BLACK }}>
             Why Choose Us
           </span>
@@ -947,6 +951,7 @@ export function WhyChooseUsSection() {
                 <img
                   src={point.image}
                   alt=""
+                  loading="lazy"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -1008,7 +1013,7 @@ export function WhyChooseUsSection() {
           </div>
           <div className="flex flex-col items-center" style={{ gap: "8px" }}>
             <div className="flex items-center" style={{ gap: "10px" }}>
-              <img src="/company-logo-black-2-cropped.png" alt="Company logo" style={{ height: "30px", width: "auto" }} />
+              <img src="/company-logo-black-2-cropped.png" alt="Company logo" loading="lazy" style={{ height: "30px", width: "auto" }} />
               <span className="font-heading" style={{ fontSize: "16px", fontWeight: 600, color: LOGO_MATTE_BLACK }}>
                 NR Industries
               </span>

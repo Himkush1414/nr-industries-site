@@ -30,6 +30,8 @@ export function Layout() {
         <img
           src="/brand-logo.webp"
           alt=""
+          loading="lazy"
+          fetchPriority="low"
           className="w-[60vw] max-w-2xl opacity-[0.08]"
         />
       </div>

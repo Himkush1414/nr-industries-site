@@ -36,6 +36,18 @@
       name="description"
       content="N R Industries — manufacturer of Power, Distribution, Furnace, Dry Type & Solar Inverter Duty Transformers, Servo Voltage Stabilizers, Compact Substations and HT/LT Panels. Himachal Pradesh, India."
     />
+    <!-- Home page's hero image is the LCP element. This is a client-rendered SPA, so
+         without a preload the browser wouldn't discover the <img> tag (and start
+         fetching it) until after the JS bundle downloads, parses, and React mounts —
+         this preload starts the fetch immediately, in parallel with that. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/hero-wind-generation-1920.webp"
+      imagesrcset="/hero-wind-generation-960.webp 960w, /hero-wind-generation-1920.webp 1920w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

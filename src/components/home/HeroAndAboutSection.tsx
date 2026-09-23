@@ -85,7 +85,11 @@ export function HeroAndAboutSection() {
       <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-navy-950">
         <img
           ref={heroImageRef}
-          src="/hero-wind-generation.jpg"
+          src="/hero-wind-generation-1920.webp"
+          srcSet="/hero-wind-generation-960.webp 960w, /hero-wind-generation-1920.webp 1920w"
+          sizes="100vw"
+          width={1920}
+          height={1080}
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-center will-change-transform"
           decoding="async"

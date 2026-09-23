@@ -145,7 +145,6 @@
 }
 .exp-modal-field .is-error { border-color: #dd554d; }
 .exp-modal-fielderr { font-size: 0.74rem; font-weight: 500; color: #c2352d; }
-.exp-modal-err { font-size: 0.8rem; font-weight: 500; color: #c2352d; }
 .exp-modal-submit {
   margin-top: 0.35rem;
   display: inline-flex;

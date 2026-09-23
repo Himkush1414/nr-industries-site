@@ -7,20 +7,17 @@ import {
   COMPANY_NAME,
   WHATSAPP_NUMBER_2,
 } from "@/config/contact";
-import { supabase } from "@/lib/supabaseClient";
 import { validateContactForm } from "@/utils/contactFormValidation";
 import logo from "../assets/nr-logo.png";
 
 /**
  * Appointment / inquiry modal opened from the nav's waveform badge.
  *
- * Submission reuses the Contact page's exact pipeline: the shared
- * `validateContactForm` validator, an insert into the same Supabase
- * `contact_submissions` table with the same column shape, and the same Google
- * Ads conversion event. No new backend, table, or handler. On success it also
- * opens a wa.me link (new tab) pre-filled with the submitted details, to
- * WHATSAPP_NUMBER_2 — a different number from the header's WhatsAppButton,
- * which stays on WHATSAPP_NUMBER and is untouched by this.
+ * Submission reuses the Contact page's shared `validateContactForm`
+ * validator and Google Ads conversion event, then opens a wa.me link (new
+ * tab) pre-filled with the submitted details, to WHATSAPP_NUMBER_2 — a
+ * different number from the header's WhatsAppButton, which stays on
+ * WHATSAPP_NUMBER and is untouched by this. No backend involved.
  */
 
 /** Same conversion event the Contact form fires on a completed submission. */
@@ -38,9 +35,7 @@ const EMPTY: Values = { name: "", phone: "", message: "" };
 function AppointmentModal({ onClose }: { onClose: () => void }) {
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof Values, string>>>({});
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,7 +59,7 @@ function AppointmentModal({ onClose }: { onClose: () => void }) {
     if (errors[field]) setErrors((p) => ({ ...p, [field]: undefined }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Shared validator — this box collects no email, so pass a value that clears
@@ -77,33 +72,15 @@ function AppointmentModal({ onClose }: { onClose: () => void }) {
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    setSubmitting(true);
-    setSubmitError(null);
-    try {
-      const { error } = await supabase.from("contact_submissions").insert({
-        name: values.name.trim(),
-        email: "",
-        phone: values.phone.trim(),
-        message: values.message.trim(),
-      });
-      if (error) {
-        setSubmitError("Something went wrong. Please try again.");
-        return;
-      }
-      trackConversion();
+    trackConversion();
 
-      // Hand off to WhatsApp with the submitted details pre-filled — a
-      // distinct number from the header's WhatsAppButton (WHATSAPP_NUMBER).
-      const waMessage = buildAppointmentWhatsAppMessage(values);
-      window.open(buildWhatsAppLink(waMessage, WHATSAPP_NUMBER_2), "_blank", "noopener,noreferrer");
+    // Hand off to WhatsApp with the submitted details pre-filled — a
+    // distinct number from the header's WhatsAppButton (WHATSAPP_NUMBER).
+    const waMessage = buildAppointmentWhatsAppMessage(values);
+    window.open(buildWhatsAppLink(waMessage, WHATSAPP_NUMBER_2), "_blank", "noopener,noreferrer");
 
-      setSubmitted(true);
-      setValues(EMPTY);
-    } catch {
-      setSubmitError("Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    setSubmitted(true);
+    setValues(EMPTY);
   };
 
   return createPortal(
@@ -163,13 +140,8 @@ function AppointmentModal({ onClose }: { onClose: () => void }) {
               error={errors.message}
               onChange={(v) => update("message", v)}
             />
-            {submitError && (
-              <p className="exp-modal-err" role="alert">
-                {submitError}
-              </p>
-            )}
-            <button type="submit" disabled={submitting} className="exp-modal-submit">
-              {submitting ? "Submitting…" : "Apply for Appointment"}
+            <button type="submit" className="exp-modal-submit">
+              Apply for Appointment
             </button>
           </form>
         )}

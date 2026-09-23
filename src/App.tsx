@@ -5,9 +5,7 @@ import { HomePage } from "@/pages/HomePage";
 
 // Code-split every route except Home: Home is what most visitors land on directly, so it
 // stays in the main bundle to avoid an extra request waterfall on first paint. Everything
-// else is reached via in-app navigation, where a brief lazy-load is the right trade — this
-// is what keeps the Supabase client (Contact only) out of the bundle every visitor pays for
-// on "/".
+// else is reached via in-app navigation, where a brief lazy-load is the right trade.
 const AboutPage = lazy(() => import("@/pages/AboutPage").then((m) => ({ default: m.AboutPage })));
 const ContactPage = lazy(() =>
   import("@/pages/ContactPage").then((m) => ({ default: m.ContactPage })),

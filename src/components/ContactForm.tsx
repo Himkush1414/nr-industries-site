@@ -1,7 +1,11 @@
-import { AlertCircle, CheckCircle2, Send } from "lucide-react";
+import { CheckCircle2, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Button } from "@/components/Button";
-import { supabase } from "@/lib/supabaseClient";
+import {
+  buildContactFormWhatsAppMessage,
+  buildWhatsAppLink,
+  WHATSAPP_NUMBER_2,
+} from "@/config/contact";
 import {
   type ContactFormErrors,
   type ContactFormValues,
@@ -75,52 +79,33 @@ export function ContactForm() {
   const [values, setValues] = useState<ContactFormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function updateField(field: keyof ContactFormValues, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const validationErrors = validateContactForm(values);
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       setIsSubmitted(false);
-      setSubmitError(null);
       return;
     }
 
-    setIsSubmitting(true);
-    setSubmitError(null);
-    setIsSubmitted(false);
+    const message = buildContactFormWhatsAppMessage({
+      name: values.name.trim(),
+      email: values.email.trim(),
+      phone: values.phone.trim(),
+      message: values.message.trim(),
+    });
+    window.open(buildWhatsAppLink(message, WHATSAPP_NUMBER_2), "_blank", "noopener,noreferrer");
 
-    try {
-      const { error } = await supabase.from("contact_submissions").insert({
-        name: values.name.trim(),
-        email: values.email.trim(),
-        phone: values.phone.trim(),
-        message: values.message.trim(),
-      });
-
-      if (error) {
-        setSubmitError("Something went wrong. Please try again.");
-        return;
-      }
-
-      trackContactConversion();
-      setIsSubmitted(true);
-      setValues(INITIAL_VALUES);
-    } catch {
-      // Network failure or an unexpected thrown error — same user-facing message,
-      // and the finally block below still resets isSubmitting either way.
-      setSubmitError("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    trackContactConversion();
+    setIsSubmitted(true);
+    setValues(INITIAL_VALUES);
   }
 
   return (
@@ -159,14 +144,9 @@ export function ContactForm() {
         onChange={(v) => updateField("message", v)}
       />
 
-      <Button
-        as="button"
-        type="submit"
-        disabled={isSubmitting}
-        className="self-start disabled:opacity-60"
-      >
+      <Button as="button" type="submit" className="self-start">
         <Send className="h-4 w-4" aria-hidden="true" />
-        {isSubmitting ? "Sending..." : "Send Message"}
+        Send Message
       </Button>
 
       {isSubmitted && (
@@ -176,14 +156,8 @@ export function ContactForm() {
         >
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-600" aria-hidden="true" />
           <p className="text-sm font-medium text-green-800">
-            Thank you! We&apos;ll contact you soon.
+            Thanks! We&apos;ve opened WhatsApp with your message ready to send.
           </p>
-        </div>
-      )}
-      {submitError && (
-        <div role="alert" className="flex items-start gap-3 rounded border border-red-200 bg-red-50 p-4">
-          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden="true" />
-          <p className="text-sm font-medium text-red-700">{submitError}</p>
         </div>
       )}
     </form>

@@ -1,5 +1,5 @@
 import { Phone } from "lucide-react";
-import { COMPANY_PHONE_DISPLAY, buildTelLink } from "@/config/contact";
+import { COMPANY_PHONE_DISPLAY, WHATSAPP_NUMBER_2, buildTelLink } from "@/config/contact";
 import type { ButtonVariant } from "@/components/Button";
 import { Button } from "@/components/Button";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -33,7 +33,7 @@ interface ContactCtaGroupProps {
 export function ContactCtaGroup({ productName, className = "" }: ContactCtaGroupProps) {
   return (
     <div className={`flex flex-wrap gap-3 ${className}`}>
-      <WhatsAppButton productName={productName} />
+      <WhatsAppButton productName={productName} number={WHATSAPP_NUMBER_2} />
       <PhoneButton />
     </div>
   );

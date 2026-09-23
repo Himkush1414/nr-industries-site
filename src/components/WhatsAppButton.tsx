@@ -2,6 +2,7 @@ import {
   buildProductWhatsAppMessage,
   buildWhatsAppLink,
   WHATSAPP_GENERAL_MESSAGE,
+  WHATSAPP_NUMBER,
 } from "@/config/contact";
 import type { ButtonVariant } from "@/components/Button";
 import { Button } from "@/components/Button";
@@ -13,6 +14,8 @@ interface WhatsAppButtonProps {
   className?: string;
   /** Smaller pill-style button for the header action bar. */
   compact?: boolean;
+  /** WhatsApp number to open — defaults to the navbar's WHATSAPP_NUMBER. Pass WHATSAPP_NUMBER_2 for any non-navbar contact CTA. */
+  number?: string;
 }
 
 function WhatsAppIcon({ className = "h-4 w-4" }: { className?: string }) {
@@ -29,6 +32,7 @@ export function WhatsAppButton({
   variant = "whatsapp",
   className = "",
   compact = false,
+  number = WHATSAPP_NUMBER,
 }: WhatsAppButtonProps) {
   const message = productName
     ? buildProductWhatsAppMessage(productName)
@@ -40,7 +44,7 @@ export function WhatsAppButton({
 
   return (
     <Button
-      href={buildWhatsAppLink(message)}
+      href={buildWhatsAppLink(message, number)}
       target="_blank"
       rel="noopener noreferrer"
       variant={variant}

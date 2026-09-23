@@ -58,6 +58,21 @@ export function buildProductWhatsAppMessage(productName: string): string {
   return `Hi, I'm interested in ${productName}. I found this on your website and would like to know more about pricing, specifications, and availability.`;
 }
 
+/** Builds the pre-filled WhatsApp message from the Contact page's form fields. */
+export function buildContactFormWhatsAppMessage({
+  name,
+  email,
+  phone,
+  message,
+}: {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}): string {
+  return `Hi, I'd like to get in touch.\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
+}
+
 /** Builds the pre-filled WhatsApp message from the appointment form's fields. */
 export function buildAppointmentWhatsAppMessage({
   name,

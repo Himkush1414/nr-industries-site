@@ -10,6 +10,7 @@ import {
   COMPANY_GOOGLE_MAPS_URL,
   COMPANY_PHONE_DISPLAY,
   COMPANY_WEBSITE_DISPLAY,
+  WHATSAPP_NUMBER_2,
   buildMailtoLink,
   buildTelLink,
 } from "@/config/contact";
@@ -90,7 +91,7 @@ export function ContactPage() {
               <p className="text-sm text-ink-500">
                 Send us a message directly and we'll respond as soon as possible.
               </p>
-              <WhatsAppButton className="self-start" />
+              <WhatsAppButton className="self-start" number={WHATSAPP_NUMBER_2} />
             </div>
 
             <div className="overflow-hidden rounded border border-ink-100 bg-white">

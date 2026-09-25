@@ -5,6 +5,7 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { OrganizationSchema } from "@/components/OrganizationSchema";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AppointmentFab } from "@/experimental-ui/components/AppointmentFab";
+import { useNormalizedVh } from "@/hooks/useNormalizedVh";
 // Styles for the fab + its modal only — safe to load site-wide.
 import "@/experimental-ui/styles/experimental.css";
 
@@ -16,6 +17,11 @@ export function Layout() {
   // no manual compensation is needed there either.
   const { pathname } = useLocation();
   const isHome = pathname === "/";
+
+  // Keeps --vh100 (used by Home's full-height cinematic panels) in sync
+  // with a realistic viewport height — see the hook for why that can't
+  // just be raw `100vh` everywhere.
+  useNormalizedVh();
 
   return (
     <div className="flex min-h-screen flex-col">

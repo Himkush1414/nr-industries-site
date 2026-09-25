@@ -91,8 +91,12 @@ export function Header() {
   };
 
   return (
+    // z-[130]: above AppointmentFab's z-index:120 (Layout.tsx) — otherwise
+    // that fixed, always-mounted button visually sits on top of the open
+    // mobile menu's bottom row (WhatsApp/Call), since it isn't hidden while
+    // the menu is open.
     <header
-      className={`sticky top-0 z-50 transition-[background-color,backdrop-filter] duration-300 ${
+      className={`sticky top-0 z-[130] transition-[background-color,backdrop-filter] duration-300 ${
         isMobileOpen ? "bg-white" : isTransitioning ? "bg-white/10 backdrop-blur-md" : "bg-transparent"
       } ${isFullyHidden && !isMobileOpen ? "pointer-events-none" : ""}`}
     >

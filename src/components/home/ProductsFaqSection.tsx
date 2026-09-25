@@ -525,7 +525,7 @@ export function ProductsFaqSection() {
       <section
         ref={mainSectionRef}
         className="relative overflow-hidden lv9-lv6-section"
-        style={{ width: "100%", height: totalHeight !== null ? `${totalHeight}px` : "300vh" }}
+        style={{ width: "100%", height: totalHeight !== null ? `${totalHeight}px` : "calc(var(--vh100, 100vh) * 3)" }}
       >
       {/* `totalHeight` is JS-computed (a cascading chain of live
           measurements), so — same reasoning as LV4's own section — this

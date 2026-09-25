@@ -349,7 +349,7 @@ export function LabAboutDarkSection() {
           they live here instead of as inline styles a class could never
           out-specificity. */}
       <style>{`
-        .lv9-about-section { width: 100%; height: calc(150vh + 240px); }
+        .lv9-about-section { width: 100%; height: calc(var(--vh100, 100vh) * 1.5 + 240px); }
         .lv9-about-desktop { display: block; }
         .lv9-about-mobile { display: none; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {

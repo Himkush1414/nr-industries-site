@@ -36,11 +36,22 @@ export function MobileNavTrigger({ isOpen, onToggle }: { isOpen: boolean; onTogg
   );
 }
 
-export function MobileNavPanel() {
+export function MobileNavPanel({ topOffsetPx = 80 }: { topOffsetPx?: number }) {
   return (
     <nav
       aria-label="Mobile primary"
-      className="pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto border-t border-ink-100 bg-white lg:hidden"
+      className="pointer-events-auto overflow-y-auto overscroll-contain border-t border-ink-100 bg-white lg:hidden"
+      // `dvh` (not `vh`) tracks the browser's actual currently-visible
+      // viewport, which shrinks when the mobile address bar is showing —
+      // `vh` alone reports the larger "address bar hidden" height even
+      // while it's still on screen, so the panel could render taller than
+      // what's actually visible. With the page's own scroll locked while
+      // this is open (see useLockBodyScroll), that leftover height was
+      // unreachable dead space at the bottom — including the WhatsApp/Call
+      // row — since nothing could scroll it into view. Capping to the real
+      // visible height here means the built-in `overflow-y-auto` above
+      // scrolls *this panel's own content* to reach it instead.
+      style={{ maxHeight: `calc(100dvh - ${topOffsetPx}px)` }}
     >
       <div className="container-page flex flex-col gap-1 py-4">
         <NavLink to="/" end className="rounded px-3 py-2.5 text-sm font-semibold text-ink-700 hover:bg-navy-50">

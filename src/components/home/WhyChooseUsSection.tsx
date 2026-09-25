@@ -364,7 +364,9 @@ export function WhyChooseUsSection() {
   // New full-screen (100vh) panel appended right after the frozen line.
   const panelThreeTop = frozenBottomLineTop !== null ? frozenBottomLineTop + 35 : null;
   const sectionHeight =
-    panelThreeTop !== null ? `calc(${panelThreeTop}px + 100vh)` : "calc(300vh + 450px)";
+    panelThreeTop !== null
+      ? `calc(${panelThreeTop}px + var(--vh100, 100vh))`
+      : "calc(var(--vh100, 100vh) * 3 + 450px)";
 
   return (
     // Height is now derived (sectionHeight, computed above) from the points/

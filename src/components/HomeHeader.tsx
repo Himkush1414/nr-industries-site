@@ -161,28 +161,34 @@ export function HomeHeader() {
       <style>{`
         .site-nav-desktop-tabs, .site-nav-desktop-actions { display: flex; }
         .site-nav-hamburger { display: none; }
+        .site-nav-desktop-logo { display: flex; align-items: center; }
+        .site-nav-mobile-logo { display: none; align-items: center; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {
           .site-nav-desktop-tabs, .site-nav-desktop-actions { display: none; }
           .site-nav-hamburger { display: flex; }
+          .site-nav-desktop-logo { display: none; }
+          .site-nav-mobile-logo { display: flex; }
         }
       `}</style>
 
-      {/* Panel 1 — logo. Rendered as a solid-color mask (the logo file's
-          own alpha channel as the stencil) rather than the raw exported
-          image — its baked-in gold/tan tones read too close to the dark
-          hero's own color range to stay reliably visible. Filling the
-          mask with a flat, deliberately-chosen dusty off-white instead
-          guarantees contrast regardless of what's behind it. */}
+      {/* Panel 1 — logo. Desktop keeps the existing solid-color mask (the
+          logo file's own alpha channel as the stencil, filled with a flat
+          dusty off-white) — its baked-in gold/tan tones read too close to
+          the dark hero's own color range to stay reliably visible there.
+          That off-white treatment is Home-desktop-only by design; every
+          other nav instance (this bar's own mobile view included) uses the
+          real full-color logo — same asset Header.tsx already uses on
+          every non-Home route, desktop and mobile alike — so the brand mark
+          reads consistently everywhere except this one deliberate exception. */}
       <Link
         to="/"
         aria-label="NR Industries home"
+        className="site-nav-desktop-logo"
         style={{
           position: "absolute",
           left: "clamp(16px, 4vw, 30px)",
           top: "50%",
           transform: "translateY(-50%)",
-          display: "flex",
-          alignItems: "center",
         }}
       >
         <div
@@ -201,6 +207,26 @@ export function HomeHeader() {
             WebkitMaskPosition: "left center",
             maskPosition: "left center",
           }}
+        />
+      </Link>
+      <Link
+        to="/"
+        aria-label="NR Industries home"
+        className="site-nav-mobile-logo"
+        style={{
+          position: "absolute",
+          left: "clamp(16px, 4vw, 30px)",
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
+      >
+        <img
+          src="/logo-v5-transparent.png"
+          alt="NR Industries"
+          height={44}
+          width={88}
+          className="h-[clamp(32px,9vw,44px)] w-auto object-contain object-left"
+          decoding="async"
         />
       </Link>
 
@@ -321,7 +347,7 @@ export function HomeHeader() {
         flow. */}
     {menuOpen && (
         <div style={{ position: "fixed", top: `${NAV_HEIGHT}px`, left: 0, right: 0, zIndex: 1000 }}>
-          <MobileNavPanel />
+          <MobileNavPanel topOffsetPx={NAV_HEIGHT} />
         </div>
     )}
     </>

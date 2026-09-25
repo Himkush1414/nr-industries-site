@@ -83,7 +83,7 @@ const BLUR_TRANSITION_MS = 400;
 // Position/height for the section between the two near-bottom lines
 // (calc(100vh - 36px) and 650px below it) — reused for every element
 // placed in that band below.
-const CERT_SECTION_TOP = "calc(100vh - 36px)";
+const CERT_SECTION_TOP = "calc(var(--vh100, 100vh) - 36px)";
 const CERT_SECTION_HEIGHT = 650;
 
 const CERTIFICATIONS_HEADING =
@@ -127,7 +127,7 @@ const CERT_IMAGE_TINT = "grayscale(40%) brightness(0.85) contrast(1.05)";
 // container `gap`, since a `gap` only applies BETWEEN items and would throw
 // off the doubled track's exact halfway point, producing a visible stutter
 // on every loop).
-const MARQUEE_SECTION_TOP = "calc(100vh - 36px + 650px)";
+const MARQUEE_SECTION_TOP = "calc(var(--vh100, 100vh) - 36px + 650px)";
 const MARQUEE_SECTION_HEIGHT = 300;
 const MARQUEE_WORD = "NR INDUSTRIES";
 const MARQUEE_ITEM_GAP_PX = 90;
@@ -187,8 +187,8 @@ function MarqueeItem({ item }: { item: MarqueeSlot }) {
 // line" added earlier sits — see MARQUEE_SECTION_TOP + MARQUEE_SECTION_HEIGHT).
 const IMAGE_STATS_BLOCK_HEIGHT = 450;
 const IMAGE_STATS_BLOCK_GAP = 15;
-const IMAGE_STATS_BLOCK1_TOP = "calc(100vh - 36px + 990px)";
-const IMAGE_STATS_BLOCK2_TOP = `calc(100vh - 36px + ${990 + IMAGE_STATS_BLOCK_HEIGHT + IMAGE_STATS_BLOCK_GAP}px)`;
+const IMAGE_STATS_BLOCK1_TOP = "calc(var(--vh100, 100vh) - 36px + 990px)";
+const IMAGE_STATS_BLOCK2_TOP = `calc(var(--vh100, 100vh) - 36px + ${990 + IMAGE_STATS_BLOCK_HEIGHT + IMAGE_STATS_BLOCK_GAP}px)`;
 // Image zone: panel 1 fully + 40% of panel 2's width.
 const IMAGE_ZONE_WIDTH = "calc((100% - 60px) * 0.35)";
 // Text zone: the remaining 60% of panel 2 + all of panel 3.
@@ -429,7 +429,7 @@ export function IndustriesCertificationsSection() {
     // of following this section's height.
     <section className="relative overflow-hidden lv9-lv5-section">
       <style>{`
-        .lv9-lv5-section { width: 100%; height: calc(100vh + 1929px); }
+        .lv9-lv5-section { width: 100%; height: calc(var(--vh100, 100vh) + 1929px); }
         .lv9-lv5-desktop { display: block; }
         .lv9-lv5-mobile { display: none; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -486,7 +486,7 @@ export function IndustriesCertificationsSection() {
       <div
         aria-hidden="true"
         className="absolute"
-        style={{ top: "calc(100vh - 36px)", left: 0, right: 0, height: "1px", backgroundImage: LINE_GRADIENT_HORIZONTAL }}
+        style={{ top: "calc(var(--vh100, 100vh) - 36px)", left: 0, right: 0, height: "1px", backgroundImage: LINE_GRADIENT_HORIZONTAL }}
       />
       {/* Line closing off the certifications section, 650px below the one
           directly above it. */}
@@ -494,7 +494,7 @@ export function IndustriesCertificationsSection() {
         aria-hidden="true"
         className="absolute"
         style={{
-          top: "calc(100vh - 36px + 650px)",
+          top: "calc(var(--vh100, 100vh) - 36px + 650px)",
           left: 0,
           right: 0,
           height: "1px",
@@ -507,7 +507,7 @@ export function IndustriesCertificationsSection() {
         aria-hidden="true"
         className="absolute"
         style={{
-          top: "calc(100vh - 36px + 950px)",
+          top: "calc(var(--vh100, 100vh) - 36px + 950px)",
           left: 0,
           right: 0,
           height: "1px",

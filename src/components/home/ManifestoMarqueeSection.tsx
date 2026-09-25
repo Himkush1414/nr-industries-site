@@ -150,7 +150,7 @@ export function ManifestoMarqueeSection() {
       <section
         ref={canvasRef}
         className="relative overflow-hidden lv9-lv7-canvas"
-        style={{ width: "100%", height: canvasHeight !== null ? `${canvasHeight}px` : "100vh" }}
+        style={{ width: "100%", height: canvasHeight !== null ? `${canvasHeight}px` : "var(--vh100, 100vh)" }}
       >
         {/* `canvasHeight` is JS-computed (from a live manifesto-text
             measurement), so this uses `!important` to override the inline

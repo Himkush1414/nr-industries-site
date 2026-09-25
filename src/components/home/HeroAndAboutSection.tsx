@@ -82,7 +82,10 @@ export function HeroAndAboutSection() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-navy-950">
+      <section
+        className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-navy-950"
+        style={{ minHeight: "var(--vh100, 100vh)" }}
+      >
         <img
           ref={heroImageRef}
           src="/hero-wind-generation-1920.webp"

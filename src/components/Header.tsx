@@ -69,11 +69,10 @@ export function Header() {
   // Change #3 (navbar scroll behavior): a single 0-1 progress value derived
   // from scroll position. 0 = resting state (top of page, or bottom of
   // page); 1 = fully scrolled-past-hero state. Logo/actions ride this to
-  // shift + fade, the pill nav rides it to slide up out of view, and a
-  // slight backdrop blur is only present while progress is strictly between
-  // the two (mid-transition) — never at rest, never once fully hidden.
+  // shift + fade, the pill nav rides it to slide up out of view. The bar's
+  // own background stays solid white throughout (see the header's
+  // className below) — only its content fades/hides with scroll.
   const navProgress = useNavScroll();
-  const isTransitioning = navProgress > 0 && navProgress < 1;
   const isFullyHidden = navProgress >= 1;
 
   // While the mobile menu is open, the bar must read as a fully visible,
@@ -95,10 +94,11 @@ export function Header() {
     // that fixed, always-mounted button visually sits on top of the open
     // mobile menu's bottom row (WhatsApp/Call), since it isn't hidden while
     // the menu is open.
+    // Solid white, never blurred/transparent — every non-Home route (this
+    // Header, desktop and mobile alike) uses this fixed background; only
+    // Home's own HomeHeader keeps the blurred-over-hero treatment.
     <header
-      className={`sticky top-0 z-[130] transition-[background-color,backdrop-filter] duration-300 ${
-        isMobileOpen ? "bg-white" : isTransitioning ? "bg-white/10 backdrop-blur-md" : "bg-transparent"
-      } ${isFullyHidden && !isMobileOpen ? "pointer-events-none" : ""}`}
+      className={`sticky top-0 z-[130] bg-white ${isFullyHidden && !isMobileOpen ? "pointer-events-none" : ""}`}
     >
       <div className="relative flex h-20 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         {/* Logo

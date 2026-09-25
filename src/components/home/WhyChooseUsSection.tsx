@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
+import { useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -317,6 +318,13 @@ export function WhyChooseUsSection() {
   // pass's explicit note, and it'll animate correctly once real content
   // exists before/after this section.
   const [revealProgress, setRevealProgress] = useState(0);
+  // Real viewport height, except on the phone + Chrome "Desktop site"
+  // anomaly (see the hook) — raw window.innerHeight there is 2-3x inflated
+  // (portrait screen height forced under a wide layout viewport), which
+  // makes the progress fraction below reach 1 far later than a real
+  // desktop's scroll amount would, leaving the text under-revealed relative
+  // to how much the user has actually scrolled.
+  const vh100 = useNormalizedVh();
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -331,14 +339,14 @@ export function WhyChooseUsSection() {
       const rect = section.getBoundingClientRect();
       // 0 when the section's top is at the bottom of the viewport (just
       // arriving), 1 once it has scrolled a full viewport height further.
-      const progress = (window.innerHeight - rect.top) / window.innerHeight;
+      const progress = (vh100 - rect.top) / vh100;
       setRevealProgress(Math.min(1, Math.max(0, progress)));
     }
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [vh100]);
 
   const mainWords = WHY_CHOOSE_US_MAIN.split(" ");
 

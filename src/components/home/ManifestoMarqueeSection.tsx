@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { HOME_REF_VH, HOME_REF_WIDTH, useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -121,6 +122,12 @@ export function ManifestoMarqueeSection() {
   const canvasRef = useRef<HTMLElement>(null);
   const manifestoRef = useRef<HTMLDivElement>(null);
   const [marqueeTop, setMarqueeTop] = useState<number | null>(null);
+  // See WhyChooseUsSection's equivalent comment — zoom is 1 normally; on
+  // the phone + Chrome "Desktop site" anomaly, it's the ratio this section
+  // (rendered at a fixed HOME_REF_WIDTH canvas) is visually/structurally
+  // shrunk or grown by to fit the phone's actual forced viewport width.
+  const { zoom } = useNormalizedVh();
+  const isHomeZoomed = zoom !== 1;
 
   // The manifesto's exact wrapped height isn't known ahead of time (font
   // rendering/kerning varies), so — same technique lab-lv6 uses for its own
@@ -132,13 +139,19 @@ export function ManifestoMarqueeSection() {
       const canvas = canvasRef.current;
       const manifesto = manifestoRef.current;
       if (!canvas || !manifesto) return;
+      // getBoundingClientRect() returns real (post-zoom) screen pixels;
+      // dividing by zoom converts back to this canvas's own reference-
+      // canvas pixels, which MARQUEE_GAP_AFTER_TEXT and every position
+      // derived from marqueeTop below are expressed in.
       const canvasTop = canvas.getBoundingClientRect().top;
-      setMarqueeTop(manifesto.getBoundingClientRect().bottom - canvasTop + MARQUEE_GAP_AFTER_TEXT);
+      setMarqueeTop(
+        (manifesto.getBoundingClientRect().bottom - canvasTop) / zoom + MARQUEE_GAP_AFTER_TEXT,
+      );
     }
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [zoom]);
 
   // The canvas ends exactly at the marquee's closing line — the footer
   // starts immediately below it in normal flow, so that line does double
@@ -150,7 +163,11 @@ export function ManifestoMarqueeSection() {
       <section
         ref={canvasRef}
         className="relative overflow-hidden lv9-lv7-canvas"
-        style={{ width: "100%", height: canvasHeight !== null ? `${canvasHeight}px` : "var(--vh100, 100vh)" }}
+        style={{
+          width: isHomeZoomed ? `${HOME_REF_WIDTH}px` : "100%",
+          height: canvasHeight !== null ? `${canvasHeight}px` : `${HOME_REF_VH}px`,
+          zoom,
+        }}
       >
         {/* `canvasHeight` is JS-computed (from a live manifesto-text
             measurement), so this uses `!important` to override the inline

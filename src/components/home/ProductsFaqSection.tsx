@@ -1,6 +1,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLayoutEffect, useRef, useState } from "react";
 import { clients } from "@/data/company";
+import { HOME_REF_VH, HOME_REF_WIDTH, useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -452,6 +453,12 @@ export function ProductsFaqSection() {
 
   const [sectionBTop, setSectionBTop] = useState<number | null>(null);
   const [sectionDTop, setSectionDTop] = useState<number | null>(null);
+  // See WhyChooseUsSection's equivalent comment — zoom is 1 normally; on
+  // the phone + Chrome "Desktop site" anomaly, it's the ratio this section
+  // (rendered at a fixed HOME_REF_WIDTH canvas) is visually/structurally
+  // shrunk or grown by to fit the phone's actual forced viewport width.
+  const { zoom } = useNormalizedVh();
+  const isHomeZoomed = zoom !== 1;
 
   // Stage 1: measure Section A's real bottom (its paragraph's line count
   // isn't known ahead of time) to place Section B.
@@ -460,13 +467,17 @@ export function ProductsFaqSection() {
       const main = mainSectionRef.current;
       const a = sectionARef.current;
       if (!main || !a) return;
+      // getBoundingClientRect() returns real (post-zoom) screen pixels;
+      // dividing by zoom converts back to this section's own reference-
+      // canvas pixels, which SECTION_B_GAP and everything derived from
+      // sectionBTop below are expressed in.
       const mainTop = main.getBoundingClientRect().top;
-      setSectionBTop(a.getBoundingClientRect().bottom - mainTop + SECTION_B_GAP);
+      setSectionBTop((a.getBoundingClientRect().bottom - mainTop) / zoom + SECTION_B_GAP);
     }
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [zoom]);
 
   const sectionCTop = sectionBTop !== null ? sectionBTop + SECTION_B_HEIGHT + SECTION_C_GAP : null;
 
@@ -481,12 +492,12 @@ export function ProductsFaqSection() {
       const c = sectionCRef.current;
       if (!main || !c) return;
       const mainTop = main.getBoundingClientRect().top;
-      setSectionDTop(c.getBoundingClientRect().bottom - mainTop + SECTION_D_GAP);
+      setSectionDTop((c.getBoundingClientRect().bottom - mainTop) / zoom + SECTION_D_GAP);
     }
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [sectionCTop]);
+  }, [sectionCTop, zoom]);
 
   const sectionETop = sectionDTop !== null ? sectionDTop + SECTION_D_HEIGHT + SECTION_E_GAP : null;
   const sectionFTop = sectionETop !== null ? sectionETop + SECTION_E_HEIGHT + SECTION_F_GAP : null;
@@ -525,7 +536,11 @@ export function ProductsFaqSection() {
       <section
         ref={mainSectionRef}
         className="relative overflow-hidden lv9-lv6-section"
-        style={{ width: "100%", height: totalHeight !== null ? `${totalHeight}px` : "calc(var(--vh100, 100vh) * 3)" }}
+        style={{
+          width: isHomeZoomed ? `${HOME_REF_WIDTH}px` : "100%",
+          height: totalHeight !== null ? `${totalHeight}px` : `${HOME_REF_VH * 3}px`,
+          zoom,
+        }}
       >
       {/* `totalHeight` is JS-computed (a cascading chain of live
           measurements), so — same reasoning as LV4's own section — this

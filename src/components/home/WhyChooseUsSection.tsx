@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
-import { useNormalizedVh } from "@/hooks/useNormalizedVh";
+import { HOME_REF_VH, HOME_REF_WIDTH, useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -291,6 +291,14 @@ export function WhyChooseUsSection() {
   // state, so the image in Panel 1 and the "only one box open" rule both
   // follow from the same source of truth.
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // `vh100`: real viewport height, except on the phone + Chrome "Desktop
+  // site" anomaly (see the hook), where raw window.innerHeight is 2-3x
+  // inflated (portrait screen height forced under a wide layout viewport).
+  // `zoom`: 1 normally; on that same anomaly, the ratio this section is
+  // rendered-at-HOME_REF_WIDTH-then-visually-scaled-down/up by (see the
+  // hook and this section's own root element below).
+  const { vh100, zoom } = useNormalizedVh();
+  const isHomeZoomed = zoom !== 1;
 
   useLayoutEffect(() => {
     function measure() {
@@ -298,15 +306,21 @@ export function WhyChooseUsSection() {
       const row = headerRowRef.current;
       const button = buttonRef.current;
       if (!section || !row || !button) return;
+      // getBoundingClientRect() always returns real (post-zoom) screen
+      // pixels, but the fixed offsets these measurements feed into
+      // (+14, +100, +310 below) are reference-canvas pixels, tuned for
+      // zoom===1 — dividing by zoom converts the measurement back to that
+      // same reference space before combining them, so the result is
+      // right whether or not this section is currently zoomed.
       const sectionTop = section.getBoundingClientRect().top;
-      setDividerTop(row.getBoundingClientRect().bottom - sectionTop + 14);
-      const buttonBottom = button.getBoundingClientRect().bottom - sectionTop;
+      setDividerTop((row.getBoundingClientRect().bottom - sectionTop) / zoom + 14);
+      const buttonBottom = (button.getBoundingClientRect().bottom - sectionTop) / zoom;
       setButtonLineTops([buttonBottom + 100, buttonBottom + 100 + 310]);
     }
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [zoom]);
 
   // Scroll-brightening progress for the main text (0 = fully dim, 1 = fully
   // revealed), driven by this section's own position relative to the
@@ -318,13 +332,6 @@ export function WhyChooseUsSection() {
   // pass's explicit note, and it'll animate correctly once real content
   // exists before/after this section.
   const [revealProgress, setRevealProgress] = useState(0);
-  // Real viewport height, except on the phone + Chrome "Desktop site"
-  // anomaly (see the hook) — raw window.innerHeight there is 2-3x inflated
-  // (portrait screen height forced under a wide layout viewport), which
-  // makes the progress fraction below reach 1 far later than a real
-  // desktop's scroll amount would, leaving the text under-revealed relative
-  // to how much the user has actually scrolled.
-  const vh100 = useNormalizedVh();
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -369,12 +376,16 @@ export function WhyChooseUsSection() {
   // `bottom` to `top`) instead of staying bottom-anchored to the
   // now-taller section.
   const frozenBottomLineTop = sectionTwoBoundary !== null ? sectionTwoBoundary + SECTION_TWO_FINAL_MARGIN - 35 : null;
-  // New full-screen (100vh) panel appended right after the frozen line.
+  // New full-screen (one reference-canvas "screen", HOME_REF_VH) panel
+  // appended right after the frozen line. Fixed to HOME_REF_VH rather than
+  // the real (--vh100) viewport height — this section's whole coordinate
+  // system is reference-canvas pixels (see the zoom comment on the
+  // <section> below), so every measurement above and every constant here
+  // needs to stay in that same space; only the zoom transform at the very
+  // end converts the result to real screen pixels.
   const panelThreeTop = frozenBottomLineTop !== null ? frozenBottomLineTop + 35 : null;
   const sectionHeight =
-    panelThreeTop !== null
-      ? `calc(${panelThreeTop}px + var(--vh100, 100vh))`
-      : "calc(var(--vh100, 100vh) * 3 + 450px)";
+    panelThreeTop !== null ? `${panelThreeTop + HOME_REF_VH}px` : `${HOME_REF_VH * 3 + 450}px`;
 
   return (
     // Height is now derived (sectionHeight, computed above) from the points/
@@ -392,7 +403,22 @@ export function WhyChooseUsSection() {
     <section
       ref={sectionRef}
       className="relative overflow-hidden lv9-lv4-section"
-      style={{ width: "100%", height: sectionHeight }}
+      // On the phone + Chrome "Desktop site" anomaly (zoom !== 1, see the
+      // hook), this section is given a fixed HOME_REF_WIDTH canvas — the
+      // width its fixed-px text/gaps are actually tuned for — and then
+      // visually AND structurally shrunk/grown with `zoom` to fit however
+      // wide the phone's forced viewport actually is, the same way a real
+      // desktop browser looks when physically resized. Every fixed-px
+      // value inside (and the getBoundingClientRect-based measurements
+      // above) stays correct because they're never touched — only their
+      // final on-screen size changes. Normal case (zoom===1, real desktop
+      // or real mobile): width stays 100% and zoom is a no-op, unchanged
+      // from today.
+      style={{
+        width: isHomeZoomed ? `${HOME_REF_WIDTH}px` : "100%",
+        height: sectionHeight,
+        zoom,
+      }}
     >
       {/* `sectionHeight` above is a JS-computed value, not a static string,
           so it can't be moved into a plain CSS class rule the way LV3's

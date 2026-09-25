@@ -1,5 +1,6 @@
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { HOME_REF_VH, HOME_REF_WIDTH, useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -81,9 +82,11 @@ const TOTAL_PAGES = Math.ceil(INDUSTRIES.length / INDUSTRIES_PER_PAGE);
 const BLUR_TRANSITION_MS = 400;
 
 // Position/height for the section between the two near-bottom lines
-// (calc(100vh - 36px) and 650px below it) — reused for every element
-// placed in that band below.
-const CERT_SECTION_TOP = "calc(var(--vh100, 100vh) - 36px)";
+// (HOME_REF_VH - 36px and 650px below it) — reused for every element
+// placed in that band below. Fixed to HOME_REF_VH (not the real --vh100
+// viewport height) since this whole section renders in reference-canvas
+// pixels — see the zoom comment on the <section> root further down.
+const CERT_SECTION_TOP = `${HOME_REF_VH - 36}px`;
 const CERT_SECTION_HEIGHT = 650;
 
 const CERTIFICATIONS_HEADING =
@@ -127,7 +130,7 @@ const CERT_IMAGE_TINT = "grayscale(40%) brightness(0.85) contrast(1.05)";
 // container `gap`, since a `gap` only applies BETWEEN items and would throw
 // off the doubled track's exact halfway point, producing a visible stutter
 // on every loop).
-const MARQUEE_SECTION_TOP = "calc(var(--vh100, 100vh) - 36px + 650px)";
+const MARQUEE_SECTION_TOP = `${HOME_REF_VH - 36 + 650}px`;
 const MARQUEE_SECTION_HEIGHT = 300;
 const MARQUEE_WORD = "NR INDUSTRIES";
 const MARQUEE_ITEM_GAP_PX = 90;
@@ -187,8 +190,8 @@ function MarqueeItem({ item }: { item: MarqueeSlot }) {
 // line" added earlier sits — see MARQUEE_SECTION_TOP + MARQUEE_SECTION_HEIGHT).
 const IMAGE_STATS_BLOCK_HEIGHT = 450;
 const IMAGE_STATS_BLOCK_GAP = 15;
-const IMAGE_STATS_BLOCK1_TOP = "calc(var(--vh100, 100vh) - 36px + 990px)";
-const IMAGE_STATS_BLOCK2_TOP = `calc(var(--vh100, 100vh) - 36px + ${990 + IMAGE_STATS_BLOCK_HEIGHT + IMAGE_STATS_BLOCK_GAP}px)`;
+const IMAGE_STATS_BLOCK1_TOP = `${HOME_REF_VH - 36 + 990}px`;
+const IMAGE_STATS_BLOCK2_TOP = `${HOME_REF_VH - 36 + 990 + IMAGE_STATS_BLOCK_HEIGHT + IMAGE_STATS_BLOCK_GAP}px`;
 // Image zone: panel 1 fully + 40% of panel 2's width.
 const IMAGE_ZONE_WIDTH = "calc((100% - 60px) * 0.35)";
 // Text zone: the remaining 60% of panel 2 + all of panel 3.
@@ -389,6 +392,13 @@ function useCertSlot(startIndex: number, startDelayMs: number) {
 }
 
 export function IndustriesCertificationsSection() {
+  // See WhyChooseUsSection's equivalent comment — zoom is 1 normally; on
+  // the phone + Chrome "Desktop site" anomaly, it's the ratio this section
+  // (rendered at a fixed HOME_REF_WIDTH canvas — see the <style> block
+  // below) is visually/structurally shrunk or grown by to fit the phone's
+  // actual forced viewport width.
+  const { zoom } = useNormalizedVh();
+  const isHomeZoomed = zoom !== 1;
   const [page, setPage] = useState(0);
   // "idle" = fully sharp/visible; "out"/"in" both render blurred+faded —
   // "in" is a distinct step so the page-index swap can happen while the
@@ -429,7 +439,11 @@ export function IndustriesCertificationsSection() {
     // of following this section's height.
     <section className="relative overflow-hidden lv9-lv5-section">
       <style>{`
-        .lv9-lv5-section { width: 100%; height: calc(var(--vh100, 100vh) + 1929px); }
+        .lv9-lv5-section {
+          width: ${isHomeZoomed ? `${HOME_REF_WIDTH}px` : "100%"};
+          height: ${HOME_REF_VH + 1929}px;
+          zoom: ${zoom};
+        }
         .lv9-lv5-desktop { display: block; }
         .lv9-lv5-mobile { display: none; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -486,7 +500,7 @@ export function IndustriesCertificationsSection() {
       <div
         aria-hidden="true"
         className="absolute"
-        style={{ top: "calc(var(--vh100, 100vh) - 36px)", left: 0, right: 0, height: "1px", backgroundImage: LINE_GRADIENT_HORIZONTAL }}
+        style={{ top: CERT_SECTION_TOP, left: 0, right: 0, height: "1px", backgroundImage: LINE_GRADIENT_HORIZONTAL }}
       />
       {/* Line closing off the certifications section, 650px below the one
           directly above it. */}
@@ -494,7 +508,7 @@ export function IndustriesCertificationsSection() {
         aria-hidden="true"
         className="absolute"
         style={{
-          top: "calc(var(--vh100, 100vh) - 36px + 650px)",
+          top: MARQUEE_SECTION_TOP,
           left: 0,
           right: 0,
           height: "1px",
@@ -507,7 +521,7 @@ export function IndustriesCertificationsSection() {
         aria-hidden="true"
         className="absolute"
         style={{
-          top: "calc(var(--vh100, 100vh) - 36px + 950px)",
+          top: `${HOME_REF_VH - 36 + 950}px`,
           left: 0,
           right: 0,
           height: "1px",

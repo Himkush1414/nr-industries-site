@@ -2,6 +2,7 @@ import { Check, Send } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useInView } from "@/hooks/useInView";
+import { HOME_REF_VH, HOME_REF_WIDTH, useNormalizedVh } from "@/hooks/useNormalizedVh";
 
 // Single shared breakpoint — matches Header.tsx's own.
 const MOBILE_BREAKPOINT = 767;
@@ -302,20 +303,32 @@ export function LabAboutDarkSection() {
   // Measured via getBoundingClientRect (not offsetTop) so it's correct
   // regardless of which element is the positioned ancestor.
   const [extraLineTops, setExtraLineTops] = useState<[number, number] | null>(null);
+  // See the WhyChooseUsSection/IndustriesCertificationsSection equivalent —
+  // zoom is 1 normally; on the phone + Chrome "Desktop site" anomaly, it's
+  // the ratio this section (rendered at a fixed HOME_REF_WIDTH canvas — see
+  // the <style> block below) is visually/structurally shrunk or grown by to
+  // fit the phone's actual forced viewport width.
+  const { zoom } = useNormalizedVh();
+  const isHomeZoomed = zoom !== 1;
 
   useLayoutEffect(() => {
     function measure() {
       const section = sectionRef.current;
       const chatWrapper = chatWrapperRef.current;
       if (!section || !chatWrapper) return;
-      const chatBottomRelative = chatWrapper.getBoundingClientRect().bottom - section.getBoundingClientRect().top;
+      // getBoundingClientRect() returns real (post-zoom) screen pixels;
+      // dividing by zoom converts back to this section's own reference-
+      // canvas pixels, which is what the +150/+400 constants below (and
+      // the element this state ends up applied to) are expressed in.
+      const chatBottomRelative =
+        (chatWrapper.getBoundingClientRect().bottom - section.getBoundingClientRect().top) / zoom;
       setExtraLineTops([chatBottomRelative + 150, chatBottomRelative + 150 + 400]);
     }
     measure();
     window.addEventListener("resize", measure);
     document.fonts?.ready?.then(measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [zoom]);
 
   return (
     // Sizing/position set via inline style rather than Tailwind utility
@@ -349,7 +362,11 @@ export function LabAboutDarkSection() {
           they live here instead of as inline styles a class could never
           out-specificity. */}
       <style>{`
-        .lv9-about-section { width: 100%; height: calc(var(--vh100, 100vh) * 1.5 + 240px); }
+        .lv9-about-section {
+          width: ${isHomeZoomed ? `${HOME_REF_WIDTH}px` : "100%"};
+          height: ${HOME_REF_VH * 1.5 + 240}px;
+          zoom: ${zoom};
+        }
         .lv9-about-desktop { display: block; }
         .lv9-about-mobile { display: none; }
         @media (max-width: ${MOBILE_BREAKPOINT}px) {

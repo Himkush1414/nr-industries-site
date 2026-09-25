@@ -128,6 +128,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Chrome's mobile "font boosting" / text-autosizer inflates text unevenly
+       (some blocks boosted, some not) whenever the browser's layout viewport
+       is wider than the physical screen — exactly what happens on a phone
+       with "Desktop site" enabled (real desktop Chrome never runs this
+       heuristic, and normal mobile mode has width=device-width matching the
+       physical screen, so neither triggers it). Pinning to 100% disables the
+       auto-inflation so text sizing follows only the CSS (fluid clamp() type
+       scale above), matching real desktop rendering at the same width. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   body {
     @apply bg-surface text-ink-900 font-body antialiased;

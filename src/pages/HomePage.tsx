@@ -1,5 +1,5 @@
 import { HeroAndAboutSection } from "@/components/home/HeroAndAboutSection";
-import { IndustriesCertificationsSection } from "@/components/home/IndustriesCertificationsSection";
+import { IndustriesSection } from "@/components/home/IndustriesSection";
 import { LenisProvider } from "@/components/home/LenisProvider";
 import { ManifestoMarqueeSection } from "@/components/home/ManifestoMarqueeSection";
 import { ProductsFaqSection } from "@/components/home/ProductsFaqSection";
@@ -9,11 +9,13 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { useWireDecorativeButtons } from "@/hooks/useWireDecorativeButtons";
 
 /**
- * Promoted from /lab/lv9 (src/lab-lv9/pages/Lv9Page.tsx): the same LV3-LV7
- * section stack (hero+about, why-choose-us, industries+certifications,
- * products/photo-grid/FAQ, manifesto+marquee), minus Lv9Nav and the footer
- * DOM-injection hook — the real site's Header and Footer (via Layout.tsx)
- * already cover both, so duplicating either here would render it twice.
+ * Promoted from /lab/lv16: a full architectural rebuild of the previous
+ * (/lab/lv9-derived) Home page — fluid clamp()-based sizing throughout,
+ * draggable auto-scrolling "conveyor belt" marquees for the Industries
+ * images, Products, and company logos, a blur-crossfade single-photo panel,
+ * and a mobile-specific static product list. The real Header/Footer (via
+ * Layout.tsx) already cover navigation and the footer, so this only
+ * composes the body sections.
  */
 export function HomePage() {
   useDocumentMeta(PAGE_META.home.title, PAGE_META.home.description);
@@ -23,7 +25,7 @@ export function HomePage() {
     <LenisProvider>
       <HeroAndAboutSection />
       <WhyChooseUsSection />
-      <IndustriesCertificationsSection />
+      <IndustriesSection />
       <ProductsFaqSection />
       <ManifestoMarqueeSection />
     </LenisProvider>

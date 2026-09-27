@@ -234,13 +234,12 @@ export function WhyChooseUsSection() {
                     alt=""
                     loading="lazy"
                     className="absolute inset-0 h-full w-full"
-                    style={{ objectFit: "cover", filter: "grayscale(70%) sepia(18%) brightness(0.92) contrast(0.95)" }}
+                    style={{ objectFit: "cover" }}
                   />
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ backgroundColor: "#E8E4DC", mixBlendMode: "multiply", opacity: 0.22 }} />
                 </div>
                 <div className="text-center">
                   <span style={{ fontSize: "clamp(13px, 1.5vw, 16px)", fontWeight: 600, lineHeight: 1.3, color: LOGO_MATTE_BLACK }}>{point.title}</span>
-                  <p style={{ marginTop: "4px", fontSize: "clamp(11.5px, 1.3vw, 14px)", lineHeight: 1.45, color: LOGO_MATTE_BLACK, opacity: 0.75 }}>{point.blurb}</p>
+                  <p style={{ marginTop: "4px", fontSize: "clamp(11.5px, 1.3vw, 14px)", lineHeight: 1.45, color: LOGO_MATTE_BLACK, opacity: 0.88 }}>{point.blurb}</p>
                 </div>
               </div>
             ))}
@@ -287,7 +286,7 @@ export function WhyChooseUsSection() {
                 <span className="font-heading block" style={{ fontSize: "clamp(13px, 1.4vw, 15px)", fontWeight: 600, color: LOGO_MATTE_BLACK }}>
                   NR Industries
                 </span>
-                <span style={{ fontSize: "clamp(10.5px, 1.1vw, 12.5px)", color: LOGO_MATTE_BLACK, opacity: 0.75 }}>{PANEL_THREE_TAGLINE}</span>
+                <span style={{ fontSize: "clamp(10.5px, 1.1vw, 12.5px)", color: LOGO_MATTE_BLACK, opacity: 0.88 }}>{PANEL_THREE_TAGLINE}</span>
               </div>
             </div>
           </div>

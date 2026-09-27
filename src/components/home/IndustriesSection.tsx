@@ -57,7 +57,7 @@ function IndustryCard({ industry }: { industry: (typeof INDUSTRIES)[number] }) {
       <div style={{ borderTop: `1px solid ${LINE_COLOR}` }} />
       <div className="flex flex-col" style={{ gap: "6px", padding: "clamp(10px, 1.4vw, 16px)" }}>
         <span className="font-heading" style={{ fontSize: "clamp(13px, 1.3vw, 15px)", fontWeight: 600, color: TEXT_CREAM }}>{industry.name}</span>
-        <span style={{ fontSize: "clamp(11px, 1.05vw, 12.5px)", lineHeight: 1.4, color: TEXT_CREAM, opacity: 0.75 }}>{industry.description}</span>
+        <span style={{ fontSize: "clamp(11px, 1.05vw, 12.5px)", lineHeight: 1.4, color: TEXT_CREAM, opacity: 0.88 }}>{industry.description}</span>
       </div>
     </div>
   );
@@ -91,7 +91,7 @@ function ImageStatCard({
         <p className="font-heading" style={{ fontSize: "clamp(14px, 1.5vw, 18px)", fontWeight: 600, lineHeight: 1.25, color: TEXT_CREAM, margin: 0 }}>{boldLine}</p>
         <div style={{ textAlign: "right", flexShrink: 0 }}>
           <span className="font-heading" style={{ display: "block", fontSize: "clamp(22px, 2.6vw, 32px)", fontWeight: 700, color: TEXT_CREAM }}>{statValue}</span>
-          <span style={{ fontSize: "clamp(10px, 1.1vw, 12.5px)", color: TEXT_CREAM, opacity: 0.75 }}>{statLabel}</span>
+          <span style={{ fontSize: "clamp(10px, 1.1vw, 12.5px)", color: TEXT_CREAM, opacity: 0.88 }}>{statLabel}</span>
         </div>
       </div>
     </div>

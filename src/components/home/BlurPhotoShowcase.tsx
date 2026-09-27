@@ -19,8 +19,6 @@ const PRODUCTS = [
 const STATIC_DURATION_MS = 3500;
 const BLUR_DURATION_MS = 650;
 
-const PRODUCT_TINT_FILTER = "grayscale(75%) sepia(30%) brightness(1.05) contrast(0.9)";
-
 export function BlurPhotoShowcase() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -69,7 +67,7 @@ export function BlurPhotoShowcase() {
         className="absolute inset-0 h-full w-full"
         style={{
           objectFit: "contain",
-          filter: `${PRODUCT_TINT_FILTER} ${visible ? "blur(0px)" : "blur(16px)"}`,
+          filter: visible ? "blur(0px)" : "blur(16px)",
           opacity: visible ? 1 : 0,
           transition: `filter ${BLUR_DURATION_MS}ms ease, opacity ${BLUR_DURATION_MS}ms ease`,
         }}

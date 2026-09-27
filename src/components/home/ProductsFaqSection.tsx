@@ -52,7 +52,6 @@ const PHOTO_GRID = [
   { image: "/why-choose-us/after-sales-support-new.jpeg", caption: "Support that continues well after installation." },
   { image: "/why-choose-us/eco-friendly-manufacturing.jpeg", caption: "Manufacturing built around sustainability." },
 ];
-const PHOTO_TINT = "saturate(0.55) sepia(0.12) brightness(0.96) contrast(0.95)";
 
 const SECTION_E_STATEMENT = "Power & Distribution Equipment Manufacturer";
 
@@ -213,7 +212,7 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
           fontSize: "clamp(11px, 1vw, 12.5px)",
           lineHeight: 1.45,
           color: MATTE_BLACK,
-          opacity: 0.75,
+          opacity: 0.85,
           flex: 1,
           display: "-webkit-box",
           WebkitLineClamp: 3,
@@ -260,7 +259,7 @@ function MobileProductCard({ product }: { product: (typeof products)[number] }) 
         {/* Real spec detail (from the same data the Products detail page
             uses) instead of a per-card button — only one "View Product"
             action exists for this whole list, above it. */}
-        <span style={{ fontSize: "11px", fontWeight: 600, color: MATTE_BLACK, opacity: 0.6 }}>
+        <span style={{ fontSize: "11px", fontWeight: 600, color: MATTE_BLACK, opacity: 0.75 }}>
           {product.rangeLabel}: {product.rangeValue}
         </span>
         <p
@@ -268,7 +267,7 @@ function MobileProductCard({ product }: { product: (typeof products)[number] }) 
             fontSize: "11.5px",
             lineHeight: 1.4,
             color: MATTE_BLACK,
-            opacity: 0.75,
+            opacity: 0.85,
             display: "-webkit-box",
             WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
@@ -368,7 +367,7 @@ export function ProductsFaqSection() {
             {PHOTO_GRID.map((photo) => (
               <div key={photo.image} className="flex flex-col" style={{ gap: "clamp(8px, 1vw, 12px)" }}>
                 <div className="overflow-hidden rounded-sm" style={{ height: "clamp(130px, 13vw, 200px)" }}>
-                  <img src={photo.image} alt="" loading="lazy" className="h-full w-full" style={{ objectFit: "cover", filter: PHOTO_TINT }} />
+                  <img src={photo.image} alt="" loading="lazy" className="h-full w-full" style={{ objectFit: "cover" }} />
                 </div>
                 <span style={{ fontSize: "clamp(11.5px, 1.2vw, 14px)", lineHeight: 1.4, color: MATTE_BLACK }}>{photo.caption}</span>
               </div>
@@ -402,7 +401,7 @@ export function ProductsFaqSection() {
             <p className="font-heading" style={{ fontSize: "clamp(16px, 2vw, 21px)", fontWeight: 700, lineHeight: 1.3, color: MATTE_BLACK, maxWidth: "560px" }}>
               {COMPANY_STATEMENT}
             </p>
-            <p className="font-heading" style={{ fontSize: "clamp(12px, 1.2vw, 13.5px)", fontWeight: 600, color: MATTE_BLACK, opacity: 0.7 }}>{SECTION_E_STATEMENT}</p>
+            <p className="font-heading" style={{ fontSize: "clamp(12px, 1.2vw, 13.5px)", fontWeight: 600, color: MATTE_BLACK, opacity: 0.82 }}>{SECTION_E_STATEMENT}</p>
 
             {/* Company logos — draggable, auto-scrolling conveyor, full
                 section width, modestly larger than before. */}
@@ -419,14 +418,14 @@ export function ProductsFaqSection() {
                     alt={client.name}
                     loading="lazy"
                     draggable={false}
-                    style={{ height: "clamp(44px, 5vw, 64px)", width: "auto", maxWidth: "140px", objectFit: "contain", filter: PHOTO_TINT }}
+                    style={{ height: "clamp(44px, 5vw, 64px)", width: "auto", maxWidth: "140px", objectFit: "contain" }}
                   />
                 )}
               />
             </div>
 
             <div className="flex w-full flex-col items-center border-t" style={{ borderColor: LINE_COLOR, paddingTop: "clamp(14px, 1.8vw, 20px)", gap: "clamp(10px, 1.2vw, 14px)" }}>
-              <span style={{ fontSize: "10.5px", fontWeight: 600, letterSpacing: "0.08em", color: MATTE_BLACK, opacity: 0.55, textTransform: "uppercase" }}>
+              <span style={{ fontSize: "10.5px", fontWeight: 600, letterSpacing: "0.08em", color: MATTE_BLACK, opacity: 0.65, textTransform: "uppercase" }}>
                 Certifications
               </span>
               <div className="flex flex-wrap items-center justify-center" style={{ gap: "clamp(16px, 2.4vw, 28px)" }}>
@@ -442,7 +441,7 @@ export function ProductsFaqSection() {
             <h3 className="font-heading" style={{ fontSize: "18px", fontWeight: 700, lineHeight: 1.2, color: MATTE_BLACK, marginBottom: "4px" }}>
               Frequently Asked Questions
             </h3>
-            <p style={{ fontSize: "12px", lineHeight: 1.5, color: MATTE_BLACK, opacity: 0.55, marginBottom: "16px" }}>
+            <p style={{ fontSize: "12px", lineHeight: 1.5, color: MATTE_BLACK, opacity: 0.68, marginBottom: "16px" }}>
               Answers to what teams most often ask us before placing an order.
             </p>
             <div className="flex flex-col">

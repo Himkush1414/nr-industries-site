@@ -1,5 +1,5 @@
 import { Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { buildTelLink, buildWhatsAppLink, COMPANY_PHONE_DISPLAY, WHATSAPP_GENERAL_MESSAGE } from "@/config/contact";
 import { MobileNavPanel, MobileNavTrigger } from "@/components/MobileNavMenu";
@@ -9,47 +9,47 @@ import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 const MOBILE_BREAKPOINT = 767;
 
 /**
- * Home-page-only navigation bar — promoted from /lab/lv9's Lv9Nav.tsx (see
- * src/lab-lv9/components/Lv9Nav.tsx, left untouched as the reference this
- * was copied from). Floats transparently (`position: fixed`, no
- * background, just a backdrop blur) over whatever's scrolled behind it,
- * distributing its content across a 4-panel column grid (`calc((100% -
- * 60px) * fraction)`, 30px insets) instead of one left-to-right strip:
- * logo in panel 1, all 6 nav tabs spanning panels 2-3 as one evenly-gapped
- * group, phone + WhatsApp actions in panel 4. Below MOBILE_BREAKPOINT, the
- * tabs/actions groups are replaced by a hamburger button opening a menu.
+ * Home-page-only navigation bar — promoted from /lab/lv16's Lv16Header.tsx
+ * (the lv16 Home redesign), which itself started from this file's own prior
+ * version (promoted from /lab/lv9's Lv9Nav.tsx before that). Floats
+ * transparently (`position: fixed`, no background, just a backdrop blur)
+ * over whatever's scrolled behind it, distributing its content across a
+ * 4-panel column grid (`calc((100% - 60px) * fraction)`, 30px insets)
+ * instead of one left-to-right strip: logo in panel 1, all 6 nav tabs
+ * spanning panels 2-3 as one evenly-gapped group, phone + WhatsApp actions
+ * in panel 4. Below MOBILE_BREAKPOINT, the tabs/actions groups are replaced
+ * by a hamburger button opening a menu.
  *
- * Every other route uses the original Header.tsx (sticky pill nav, restored
- * to how it looked before this bar was promoted) instead of this component
- * — see Layout.tsx, which picks between the two by route. Only Home's hero
- * is designed to sit flush behind this fixed bar (a dark background photo,
- * matching how LV3's hero works in lab-lv9), so `NAV_HEIGHT` is exported
- * only for this component's own mobile-menu offset, not for Layout's main
- * content padding.
+ * Two behaviors added in the lv16 promotion (see useNavTheme below):
+ *  1. Nav tab text + the phone button/icon switch between matte black and
+ *     cream white based on whatever Home section is actually behind the bar
+ *     at the current scroll position, instead of always being a fixed cream
+ *     tone — each Home section carries a `data-nav-theme="dark"|"light"`
+ *     attribute for this to read.
+ *  2. The logo (both desktop and mobile) is the real, full-color logo — the
+ *     same asset Header.tsx already uses on every non-Home route — instead
+ *     of the masked single-tone "dusty off-white" treatment desktop used to
+ *     have here.
  *
- * The mobile menu (below) intentionally does NOT reuse Lv9Nav's own
- * full-screen dark takeover panel — per an explicit request, it matches
- * the original Header.tsx's light dropdown panel (white background, navy
- * text, sliding in directly below the bar) instead, just repositioned with
- * `position: fixed` since this bar (unlike the original's `sticky` one)
- * reserves no space in normal document flow.
+ * Every other route uses the original Header.tsx (sticky pill nav) instead
+ * of this component — see Layout.tsx, which picks between the two by route.
+ * Only Home's hero is designed to sit flush behind this fixed bar (a dark
+ * background photo), so `NAV_HEIGHT` is exported only for this component's
+ * own mobile-menu offset, not for Layout's main content padding.
+ *
+ * The mobile menu (below) is the exact same MobileNavPanel Header.tsx uses
+ * on every other route — just repositioned with `position: fixed` since
+ * this bar (unlike the original's `sticky` one) reserves no space in normal
+ * document flow.
  */
 export const NAV_HEIGHT = 90;
 
-const TEXT_CREAM = "#F2F4F7";
-// Same gold accent already used elsewhere on the real site (the hero
-// heading's "INDUSTRIES"/"Power at Best", --color-gold-400 in index.css)
-// — reused here as the nav tabs' hover color rather than inventing a new
-// brand tone.
 const GOLD_ACCENT = "#dcbd5c";
-// Soft muted white ("dusty off-white", not flat #fff) for the masked logo
-// — see the Panel 1 comment below for why it's masked rather than shown
-// as the raw exported image.
-const DUSTY_OFF_WHITE = "#E7E2D8";
-const LOGO_HEIGHT = 47;
-// The cropped source (public/cream-logo.png) is 662x187 — this preserves
-// that exact aspect ratio at LOGO_HEIGHT so the mask isn't stretched.
-const LOGO_WIDTH = Math.round((LOGO_HEIGHT * 662) / 187);
+// The "black" every cream Home section already uses for its own body copy
+// — reused here so the bar's dark-on-light state matches the page's own
+// text color exactly, not an arbitrary pure #000.
+const MATTE_BLACK = "#222222";
+const TEXT_CREAM = "#F2F4F7";
 const ACTION_HEIGHT = 40;
 
 const PANEL2_LEFT = "calc(30px + (100% - 60px) * 0.25)";
@@ -69,7 +69,43 @@ const TABS = [
   { to: "/contact", label: "Contact", end: false },
 ] as const;
 
-function NavTab({ to, label, end }: { to: string; label: string; end?: boolean }) {
+/**
+ * Which color scheme the bar should use right now: samples every
+ * `[data-nav-theme]`-marked Home section to find whichever one currently
+ * spans the bar's own vertical center, and reads its theme. Defaults to
+ * "dark" (matches the hero) when nothing matches yet, or once scrolled past
+ * the last marked section into the real Footer (also dark).
+ */
+function useNavTheme(): "dark" | "light" {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    function update() {
+      const sampleY = NAV_HEIGHT / 2;
+      const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
+      let current: "dark" | "light" = "dark";
+      for (const el of sections) {
+        const r = el.getBoundingClientRect();
+        if (r.top <= sampleY && r.bottom > sampleY) {
+          current = el.dataset.navTheme === "light" ? "light" : "dark";
+          break;
+        }
+      }
+      setTheme(current);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  return theme;
+}
+
+function NavTab({ to, label, end, color }: { to: string; label: string; end?: boolean; color: string }) {
   // Both the underline and the text color follow the live hover state and
   // revert together on mouse-leave.
   const [hovering, setHovering] = useState(false);
@@ -87,10 +123,11 @@ function NavTab({ to, label, end }: { to: string; label: string; end?: boolean }
         fontSize: "14px",
         fontWeight: 600,
         letterSpacing: "0.02em",
-        color: isActive || hovering ? GOLD_ACCENT : TEXT_CREAM,
+        color: isActive || hovering ? GOLD_ACCENT : color,
         opacity: isActive || hovering ? 1 : 0.8,
         textDecoration: "none",
         whiteSpace: "nowrap",
+        transition: "color 0.2s ease",
       })}
     >
       {label}
@@ -130,6 +167,9 @@ export function HomeHeader() {
   // Background content must not scroll while the mobile menu is open —
   // same behavior as the original Header.tsx's mobile menu.
   useLockBodyScroll(menuOpen);
+
+  const theme = useNavTheme();
+  const barColor = theme === "light" ? MATTE_BLACK : TEXT_CREAM;
 
   return (
     <>
@@ -171,61 +211,41 @@ export function HomeHeader() {
         }
       `}</style>
 
-      {/* Panel 1 — logo. Desktop keeps the existing solid-color mask (the
-          logo file's own alpha channel as the stencil, filled with a flat
-          dusty off-white) — its baked-in gold/tan tones read too close to
-          the dark hero's own color range to stay reliably visible there.
-          That off-white treatment is Home-desktop-only by design; every
-          other nav instance (this bar's own mobile view included) uses the
-          real full-color logo — same asset Header.tsx already uses on
-          every non-Home route, desktop and mobile alike — so the brand mark
-          reads consistently everywhere except this one deliberate exception. */}
+      {/* Panel 1 — logo. Real, full-color logo on both desktop and mobile
+          (no masked/monochrome treatment) — same asset Header.tsx uses on
+          every other route, so the brand mark reads consistently
+          everywhere. */}
       <Link
         to="/"
         aria-label="NR Industries home"
         className="site-nav-desktop-logo"
-        style={{
-          position: "absolute",
-          left: "clamp(16px, 4vw, 30px)",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
+        style={{ position: "absolute", left: "clamp(16px, 4vw, 30px)", top: "50%", transform: "translateY(-50%)" }}
       >
-        <div
-          role="img"
-          aria-label="NR Industries"
-          style={{
-            height: `clamp(34px, 8vw, ${LOGO_HEIGHT}px)`,
-            width: `clamp(${Math.round((34 * 662) / 187)}px, ${(8 * 662) / 187}vw, ${LOGO_WIDTH}px)`,
-            backgroundColor: DUSTY_OFF_WHITE,
-            WebkitMaskImage: "url(/cream-logo.png)",
-            maskImage: "url(/cream-logo.png)",
-            WebkitMaskSize: "contain",
-            maskSize: "contain",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            WebkitMaskPosition: "left center",
-            maskPosition: "left center",
-          }}
+        {/* Height set via inline style, not an arbitrary-value Tailwind
+            class — safer against this project's own build pipeline. */}
+        <img
+          src="/logo-v5-transparent.png"
+          alt="NR Industries"
+          height={56}
+          width={112}
+          className="w-auto object-contain object-left"
+          style={{ height: "clamp(40px, 9.5vw, 56px)" }}
+          decoding="async"
         />
       </Link>
       <Link
         to="/"
         aria-label="NR Industries home"
         className="site-nav-mobile-logo"
-        style={{
-          position: "absolute",
-          left: "clamp(16px, 4vw, 30px)",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
+        style={{ position: "absolute", left: "clamp(16px, 4vw, 30px)", top: "50%", transform: "translateY(-50%)" }}
       >
         <img
           src="/logo-v5-transparent.png"
           alt="NR Industries"
-          height={44}
-          width={88}
-          className="h-[clamp(32px,9vw,44px)] w-auto object-contain object-left"
+          height={52}
+          width={104}
+          className="w-auto object-contain object-left"
+          style={{ height: "clamp(38px, 10.5vw, 52px)" }}
           decoding="async"
         />
       </Link>
@@ -234,7 +254,7 @@ export function HomeHeader() {
           `gap`, not `space-between`, so the gap between every pair —
           including "Products"/"Specifications" at the panel boundary — is
           identical; `gap` alone already guarantees that regardless of each
-          label's own width). Centered. */}
+          label's own width). Centered. Color driven by useNavTheme. */}
       <div
         className="site-nav-desktop-tabs"
         style={{
@@ -249,12 +269,12 @@ export function HomeHeader() {
         }}
       >
         {TABS.map((tab) => (
-          <NavTab key={tab.to} {...tab} />
+          <NavTab key={tab.to} {...tab} color={barColor} />
         ))}
       </div>
 
-      {/* Panel 4 — call (circle) then WhatsApp (wider rectangle), in that
-          left-to-right order. */}
+      {/* Panel 4 — call (circle, color driven by useNavTheme) then WhatsApp
+          (unchanged, always its own green), in that left-to-right order. */}
       <div
         className="site-nav-desktop-actions"
         style={{
@@ -275,15 +295,16 @@ export function HomeHeader() {
             width: `${ACTION_HEIGHT}px`,
             height: `${ACTION_HEIGHT}px`,
             borderRadius: "50%",
-            border: `1px solid ${TEXT_CREAM}`,
-            color: TEXT_CREAM,
+            border: `1px solid ${barColor}`,
+            color: barColor,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
+            transition: "color 0.2s ease, border-color 0.2s ease",
           }}
         >
-          <Phone size={16} color={TEXT_CREAM} aria-hidden="true" />
+          <Phone size={16} color={barColor} aria-hidden="true" />
         </a>
         <a
           href={buildWhatsAppLink(WHATSAPP_GENERAL_MESSAGE)}
@@ -322,12 +343,7 @@ export function HomeHeader() {
           is what enforces the correct breakpoint here. */}
       <div
         className="site-nav-hamburger"
-        style={{
-          position: "absolute",
-          right: "clamp(16px, 4vw, 30px)",
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
+        style={{ position: "absolute", right: "clamp(16px, 4vw, 30px)", top: "50%", transform: "translateY(-50%)" }}
       >
         <MobileNavTrigger isOpen={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
       </div>
@@ -338,13 +354,7 @@ export function HomeHeader() {
         containing block for `position: fixed` descendants — a fixed child
         of a 90px-tall nav would resolve its own top/bottom edges relative
         to that 90px box instead of the viewport. Living outside <nav>
-        avoids that entirely.
-        Per an explicit request, this is the exact same MobileNavPanel
-        Header.tsx uses on every other route (not a separate/lookalike
-        version) — just wrapped here with `position: fixed` and an explicit
-        `top: NAV_HEIGHT` instead of the original's `sticky`-header-relative
-        flow position, since this bar reserves no space in normal document
-        flow. */}
+        avoids that entirely. */}
     {menuOpen && (
         <div style={{ position: "fixed", top: `${NAV_HEIGHT}px`, left: 0, right: 0, zIndex: 1000 }}>
           <MobileNavPanel topOffsetPx={NAV_HEIGHT} />
